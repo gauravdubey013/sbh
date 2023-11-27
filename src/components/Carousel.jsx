@@ -4,18 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from "next/image";
 import Link from "next/link";
-
-
-const slides = [
-  { id: 1, url: "/bg.gif", bg: "bg-blue-500" },
-  { id: 2, url: "/bg1.gif", bg: "bg-[#53c28b]" },
-  { id: 3, url: "/bg2.gif", bg: "bg-blue-500" },
-  { id: 4, url: "/bg3.gif", bg: "bg-[#53c28b]" },
-  { id: 5, url: "/bg55.gif", bg: "bg-blue-500" },
-  { id: 6, url: "/bg55.gif", bg: "bg-[#53c28b]" },
-  { id: 7, url: "/contact.png", bg: "bg-red-600" },
-  { id: 8, url: "/bbg.gif", bg: "bg-[#53c28b]" },
-];
+import { slides } from "@/context/data";
 
 const Carousel = (props) => {
   const settings = {
@@ -85,7 +74,10 @@ const Carousel = (props) => {
                   </span>
                   <div className="w-full h-auto flex flex-row lg:flex-col gap-1 bottom-0">
                     <div className="review w-[4rem] lg:w-full h-[3.25rem] bg-[#53c28b] rounded-3xl"></div>
-                    <Link href={props.onClickBtn} className="allBtn w-full h-[3.25rem] text-sm rounded-3xl">
+                    <Link
+                      href={props.onClickBtn}
+                      className="allBtn w-full h-[3.25rem] text-sm rounded-3xl"
+                    >
                       View more
                     </Link>
                   </div>

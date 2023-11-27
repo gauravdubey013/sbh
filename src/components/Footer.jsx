@@ -1,6 +1,43 @@
 import Link from "next/link";
 import React from "react";
 
+const Footer = (props) => {
+  return (
+    <>
+      <footer>
+        <div className="footer border-t-[.5px] rounded-md border-[#53c28b]/30 flex flex-col sm:flex-row justify-between items-center gap-1 p-2 ease-in-out duration-300 md:duration-500">
+          <div className="row text-[gray] flex flex-row gap-3 sm:scale-75 sm:hidden duration-300 ease-in-out">
+            {footer.map((icon) => (
+              <a key={icon.id} href={icon.url} className="icon">
+                <i className={icon.className} />
+              </a>
+            ))}
+          </div>
+          <div className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75">
+            <Link href={"/"} className=" text-3xl logoTitle">
+              {props.title}
+            </Link>
+          </div>
+          <span className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75 text-sm sm:ml-3">
+            <span className="scale-125 -mr-2.5">©</span>2023 {props.title}
+            <span className="scale-150 -mr-1 -ml-1">||</span>All rights
+            reserved.
+          </span>
+          <div className="row text-[gray] sm:scale-75 hidden sm:flex flex-row gap-3 duration-300 ease-in-out">
+            {footer.map((icon) => (
+              <a key={icon.id} href={icon.url} className="icon">
+                <i className={icon.className} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+};
+
+export default Footer;
+
 const footer = [
   {
     id: 1,
@@ -27,39 +64,3 @@ const footer = [
     url: "/",
   },
 ];
-
-const Footer = (props) => {
-  return (
-    <>
-      <footer>
-        <div className="footer border-t-[.5px] rounded-md border-[#53c28b]/30 flex flex-col sm:flex-row justify-between items-center gap-1 p-2 ease-in-out duration-300 md:duration-500">
-          <div className="row text-[gray] flex flex-row gap-3 sm:scale-75 sm:hidden duration-300 ease-in-out">
-            {footer.map((icon) => (
-              <a key={icon.id} href={icon.url} className="icon">
-                <i className={icon.className} />
-              </a>
-            ))}
-          </div>
-          <div className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75">
-            <Link href={"/"} className=" text-3xl logoTitle">
-              {props.title}
-            </Link>
-          </div>
-          <span className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75 text-sm sm:ml-3">
-            <span className="scale-125 -mr-2.5">©</span>2023 {props.title}
-            <span className="scale-150 -mr-1 -ml-1">||</span>All rights reserved.
-          </span>
-          <div className="row text-[gray] sm:scale-75 hidden sm:flex flex-row gap-3 duration-300 ease-in-out">
-            {footer.map((icon) => (
-              <a key={icon.id} href={icon.url} className="icon">
-                <i className={icon.className} />
-              </a>
-            ))}
-          </div>
-        </div>
-      </footer>
-    </>
-  );
-};
-
-export default Footer;

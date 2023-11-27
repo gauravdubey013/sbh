@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Loading() {
   return (
     <>
-      <div className="w-full h-[75vh] flex items-center justify-center text-center relative scale-50">
+      <div className="w-full h-[77vh] flex items-center justify-center text-center relative scale-50">
         <Image
           src="/loadingThreeRotate.gif"
           alt="authImg"
