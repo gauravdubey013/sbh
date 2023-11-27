@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
+import Loading from "../loading";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
 // import Carousel from "./components/Carousel";
 
@@ -143,6 +144,9 @@ export default function Home() {
             Scroll Down
           </div>
         </div>
+      </section>
+      <section className="w-full h-screen flex justify-center items-center">
+        <Loading />
       </section>
     </>
   );

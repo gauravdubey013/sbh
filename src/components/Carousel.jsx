@@ -12,7 +12,7 @@ const slides = [
   { id: 3, url: "/bg2.gif", bg: "bg-blue-500" },
   { id: 4, url: "/bg3.gif", bg: "bg-[#53c28b]" },
   { id: 5, url: "/bg55.gif", bg: "bg-blue-500" },
-  { id: 6, url: "/bg6.jpeg", bg: "bg-[#53c28b]" },
+  { id: 6, url: "/bg55.gif", bg: "bg-[#53c28b]" },
   { id: 7, url: "/contact.png", bg: "bg-red-600" },
   { id: 8, url: "/bbg.gif", bg: "bg-[#53c28b]" },
 ];
@@ -68,7 +68,7 @@ const Carousel = (props) => {
               >
                 <div className="w-full h-auto -translate-y-[56px] lg:-translate-y-[46.5px] flex justify-center">
                   <Image
-                    src={"/bg6.jpeg"}
+                    src={"/bg6.png"}
                     alt="url"
                     // fill="true"
                     width={100}
