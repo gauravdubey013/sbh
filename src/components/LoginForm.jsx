@@ -23,7 +23,6 @@ function LoginForm() {
   // const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
 
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,12 +98,12 @@ function LoginForm() {
             </div>
 
             <div className="w-full h-auto flex gap-4 justify-center items-center">
-              <Link
-                href="#"
+              <button
+                onClick={() => signIn("github")}
                 className="w-[3rem] h-[3rem] active:scale-75 flex justify-center items-center hover:text-blue- text-2xl no-underline border-[1px] rounded-full hover:border-[#53c28b] ease-in-out duration-300 shadow-md"
               >
                 <i className="fa fa-github hover:scale-110" />
-              </Link>
+              </button>
               <Link
                 href="#"
                 className="w-[3rem] h-[3rem] active:scale-75 flex justify-center items-center hover:text-red-500 text-2xl no-underline border-[1px] rounded-full hover:border-[#53c28b] ease-in-out duration-300 shadow-md"

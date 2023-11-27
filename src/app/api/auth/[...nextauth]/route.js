@@ -39,6 +39,31 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "credentials") {
+        return true;
+      }
+      if (account?.provider === "github") {
+        await connect();
+        try {
+          const existingUser = await User.findOne({ email: user.email });
+          if (!existingUser) {
+            const newUser = new User({
+              email: user.email,
+            });
+            await newUser.save();
+            return true;
+          }
+          return true;
+        } catch (error) {
+          console.log("Error storing onto the db : ", error);
+          return false;
+        }
+      }
+    },
+  },
 };
 
 export const handler = NextAuth(authOptions);
