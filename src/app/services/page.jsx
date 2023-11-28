@@ -1,10 +1,17 @@
-import ServiceCompo from "@/components/ServiceCompo";
 import React from "react";
+import ServiceCompo from "@/components/ServiceCompo";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export const Service = () => {
+const Services = async () => {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/signIn");
+  }
   return (
     <div>
       <ServiceCompo />
     </div>
   );
 };
+export default Services;

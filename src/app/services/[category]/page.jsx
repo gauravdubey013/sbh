@@ -1,7 +1,6 @@
-"use client";
 import React from "react";
-import { notFound } from "next/navigation";
-import { slides } from "../../../context/data";
+// import { notFound } from "next/navigation";
+// import { slides } from "../../../context/data";
 import Image from "next/image";
 
 const Category = ({ params }) => {
@@ -16,7 +15,7 @@ const Category = ({ params }) => {
           </div>
           <div className="w-[40%] h-auto border-[1px] flex justify-center items-center">
             <Image
-              src={"/bg6.jpeg"}
+              src={"/bg6.png"}
               alt="url"
               // fill="true"
               width={100}

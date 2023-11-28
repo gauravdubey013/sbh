@@ -12,6 +12,7 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { tabs } from "@/context/data";
 import { useRouter } from "next/navigation";
+import Dropdown from "./DropDownList";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -126,27 +127,27 @@ const Navbar = () => {
                     </Link>
                   ))}
                 </div>
-                {!session ? (
-                  <Link
-                    href={"/signIn"}
-                    className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
-                  >
-                    Login
-                  </Link>
-                ) : (
-                  <>
-                    <div className="">{session.user?.email}</div>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        router.push("/signIn");
-                      }}
+                <div className="w-auto h-auto ml-4">
+                  {!session ? (
+                    <Link
+                      href={"/signIn"}
                       className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
                     >
-                      SignOut
-                    </button>
-                  </>
-                )}
+                      Login
+                    </Link>
+                  ) : (
+                    <>
+                      <Dropdown
+                        userEmail={session.user?.email}
+                        btnOnClick={() => {
+                          signOut();
+                          router.push("/signIn");
+                        }}
+                        btnName={"LogOut"}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
