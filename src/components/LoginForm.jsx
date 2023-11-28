@@ -107,12 +107,12 @@ function LoginForm() {
                 >
                   <i className="fa fa-github hover:scale-110" />
                 </button>
-                <Link
-                  href="#"
+                <button
+                  onClick={() => signIn("google")}
                   className="w-[3rem] h-[3rem] active:scale-75 flex justify-center items-center hover:text-red-500 text-2xl no-underline border-[1px] rounded-full hover:border-[#53c28b] ease-in-out duration-300 shadow-md"
                 >
                   <i className="fa fa-google-plus hover:scale-110" />
-                </Link>
+                </button>
               </div>
 
               <div className="flex items-center justify-center gap-1 text-2xl">

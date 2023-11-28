@@ -131,7 +131,7 @@ const Navbar = () => {
                   {!session ? (
                     <Link
                       href={"/signIn"}
-                      className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
+                      className="signin allBtn w-[3rem] h-[2rem] text-md rounded-md"
                     >
                       Login
                     </Link>
