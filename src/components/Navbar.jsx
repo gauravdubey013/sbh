@@ -127,7 +127,7 @@ const Navbar = () => {
                     </Link>
                   ))}
                 </div>
-                <div className="w-auto h-auto ml-4">
+                <div className="w-auto h-auto ml-2">
                   {!session ? (
                     <Link
                       href={"/signIn"}
