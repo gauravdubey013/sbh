@@ -7,8 +7,12 @@ import { useRouter } from "next/navigation";
 const ProfessionalRegistrationForm = () => {
   const router = useRouter();
 
-  const [profileImg, setProfileImg] = useState(null);
-  const [resume, setResume] = useState(null);
+  const [profileImg, setProfileImg] = useState();
+  const [resume, setResume] = useState();
+
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDOB] = useState("");
 
   const [service, setService] = useState("");
   const [address, setAddress] = useState("");
@@ -20,8 +24,45 @@ const ProfessionalRegistrationForm = () => {
   const [sLTwo, setSLTwo] = useState("");
   const [workHistory, setWorkHistory] = useState("");
 
-  const handleSubmit = (e) => {
-    router.push("/signIn");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create a FormData object
+    const data = new FormData();
+    data.set("profileImg", profileImg);
+    data.set("resume", resume);
+    data.set("email", email);
+    data.set("gender", gender);
+    data.set("dob", dob);
+
+    data.set("service", service);
+    data.set("address", address);
+    data.set("zipCode", zipCode);
+    data.set("phone", phone);
+    data.set("bio", bio);
+    data.set("skillLevel", skillLevel);
+    data.set("sLOne", sLOne);
+    data.set("sLTwo", sLTwo);
+    data.set("workHistory", workHistory);
+
+    try {
+      const res = await fetch("/api/professionalRegister", {
+        method: "POST",
+        body: data,
+      });
+
+      if (res.status === 400) {
+        setError("User already exists!");
+      } else if (res.status === 200) {
+        setError("");
+        router.push("/signIn");
+      }
+    } catch (error) {
+      setError(error);
+      console.error("Error", error);
+    }
   };
 
   const imageLoader = ({ src, width, quality }) => {
@@ -36,7 +77,7 @@ const ProfessionalRegistrationForm = () => {
           <div className="w-[50%] h-full hidden sm:flex justify-center items-cent rounded-xl ease-in-out duration-300">
             <Image
               loader={imageLoader}
-              src="/authImg.png"
+              src="/assets/authImg.png"
               alt="authImg"
               width="400"
               height="400"
@@ -55,24 +96,50 @@ const ProfessionalRegistrationForm = () => {
                 onSubmit={handleSubmit}
                 className="w-full h-full flex flex-col gap-4"
               >
+                <input
+                  type="email"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Re-enter your e-mail"
+                  className="allFormInput h-[52px]"
+                  required
+                />
                 <div className="w-full h-[20vh] flex flex-col items-center justify-between border-[1px] hover:border-[#53c28b] hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
                   <label className="text-xl">Add Profile</label>
                   <div className=" w-auto h-auto text-center md:px-10">
                     <input
                       type="file"
                       name="profileImg"
-                      onChange={(e) => setProfileImg(e.target.value)}
+                      onChange={(e) => setProfileImg(e.target.files?.[0])}
                       accept=".jpg, .jpeg, .png"
                       className="allFormInput w-full h-full border-none cursor-pointer"
                     />
                   </div>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    name="gender"
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                    placeholder="Enter Gender"
+                    className="allFormInput h-[52px]"
+                  />
+                  <input
+                    type="date"
+                    name="dob"
+                    onChange={(e) => setDOB(e.target.value)}
+                    required
+                    placeholder="DOB"
+                    className="allFormInput h-[52px]"
+                  />
                 </div>
                 <select
                   name="service"
                   onChange={(e) => setService(e.target.value)}
                   placeholder="Freelancer Category"
                   required
-                  className="w-full h-[52px] fontFam hover:text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
+                  className="w-full h-[52px] fontFam hover:text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
                 >
                   <option value="">Select Service</option>
                   <option value="web_development">Web Development</option>
@@ -139,8 +206,8 @@ const ProfessionalRegistrationForm = () => {
                 <input
                   type="file"
                   name="resume"
-                  onChange={(e) => setResume(e.target.value)}
-                  accept=".pdf, .doc, .docx"
+                  onChange={(e) => setResume(e.target.files?.[0])}
+                  accept=".pdf, .doc, .docx, .ppt"
                   className="allFormInput h-[52px]"
                 />
                 <input

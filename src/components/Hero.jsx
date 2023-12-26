@@ -40,7 +40,7 @@ export default function Hero() {
           <motion.div
             className="inset-0 absolute z-0"
             style={{
-              backgroundImage: `url(/heroBanner.gif)`,
+              backgroundImage: `url(/assets/heroBanner.gif)`,
               backgroundPosition: "bottom",
               backgroundSize: "cover",
               y: by,
@@ -184,7 +184,7 @@ export const AboutContext = (props) => {
           <motion.div
             style={{
               y: yAxis,
-              backgroundImage: `url(/aboutBanner.jpeg)`,
+              backgroundImage: `url(/assets/aboutBanner.jpeg)`,
               opacity: "80%",
             }}
             className="w-full h-full bg-no-repeat bg-cover z-0 md:rounded-r-3xl"

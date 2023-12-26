@@ -80,11 +80,12 @@ const Navbar = () => {
                 {/* {props.title} */}
                 <Image
                   loader={imageLoader}
-                  src={"/logoT.png"}
+                  src={"/assets/logoT.png"}
                   alt="logo"
                   width={0}
                   height={0}
                   sizes="100vw"
+                  priority={true}
                   className="w-full h-auto max-w-[270]"
                 />
               </Link>

@@ -83,7 +83,7 @@ function LoginForm() {
             {/* px-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] */}
             <div className="w-[50%] h-full hidden sm:flex justify-center items-cent rounded-xl ease-in-out duration-300">
               <Image
-                src="/authImg.png"
+                src="/assets/authImg.png"
                 alt="authImg"
                 width={400}
                 // fill={true}

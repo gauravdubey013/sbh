@@ -57,7 +57,7 @@ const Carousel = (props) => {
               >
                 <div className="w-full h-auto -translate-y-[56px] lg:-translate-y-[46.5px] flex justify-center">
                   <Image
-                    src={"/bg6.png"}
+                    src={"/assets/bg6.png"}
                     alt="url"
                     // fill="true"
                     width={100}

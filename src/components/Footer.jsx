@@ -20,8 +20,7 @@ const Footer = (props) => {
           </div>
           <span className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75 text-sm sm:ml-3">
             <span className="scale-125 -mr-2.5">©</span>2023 {props.title}
-            <span className="scale-150 -mr-1 -ml-1">||</span>All rights
-            reserved.
+            <span className="scale-150 -mr-1 -ml-1">||</span>All rights by reserved by GD.
           </span>
           <div className="row text-[gray] sm:scale-75 hidden sm:flex flex-row gap-3 duration-300 ease-in-out">
             {footer.map((icon) => (

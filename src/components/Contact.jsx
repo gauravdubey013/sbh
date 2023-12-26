@@ -14,12 +14,12 @@ const Contact = () => {
         <div className="w-full lg:w-1/2 h-1/2 md:h-full flex justify-center items-center ease-in-out duration-300">
           <div className="imgCont w-full h-[350px] lg:h-[500px] relative opacity-[90%] ease-in-out duration-300">
             <Image
-              src="/contact.png"
+              src="/assets/contact.png"
               alt="contactImg"
               fill={true}
               sizes="(max-width: full) (max-width: full)"
-              priority={true} 
-            //   layout="responsive"
+              priority={true}
+              //   layout="responsive"
               // width={500}
               // height={500}
               className="contactImg w-auto h-auto absolute object-contain animate-[moveCon_3s_infinite_ease_alternate]"

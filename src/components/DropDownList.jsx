@@ -13,7 +13,7 @@ const Dropdown = (props) => {
       <img
         onClick={handleToggle}
         className="h-6 w-6 rounded-full cursor-pointer"
-        src="/bg6.png"
+        src="/assets/bg6.png"
         alt="Profile"
       />
 

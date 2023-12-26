@@ -45,20 +45,20 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "firstname: ",
-      firstname,
-      "\nlastname: ",
-      lastname,
-      "\nemail: ",
-      email,
-      "\npassword: ",
-      password,
-      "\nconfirmPassword: ",
-      confirmPassword,
-      "\nprofCheckValue: ",
-      profCheckValue
-    );
+    // console.log(
+    //   "firstname: ",
+    //   firstname,
+    //   "\nlastname: ",
+    //   lastname,
+    //   "\nemail: ",
+    //   email,
+    //   "\npassword: ",
+    //   password,
+    //   "\nconfirmPassword: ",
+    //   confirmPassword,
+    //   "\nprofCheckValue: ",
+    //   profCheckValue
+    // );
 
     confirmPassword !== password
       ? setError("Mismatch password!")
@@ -110,7 +110,7 @@ const RegistrationForm = () => {
           <div className="w-[95%] md:w-[85%] xl:w-[75%] h-[90%] border-[1px] border-solid border-[#53c28b]/90 rounded-2xl shadow-lg flex flex-rol ease-in-out duration-300">
             <div className="w-[50%] h-full hidden sm:flex justify-center items-cent rounded-xl ease-in-out duration-300">
               <Image
-                src="/authImg.png"
+                src="/assets/authImg.png"
                 alt="authImg"
                 width={400}
                 height={400}

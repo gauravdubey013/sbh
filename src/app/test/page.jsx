@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
 import Loading from "../loading";
+import ImgUpload from "@/components/ImgUpload";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
 // import Carousel from "./components/Carousel";
 
@@ -61,7 +62,7 @@ export default function Home() {
         <motion.div
           className="inset-0 absolute z-0"
           style={{
-            backgroundImage: `url(/bg55.gif)`,
+            backgroundImage: `url(/assets/bg55.gif)`,
             backgroundPosition: "bottom",
             backgroundSize: "cover",
             y: by,
@@ -147,6 +148,10 @@ export default function Home() {
       </section>
       <section className="w-full h-screen flex justify-center items-center">
         <Loading />
+      </section>
+      <section className="w-full h-[25rem] flex flex-col justify-center items-center">
+        <div>test - Upload Image in public folder : </div>
+        <ImgUpload />
       </section>
     </>
   );

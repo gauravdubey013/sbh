@@ -118,3 +118,57 @@ html {
 .scrollDiv::-webkit-scrollbar {
   display: none;
 }
+
+/* const handleSubmit = async (e) => {
+  console.log(
+    "service: ",
+    service,
+    "\naddress: ",
+    address,
+    "\nzipCode: ",
+    zipCode,
+    "\nphone: ",
+    phone,
+    "\nbio: ",
+    bio,
+    "\nskillLevel: ",
+    skillLevel,
+    "\nsocial-Link-One: ",
+    sLOne,
+    "\nsocial-Link-Two: ",
+    sLTwo,
+    "\nworkHistory: ",
+    workHistory
+  );
+
+  try {
+    const res = await fetch("/api/professionalRegister", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profileImg,
+        resume,
+        service,
+        address,
+        zipCode,
+        phone,
+        bio,
+        skillLevel,
+        sLOne,
+        sLTwo,
+        workHistory,
+      }),
+    });
+
+    if (res.status === 400) {
+      setError("User already exists!");
+    }
+    if (res.status === 200) {
+      setError("");
+      router.push("/signIn");
+    }
+  } catch (error) {
+    setError(error);
+    console.log("Error", error);
+  }
+}; */

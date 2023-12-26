@@ -6,7 +6,7 @@ export default function Loading() {
     <>
       <div className="w-full h-[77vh] flex items-center justify-center text-center relative scale-50">
         <Image
-          src="/loadingThreeRotate.gif"
+          src="/assets/loadingThreeRotate.gif"
           alt="authImg"
           width={400}
           // fill={true}
