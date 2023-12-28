@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 
 export default function FormLayout(props) {
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
+  const { data: session, status: sessionStatus } = useSession(); //session
   let verified = props.setVerified;
 
   useEffect(() => {

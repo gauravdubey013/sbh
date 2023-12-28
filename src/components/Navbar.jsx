@@ -13,15 +13,16 @@ import { signOut, useSession } from "next-auth/react";
 import { tabs } from "@/context/data";
 import { useRouter } from "next/navigation";
 import Dropdown from "./DropDownList";
+import Loading from "@/app/loading";
 
 const Navbar = () => {
-  const { data: session } = useSession();
   const router = useRouter();
 
   const [toggle, setToggle] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
   const pathname = usePathname();
   const [hashTagValue, setHashTagValue] = useState("");
+  const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
     const activeTabFinder = tabs.find(
@@ -41,6 +42,10 @@ const Navbar = () => {
   //   const origin = process.env.HOSTNAME || window.location.origin;
   //   return `${origin}${src}?w=${width}&q=${quality || 75}`;
   // };
+
+  if (sessionStatus === "loading") {
+    return <Loading setHeight={"120"} />;
+  }
 
   return (
     <>

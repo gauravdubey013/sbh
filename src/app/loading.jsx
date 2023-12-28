@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
 
-export default function Loading() {
+export default function Loading(props) {
   return (
     <>
-      <div className="w-full h-[77vh] flex items-center justify-center text-center relative scale-50">
+      <div
+        className={`w-full h-[${props.setHeight}vh] flex items-center justify-center text-center relative scale-50`}
+      >
         <Image
           src="/assets/loadingThreeRotate.gif"
           alt="authImg"
@@ -17,3 +19,7 @@ export default function Loading() {
     </>
   );
 }
+
+Loading.defaultProps = {
+  setHeight: 77,
+};
