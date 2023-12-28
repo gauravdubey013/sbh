@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 const Contact = () => {
   return (
@@ -28,42 +31,126 @@ const Contact = () => {
         </div>
 
         <div className="w-full lg:w-1/2 h-1/2 md:h-full ease-in-out duration-300 px-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] flex items-center mt-5">
-          <form
-            method="get"
-            className="w-full h-full flex flex-col gap-6 justify-center"
-          >
-            <div className="w-full h-[54px] flex gap-2">
-              <input
-                type="text"
-                placeholder="First Name"
-                className="allFormInput h-[52px]"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="allFormInput h-[52px]"
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Email*"
-              className="allFormInput h-[52px]"
-            />
-            <textarea
-              cols={30}
-              rows={5}
-              className="allFormInput"
-              placeholder="Leave us a message..."
-            />
-            <button
-              type="submit"
-              className="allBtn w-[7.75rem] h-[3.25rem] text-xl rounded-3xl"
-            >
-              Send
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </div>
+    </>
+  );
+};
+
+export const ContactForm = () => {
+  const [contactUserMessage, setContactUserMessage] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    message: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContactUserMessage({
+      ...contactUserMessage,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(
+      "firstname: ",
+      contactUserMessage.firstname,
+      "\nlastname: ",
+      contactUserMessage.lastname,
+      "\nemail: ",
+      contactUserMessage.email,
+      "\nmessage: ",
+      contactUserMessage.message
+    );
+
+    try {
+      const res = await fetch("/api/contact-us-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: contactUserMessage.firstname,
+          lastname: contactUserMessage.lastname,
+          email: contactUserMessage.email,
+          message: contactUserMessage.message,
+        }),
+      });
+
+      if (res.status === 400) {
+        setError("We already have received message from this email!");
+      }
+      if (res.status === 200) {
+        setError("");
+        router.push("/");
+      }
+    } catch (error) {
+      setError("Error: Something went wrong!");
+      console.log("Error", error);
+    }
+  };
+
+  return (
+    <>
+      <form
+        onSubmit={handleSubmit}
+        method=""
+        className="w-full h-full flex flex-col gap-6 justify-center"
+      >
+        <div className="w-full h-[54px] flex gap-2">
+          <input
+            type="text"
+            placeholder="First Name"
+            required
+            onChange={handleChange}
+            name="firstname"
+            value={contactUserMessage.firstname}
+            className="allFormInput h-[52px]"
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            required
+            onChange={handleChange}
+            name="lastname"
+            value={contactUserMessage.lastname}
+            className="allFormInput h-[52px]"
+          />
+        </div>
+        <input
+          type="email"
+          placeholder="Email*"
+          required
+          onChange={handleChange}
+          name="email"
+          value={contactUserMessage.email}
+          className="allFormInput h-[52px]"
+        />
+        <textarea
+          cols={30}
+          rows={5}
+          placeholder="Leave us a message..."
+          required
+          onChange={handleChange}
+          name="message"
+          value={contactUserMessage.message}
+          className="allFormInput"
+        />
+        <button
+          type="submit"
+          className="allBtn w-[7.75rem] h-[3.25rem] text-xl rounded-3xl"
+        >
+          Send
+        </button>
+        {error && <span className="text-red-500">{error}</span>}
+      </form>
     </>
   );
 };

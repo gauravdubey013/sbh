@@ -137,10 +137,10 @@ export const HeroContext = () => {
             <button
               type="submit"
               // onClick={"/"}
-              className="allBtn w-[3.2rem] h-[3.25rem] text-xl rounded-md"
+              className="allBtn w-[3.2rem] md:w-[6rem] h-[3.25rem] text-xl rounded-md"
             >
               <span>
-                <CiSearch size={25} className="md:hidden" />
+                <CiSearch size={25} className="md:hidden font-bold" />
               </span>
               <span className="hidden md:flex">Search</span>
             </button>

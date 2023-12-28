@@ -1,12 +1,14 @@
-import RegistrationForm from '@/components/RegistrationForm'
-import React from 'react'
+import FormLayout from "@/components/FormLayout";
+import RegistrationForm from "@/components/RegistrationForm";
+import React from "react";
 
 const SignUp = () => {
   return (
     <div>
-        <RegistrationForm />
+      {/* <RegistrationForm /> */}
+      <FormLayout setForm={<RegistrationForm />} />
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

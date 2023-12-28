@@ -37,10 +37,10 @@ const Navbar = () => {
 
   // console.log(activeTab);
 
-  const imageLoader = ({ src, width, quality }) => {
-    const origin = process.env.HOSTNAME || window.location.origin;
-    return `${origin}${src}?w=${width}&q=${quality || 75}`;
-  };
+  // const imageLoader = ({ src, width, quality }) => {
+  //   const origin = process.env.HOSTNAME || window.location.origin;
+  //   return `${origin}${src}?w=${width}&q=${quality || 75}`;
+  // };
 
   return (
     <>
@@ -52,7 +52,10 @@ const Navbar = () => {
           <Link href={"/"} className="hover:text-[#53c28b] duration-200">
             English
           </Link>
-          <Link href={"/"} className="hover:text-[#53c28b] duration-200">
+          <Link
+            href={"/#contact"}
+            className="hover:text-[#53c28b] duration-200"
+          >
             Contact Us
           </Link>
         </div>
@@ -79,11 +82,11 @@ const Navbar = () => {
               <Link href={"/"} className="logoTitle text-[28px] w-auto h-auto">
                 {/* {props.title} */}
                 <Image
-                  loader={imageLoader}
                   src={"/assets/logoT.png"}
+                  // loader={imageLoader}
                   alt="logo"
-                  width={0}
-                  height={0}
+                  width={10}
+                  height={10}
                   sizes="100vw"
                   priority={true}
                   className="w-full h-auto max-w-[270]"

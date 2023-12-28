@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema(
+const contactUsMessageSchema = new Schema(
   {
     firstname: {
       type: String,
@@ -17,26 +17,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    password: {
+    message: {
       type: String,
       required: true,
-    },
-    profCheckValue: {
-      type: String,
-      required: true,
-    },
-
-    resetToken: {
-      type: String,
-      trim: true,
-      required: false,
-    },
-    resetTokenExpiry: {
-      type: Date,
-      required: false,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.ContactUsMessage ||
+  mongoose.model("ContactUsMessage", contactUsMessageSchema);

@@ -112,63 +112,9 @@ html {
 }
 
 .allBtn {
-  @apply fontFam md:w-[6rem] active:text-lg active:scale-90 font-extrabold cursor-pointer backdrop-filter backdrop-blur-sm bg-[#53c28b] hover:bg-[#53c28b]/[0.6] scale-95 hover:scale-100 shadow-sm flex justify-center items-center hover:shadow-md focus:shadow-md ease-[ease] duration-200;
+  @apply fontFam active:text-lg active:scale-90 font-extrabold cursor-pointer backdrop-filter backdrop-blur-sm bg-[#53c28b] hover:bg-[#53c28b]/[0.6] scale-95 hover:scale-100 shadow-sm flex justify-center items-center hover:shadow-md focus:shadow-md ease-[ease] duration-200;
 }
 
 .scrollDiv::-webkit-scrollbar {
   display: none;
 }
-
-/* const handleSubmit = async (e) => {
-  console.log(
-    "service: ",
-    service,
-    "\naddress: ",
-    address,
-    "\nzipCode: ",
-    zipCode,
-    "\nphone: ",
-    phone,
-    "\nbio: ",
-    bio,
-    "\nskillLevel: ",
-    skillLevel,
-    "\nsocial-Link-One: ",
-    sLOne,
-    "\nsocial-Link-Two: ",
-    sLTwo,
-    "\nworkHistory: ",
-    workHistory
-  );
-
-  try {
-    const res = await fetch("/api/professionalRegister", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profileImg,
-        resume,
-        service,
-        address,
-        zipCode,
-        phone,
-        bio,
-        skillLevel,
-        sLOne,
-        sLTwo,
-        workHistory,
-      }),
-    });
-
-    if (res.status === 400) {
-      setError("User already exists!");
-    }
-    if (res.status === 200) {
-      setError("");
-      router.push("/signIn");
-    }
-  } catch (error) {
-    setError(error);
-    console.log("Error", error);
-  }
-}; */

@@ -9,12 +9,11 @@ export const POST = async (request) => {
 
     const data = await request.formData();
 
+    const email = data.get("email");
     const profileImg = data.get("profileImg");
     const resume = data.get("resume");
-    const email = data.get("email");
     const gender = data.get("gender");
     const dob = data.get("dob");
-
     const service = data.get("service");
     const address = data.get("address");
     const zipCode = data.get("zipCode");
@@ -26,6 +25,10 @@ export const POST = async (request) => {
     const sLTwo = data.get("sLTwo");
 
     // console.log("Request received:", request.body);
+    const existingUser = await Professional.findOne({ email });
+    if (existingUser) {
+      return new NextResponse("User already exists!", { status: 400 });
+    }
 
     let profileImgPath = "";
     let resumePath = "";
