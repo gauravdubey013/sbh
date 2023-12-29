@@ -16,8 +16,8 @@ const SignUp = () => {
           <FormLayout
             setForm={
               <RegistrationForm
-                tcClickProps={tcClick}
-                // setTcClickProps={setTcClick()}
+              // tcClickProps={tcClick}
+              // setTcClickProps={setTcClick()}
               />
             }
           />

@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 
 const RegistrationForm = (props) => {
-  let [tcClick, setTcClick] = useState(props.tcClickProps);
+  let [tcClick, setTcClick] = useState(false);
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
