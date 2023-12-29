@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
+  let [tcClick, setTcClick] = useState(props.tcClickProps);
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -175,7 +177,12 @@ const RegistrationForm = () => {
               required
               className="w-4 h-4 leading-tight bg-[#53c28b] rounded hover:ring-1 focus:ring-1 accent-[#53c28b]"
             />
-            I agree to the terms and conditions!
+            <div
+              className="hover:text-[#53c28b] no-underline cursor-pointer active:scale-90 ease-in-out duration-300"
+              onClick={() => setTcClick(!tcClick)}
+            >
+              I agree to the terms and conditions!
+            </div>
           </div>
           <button
             type="submit"

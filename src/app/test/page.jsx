@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
 import Loading from "../loading";
+import TermsConditionsUser from "@/components/TermsConditions";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
 // import Carousel from "./components/Carousel";
 
@@ -145,9 +146,11 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full h-screen flex justify-center items-center">
-        <Loading />
-        {/* <FormLayout setForm={<TestRegistrationForm />} /> */}
+      <section className="w-full h-screen boder-[1px] flex justify-center items-center">
+        {/* <Loading /> */}
+        {/* <div className=""> */}
+        <TermsConditionsUser />
+        {/* </div> */}
       </section>
     </>
   );

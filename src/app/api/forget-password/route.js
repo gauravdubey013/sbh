@@ -3,6 +3,10 @@ import connect from "@/utils/db";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import { Resend } from "resend";
+import ResetPassword from "@/app/(form)/reset-password/[token]/page";
+
+const resend = new Resend(process.env.RESEND_API_LEY);
 
 // import { render } from "@react-email/render";
 // import { sendEmail } from "@/config/mail";
@@ -32,6 +36,13 @@ export const sendEmail = async (to, subject, text) => {
 connect();
 
 export async function POST(request) {
+  await resend.emails.send({
+    from: "..",
+    to: email,
+    subject: "..",
+    react: <ResetPassword />,
+  });
+
   const { email } = await request.json();
 
   // check user email firsr
