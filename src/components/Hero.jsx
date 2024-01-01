@@ -32,7 +32,7 @@ export default function Hero() {
             }}
           />
           <motion.div
-            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[2px]"
+            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[7px]"
             style={{
               y: by,
             }}
