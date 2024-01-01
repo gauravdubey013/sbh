@@ -3,7 +3,6 @@ import connect from "@/utils/db";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { Resend } from "resend";
-import { SendEmailLink } from "../../../../emails/SendEmailLink";
 // import nodemailer from "nodemailer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
