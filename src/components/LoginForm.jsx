@@ -70,10 +70,11 @@ function LoginForm() {
         onSubmit={handleSubmit}
         className="fontFam w-full h-full flex flex-col justify-between gap-2 px-5 rounded-xl ease-in-out duration-300"
       >
-        <div className="fontFam w-full h-auto text-[40px] md:text-[45px] lg:text-[60px] text-[#53c28b] text-center ease-in-out duration-300">
+        <div className="fontFam w-full h-auto mb-16 sm:mb-0 text-[40px] md:text-[45px] lg:text-[60px] text-[#53c28b] text-center ease-in-out duration-300">
           Login
         </div>
 
+        {/* <div className="w-full h-auto"> */}
         <div className="w-full h-auto flex gap-4 justify-center items-center">
           <button
             onClick={() => signIn("github")}
@@ -152,6 +153,7 @@ function LoginForm() {
             <span className="underline underline-offset-2">Now</span>
           </Link>
         </div>
+        {/* </div> */}
       </form>
     </>
   );

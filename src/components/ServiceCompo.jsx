@@ -7,14 +7,14 @@
 // };
 
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 // import { slides } from "./data";
 import Carousel from "./Carousel";
 
 const ServiceCompo = () => {
   return (
     <>
-      <div className="w-full h-full flex flex-col gap-1">
+      <div className="w-full h-auto flex flex-col gap-1">
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
           <div className="w-full h-full scale-90 md:scale-100">

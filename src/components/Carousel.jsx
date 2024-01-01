@@ -7,6 +7,8 @@ import Link from "next/link";
 import { slides } from "@/context/data";
 
 const Carousel = (props) => {
+  let { bg, btext } = props;
+
   const settings = {
     dots: false,
     slidesToShow: props.slidesToShowDefault,
@@ -50,8 +52,10 @@ const Carousel = (props) => {
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
-              className={`w-full h-full ${props.bg} scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col overflow-hidden`}
+              className={`w-full h-full ${bg} scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
             >
+              {" "}
+              {btext}
               <div
                 className={`${props.profile} w-full h-full bg-white rounded-lg translate-y-[40px]`}
               >
@@ -65,18 +69,22 @@ const Carousel = (props) => {
                     className=" w-[8rem] h-[8rem] scale-75 lg:scale-90 rounded-full shadow-md ease-in-out duration-500"
                   />
                 </div>
-                <div className="fontFam w-full h-full z-10 -translate-y-20 lg:-translate-y-16 bg-transparent text-black bottom-0 rounded-lg p-2 overflow-hidden flex flex-col gap-1">
-                  <h2 className="text-lg font-semibold">Name chomu</h2>
+                <div className="fontFam w-full h-auto z-10 -translate-y-20 lg:-translate-y-16 bg-transparent text-black bottom-0 rounded-lg p-2 overflow-hidden flex flex-col gap-1">
+                  <h2 className="text-md md:text-lg font-semibold">
+                    Name chomu
+                  </h2>
                   <span className="text-sm line-clamp-3 -mt-2">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
                     quisquam saepe quae dolorem distinctio optio perspiciatis
                     consequuntur tempora labore eos.
                   </span>
                   <div className="w-full h-auto flex flex-row lg:flex-col gap-1 bottom-0">
-                    <div className="review w-[4rem] lg:w-full h-[3.25rem] bg-[#53c28b] rounded-3xl"></div>
+                    <div className="review w-[4rem] lg:w-full h-[3.25rem] bg-[#53c28b] rounded-3xl flex items-center justify-center">
+                      review
+                    </div>
                     <Link
                       href={props.onClickBtn}
-                      className="allBtn w-full h-[3.25rem] text-sm rounded-3xl"
+                      className="allBtn w-full h-[3.25rem] text-sm rounded-3xl flex items-center justify-center"
                     >
                       View more
                     </Link>
@@ -86,7 +94,6 @@ const Carousel = (props) => {
               {/* <div className="w-full z-20 h-auto rounded-t-lg flex justify-center ease-in-out duration-300">
                 
               </div> */}
-
               {/* <Image
                 src={slide.url}
                 alt="url"

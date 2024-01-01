@@ -15,7 +15,7 @@ const Category = ({ params }) => {
           </div>
           <div className="w-[40%] h-auto border-[1px] flex justify-center items-center">
             <Image
-              src={"/bg6.png"}
+              src={"/assets/bg6.png"}
               alt="url"
               // fill="true"
               width={100}

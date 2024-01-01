@@ -32,15 +32,26 @@ export default function Hero() {
             }}
           />
           <motion.div
-            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[7px]"
+            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[2px]"
             style={{
               y: by,
             }}
           />
           <motion.div
-            className="inset-0 absolute z-0"
+            className="md:hidden inset-0 absolute z-0"
             style={{
-              backgroundImage: `url(/assets/heroBanner.gif)`,
+              backgroundImage: `url(/assets/heroBannerMB.gif)`,
+              backgroundPosition: "bottom",
+              backgroundSize: "cover",
+              y: by,
+              scale,
+              opacity,
+            }}
+          ></motion.div>
+          <motion.div
+            className="hidden md:flex inset-0 absolute z-0"
+            style={{
+              backgroundImage: `url(/assets/heroBannerPC.gif)`,
               backgroundPosition: "bottom",
               backgroundSize: "cover",
               y: by,
@@ -63,6 +74,7 @@ export default function Hero() {
           <div className="bg-transparent -translate-y-20">
             <Carousel
               bg="bg-[#53c28b]"
+              btext="BANNER"
               profile={"hidden"}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
@@ -74,12 +86,12 @@ export default function Hero() {
               slidesToShowDefault={3}
               slidesToShow768={3}
               slidesToShow1024={3}
-              slidesToShow640={2}
+              slidesToShow640={1}
             />
           </div>
           <div
             id="services"
-            className="w-full h-auto p-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] z-20 -translate-y-16"
+            className="w-full h-auto p-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] z-20 -translate-y-20"
           >
             <h3 className="text-[#53c28b] font-extrabold text-xl">Service</h3>
             <ServiceCompo />
@@ -88,14 +100,14 @@ export default function Hero() {
         {/* about-section */}
         <section
           id="about"
-          className="w-full h-screen  flex flex-col md:flex-row bdbg"
+          className="w-full h-screen z-30 relative -translate-y-20 flex flex-col md:flex-row bdbg"
         >
           <AboutContext aboutY={ay} />
         </section>
         {/* contact-section */}
         <section
           id="contact"
-          className="relative z-10 h-[90vh] md:h-screen bdbg"
+          className="relative -translate-y-20 z-30 h-auto -mb-8 bdbg border-[px]"
         >
           <Contact />
         </section>
@@ -109,7 +121,7 @@ export default function Hero() {
 export const HeroContext = () => {
   return (
     <>
-      <div className="w-full h-[101vh] bg-transparent relative z-20 flex flex-col justify-center p-[20px] sm:px-[65px] md:px-[65px] lg:px-[200px] ease-in-out duration-300">
+      <div className="w-full h-[70vh] md:h-[101vh] bg-transparent relative z-20 flex flex-col justify-center p-[20px] sm:px-[65px] md:px-[65px] lg:px-[200px] ease-in-out duration-300">
         <div className="text-[30px] md:text-[35px] lg:text-[40px] font-bold leading-[36px] md:leading-[40px] lg:leading-[45px] ease-in-out duration-500">
           <span className="fontFam animate-slideDown text-[#53c28b]">
             Find the perfect <br /> professional for you
@@ -187,7 +199,7 @@ export const AboutContext = (props) => {
               backgroundImage: `url(/assets/aboutBanner.jpeg)`,
               opacity: "80%",
             }}
-            className="w-full h-full bg-no-repeat bg-cover z-0 md:rounded-r-3xl"
+            className="w-full h-full scale-125 md:scale-100 bg-no-repeat bg-cover z-0 md:rounded-r-3xl"
           ></motion.div>
         </div>
       </div>
