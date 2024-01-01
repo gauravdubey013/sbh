@@ -35,8 +35,8 @@ export const authOptions = {
       },
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID ?? "",
+      clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -47,9 +47,7 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === "credentials") {
-        return true;
-      }
+      if (account?.provider === "credentials") return true;
       if (account?.provider === "github") {
         await connect();
         try {

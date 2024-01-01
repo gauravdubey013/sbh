@@ -43,10 +43,6 @@ const Navbar = () => {
   //   return `${origin}${src}?w=${width}&q=${quality || 75}`;
   // };
 
-  if (sessionStatus === "loading") {
-    return <Loading setHeight={"120"} />;
-  }
-
   return (
     <>
       <section className="fontFam z-40 w-full flex justify-center flex-col">
@@ -90,11 +86,11 @@ const Navbar = () => {
                   src={"/assets/logoT.png"}
                   // loader={imageLoader}
                   alt="logo"
-                  width={10}
-                  height={10}
-                  sizes="100vw"
+                  width={100}
+                  height={100}
+                  sizes="200vw"
                   priority={true}
-                  className="w-full h-auto max-w-[270]"
+                  className="w-[18vh] md:w-full h-auto max-w-[470]"
                 />
               </Link>
               <div className="flex items-center justify-center">
@@ -137,7 +133,16 @@ const Navbar = () => {
                   ))}
                 </div>
                 <div className="w-auto h-auto ml-2">
-                  {!session ? (
+                  {sessionStatus === "loading" ? (
+                    <Image
+                      src="/assets/loadingThreeRotate.gif"
+                      alt="authImg"
+                      width={100}
+                      // fill={true}
+                      height={100}
+                      className="h-8 w-8"
+                    />
+                  ) : !session ? (
                     <Link
                       href={"/signIn"}
                       className="signin allBtn w-[4.5rem] h-[2rem] text-md rounded-md"

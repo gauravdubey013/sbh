@@ -11,7 +11,7 @@ const ResetPassword = ({ params }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const verifyToken = async () => {
+    const verifyToken = async (props) => {
       try {
         const res = await fetch("/api/verify-token", {
           method: "POST",

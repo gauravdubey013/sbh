@@ -11,6 +11,7 @@ export default function ResetPasswordForm(props) {
   const [error, setError] = useState("");
   let tokenError = props.setErrorProps;
   let user = props.setUserProps;
+  let {} = props;
 
   // Handle form submission
   const handleSubmit = async (e) => {

@@ -88,14 +88,14 @@ export default function Hero() {
         {/* about-section */}
         <section
           id="about"
-          className="w-full h-screen flex flex-col md:flex-row bdbg"
+          className="w-full h-screen  flex flex-col md:flex-row bdbg"
         >
           <AboutContext aboutY={ay} />
         </section>
         {/* contact-section */}
         <section
           id="contact"
-          className="relative z-10 h-[120vh] mt-5 md:h-screen bdbg"
+          className="relative z-10 h-[90vh] md:h-screen bdbg"
         >
           <Contact />
         </section>

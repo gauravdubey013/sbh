@@ -2,50 +2,18 @@ import User from "@/models/User";
 import connect from "@/utils/db";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 import { Resend } from "resend";
-import ResetPassword from "@/app/(form)/reset-password/[token]/page";
+import { SendEmailLink } from "../../../../emails/SendEmailLink";
+// import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_LEY);
-
-// import { render } from "@react-email/render";
-// import { sendEmail } from "@/config/mail";
-// import ForgotPasswordEmail from "@/emails/ForgotPasswordEmail";
-
-export const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_SERVER,
-  port: process.env.SMTP_PORT,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
-
-// to send email
-export const sendEmail = async (to, subject, text) => {
-  const info = await transporter.sendMail({
-    from: process.env.SMTP_EMAIL_FROM,
-    to: to,
-    subject: subject,
-    html: text,
-  });
-  return info?.messageId;
-};
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 connect();
 
 export async function POST(request) {
-  await resend.emails.send({
-    from: "..",
-    to: email,
-    subject: "..",
-    react: <ResetPassword />,
-  });
-
   const { email } = await request.json();
 
-  // check user email firsr
+  // checking user email
   const existingUser = await User.findOne({ email });
   if (!existingUser) {
     return new NextResponse("Error : This e-mail doesn't exists!", {
@@ -65,32 +33,29 @@ export async function POST(request) {
   existingUser.resetTokenExpiry = passwordResetExpires;
   const resetUrl = `${process.env.HOSTNAME}/reset-password/${resetToken}`;
 
-  console.log(resetUrl);
-  await existingUser.save();
+  const body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${existingUser.firstname}!!</h1>
+  <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">To Reset the password : </span>
+  <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Click me</a>
+  <h3 style="color: #ccc;">And if it wasn't you, then <u>ignore it!</u></h3>
+  `;
+
+  console.log(resetToken);
 
   try {
-    // const html = render(
-    //   ForgotPasswordEmail({
-    //     params: {
-    //       name: existingUser.firstname,
-    //       url: resetUrl,
-    //     },
-    //   })
-    // );
-
-    const body =
-      "Heya " +
-      existingUser.firstname +
-      "!\nClick to reset the password : " +
-      resetUrl;
-
-    const htmlContent = `<p>${body}</p>`;
+    await existingUser.save();
     // * Send email to user
-    await sendEmail(email, "Reset Password", htmlContent);
+    const data = await resend.emails.send({
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: "SkillBeHired - Reset Password",
+      html: body,
+    });
+
     return NextResponse.json({
       status: 200,
       message:
         "Password-Reset email sent successfully. Please check your email!",
+      email: data,
     });
   } catch (error) {
     console.log("Error: ", error);
@@ -100,74 +65,10 @@ export async function POST(request) {
     });
   }
 }
-
-// import sgMail from "@sendgrid/mailś";
-
-// export const POST = async (request) => {
-// const { email } = await request.json();
-
-//   await connect();
-
-//   const existingUser = await User.findOne({ email });
-
-//   if (!existingUser) {
-//     return new NextResponse("Error : This e-mail doesn't exists!", {
-//       status: 400,
-//     });
-//   }
-
-//   const resetToken = crypto.randomBytes(20).toString("hex");
-//   const passwordResetToken = crypto
-//     .createHash("sha256")
-//     .update(resetToken)
-//     .digest("hex");
-
-//   const passwordResetExpires = Date.now() + 3600000;
-
-//   existingUser.resetToken = passwordResetToken;
-//   existingUser.resetTokenExpiry = passwordResetExpires;
-//   const resetUrl = `localhost:3000/reset-password/${resetToken}`;
-
-//   console.log(resetUrl);
-
-//   const body = "Click to reset the password : " + resetUrl;
-
-//   const msg = {
-//     to: email,
-//     from: "dubeygaurav520@gmail.com",
-//     subject: "SkillBeHired : Reset Password",
-//     text: body,
-//   };
-
-//   sgMail.setApiKey(process.env.SENDGRID_URL || "");
-//   sgMail
-//     .send(msg)
-//     .then(() => {
-//       return new NextResponse("Password-Reset email has been sent.", {
-//         status: 200,
-//       });
-//     })
-//     .catch(async (error) => {
-//       existingUser.resetToken = undefined;
-//       existingUser.resetTokenExpiry = undefined;
-//       await existingUser.save();
-
-//       return new NextResponse(
-//         "Failed sending Password-Reset email, Try again later...",
-//         {
-//           status: 400,
-//         }
-//       );
-//     });
-
-//   try {
-//     await existingUser.save();
-//     return new NextResponse("Password-Reset email has been sent.", {
-//       status: 200,
-//     });
-//   } catch (error) {
-//     return new NextResponse(error, {
-//       status: 200,
-//     });
-//   }
-// };
+// react: (
+//   <SendEmailLink
+//     setText={`Heyaa ${email.firstname}!!! \n To reset your password click the reset button: `}
+//     setBtnText="Reset"
+//     setUrl={resetUrl}
+//   />
+// ),

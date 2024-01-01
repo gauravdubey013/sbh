@@ -1,16 +1,16 @@
 import connect from "@/utils/db";
 import User from "@/models/User";
-// import crypto from "crypto";
+import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   const { token } = await request.json();
 
   await connect();
-  //   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   const user = await User.findOne({
-    resetToken: token,
+    resetToken: hashedToken,
     resetTokenExpiry: { $gt: Date.now() },
   });
 
