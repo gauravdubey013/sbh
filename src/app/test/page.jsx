@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from "react";
 import Carousel from "../../components/Carousel";
 import Loading from "../loading";
 import TermsConditionsUser from "@/components/TermsConditions";
+import { tcPolicyUser } from "@/context/terms-conditions";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
 // import Carousel from "./components/Carousel";
 
@@ -130,7 +131,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full h-screen flex justify-center p-5">
+      {/* <section className="w-full h-screen flex justify-center p-5">
         <div className="w-[80%] h-full overflow-y-scroll scroll-snap-type-y-mandatory">
           <div className="h-[1000px] w-full flex items-center justify-center text-4xl font-bold bg-slate-500 ">
             Scroll Down
@@ -145,11 +146,11 @@ export default function Home() {
             Scroll Down
           </div>
         </div>
-      </section>
-      <section className="w-full h-screen boder-[1px] flex justify-center items-center">
-        {/* <Loading /> */}
+      </section> */}
+      <section className="w-full h-[130vh] boder-[1px] flex flex-col justify-center items-center">
+        <Loading />
         {/* <div className=""> */}
-        <TermsConditionsUser />
+        <TermsConditionsUser setData={tcPolicyUser} />
         {/* </div> */}
       </section>
     </>
