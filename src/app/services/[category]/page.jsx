@@ -2,6 +2,7 @@ import React from "react";
 // import { notFound } from "next/navigation";
 // import { slides } from "../../../context/data";
 import Image from "next/image";
+import Loading from "@/app/loading";
 
 const Category = ({ params }) => {
   // const pd = getData(params.category);
@@ -24,6 +25,7 @@ const Category = ({ params }) => {
             />
           </div>
         </div>
+          <Loading />
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 
 const RegistrationForm = (props) => {
+  const router = useRouter();
   let [tcClick, setTcClick] = useState(false);
 
   const [firstname, setFirstname] = useState("");
@@ -18,8 +19,68 @@ const RegistrationForm = (props) => {
   const [profCheckValue, setProfCheckValue] = useState("null");
 
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({ emailE: "", passwordE: "" });
+  const [condition, setCondition] = useState({ email: true, password: true });
+  
+  const handelEmail = (e) => {
+    const inputValue = e.target.value;
+    setEmail(inputValue);
 
-  const router = useRouter();
+    if (inputValue.trim() === "") {
+      setCondition({ email: true });
+      setErrors({ emailE: "" });
+    } else {
+      setCondition({ email: false });
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(inputValue)) {
+        setErrors({ emailE: "Invalid email" });
+      } else {
+        setErrors({ emailE: "" });
+      }
+    }
+    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
+  };
+
+  const handelPassword = (e) => {
+    const inputValue = e.target.value;
+    setPassword(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ password: true });
+      setErrors({ passwordE: "" });
+    } else {
+      setCondition({ password: false });
+      setErrors({ passwordE: "" });
+      const passwordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!/(?=.*[a-z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one lowercase letter.",
+        });
+      } else if (!/(?=.*[A-Z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one uppercase letter.",
+        });
+      } else if (!/(?=.*\d)/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one digit.",
+        });
+      } else if (!/(?=.*[@$!%*?&])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one special character (@$!%*?&).",
+        });
+      } else if (inputValue.length < 8) {
+        setErrors({
+          passwordE: "Password must be at least 8 characters long.",
+        });
+      } else if (!passwordPattern.test(inputValue)) {
+        setErrors({ passwordE: "Invalid password" });
+      } else {
+        setErrors({ passwordE: "" });
+      }
+    }
+  };
 
   const handleProCheck = () => {
     setProfChecked(!profChecked);
@@ -28,7 +89,6 @@ const RegistrationForm = (props) => {
       : setProfCheckValue("null");
     // console.log(profCheckValue);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -135,11 +195,21 @@ const RegistrationForm = (props) => {
           <input
             type="text"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handelEmail}
             required
             placeholder="Enter E-mail"
             className="allFormInput h-[52px]"
           />
+          <div className="w-full h-[3rem] overflow-hidden">
+            <span className={`${condition.email == true ? "flex" : "hidden"}`}>
+              must be valid, ex: abc@gmail.com
+            </span>
+            {errors.emailE && (
+              <span className="text-red-500 animate-slideDown">
+                {errors.emailE}
+              </span>
+            )}
+          </div>
           <input
             type="password"
             name="password"
@@ -148,6 +218,18 @@ const RegistrationForm = (props) => {
             placeholder="Enter Password"
             className="allFormInput h-[52px]"
           />
+          <div className="w-full h-auto overflow-hidden">
+            <span
+              className={` relative ${
+                condition.password == true ? "flex" : "hidden"
+              }`}
+            >
+              keep the strong password!, ex: StrongP@ssw0rd
+            </span>
+            {errors.passwordE && (
+              <span className="text-red-500">{errors.passwordE}</span>
+            )}
+          </div>
           <input
             type="password"
             name="email"

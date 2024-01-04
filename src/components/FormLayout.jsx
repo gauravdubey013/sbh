@@ -33,6 +33,7 @@ export default function FormLayout(props) {
               <Image
                 src="/assets/authImg.png"
                 alt="authImg"
+                priority={true}
                 // loader={imageLoader}
                 width={400}
                 height={400}

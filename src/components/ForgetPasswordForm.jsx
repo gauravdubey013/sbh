@@ -5,10 +5,32 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function ForgetPasswordForm() {
-  // Define state variables for form fields and validation errors
+  // Define state variables for form fields and validation emailError
   const [email, setEmail] = useState("");
   const router = useRouter();
   const [error, setError] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [condition, setCondition] = useState(true);
+
+  const handelEmail = (e) => {
+    const inputValue = e.target.value;
+    setEmail(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition(true);
+      setEmailError("");
+    } else {
+      setCondition(false);
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(inputValue)) {
+        setEmailError("Invalid email");
+      } else {
+        setEmailError("");
+      }
+    }
+    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -56,11 +78,26 @@ export default function ForgetPasswordForm() {
               placeholder="Enter E-mail"
               className={`allFormInput h-[52px]`}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handelEmail}
             />
-            {error && <span className="text-red-500">{error}</span>}
+            <div className="w-full h-auto overflow-hidden">
+              <span
+                className={`${
+                  condition == true ? "flex animate-slideDown" : "hidden"
+                }`}
+              >
+                Please provide registered email, ex: abc@gmail.com
+              </span>
+              {emailError && (
+                <span className="text-red-500 animate-slideDown">
+                  {emailError}
+                </span>
+              )}
+              {error && (
+                <span className="text-red-500 animate-slideDown">{error}</span>
+              )}
+            </div>
           </div>
-
           <button
             type="submit"
             className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"

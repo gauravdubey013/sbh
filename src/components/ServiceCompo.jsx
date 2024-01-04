@@ -18,7 +18,7 @@ const ServiceCompo = () => {
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
           <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel onClickBtn={"/services/chomu"} />
+            <Carousel onClickBtn={"/services/rak"} />
           </div>
         </div>
         <div className="w-full h-full">

@@ -1,12 +1,13 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
 import Loading from "../loading";
-import TermsConditionsUser from "@/components/TermsConditions";
-import { tcPolicyUser } from "@/context/terms-conditions";
+// import TermsConditionsUser from "@/components/TermsConditions";
+// import { tcPolicyUser } from "@/context/terms-conditions";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
 // import Carousel from "./components/Carousel";
 
@@ -147,10 +148,18 @@ export default function Home() {
           </div>
         </div>
       </section> */}
-      <section className="w-full h-[130vh] boder-[1px] flex flex-col justify-center items-center">
-        <Loading />
+      <section className="w-full h-[70vh] border-[px] flex flex-col justify-center items-center relative scale-50">
+        {/* <Loading /> */}
+        <Image
+          src="/assets/loading3d360Rotate.gif"
+          alt="authImg"
+          width={400}
+          // fill={true}
+          height={400}
+          className="w-auto h-auto absolute animate-[moveCon_1s_infinite_ease_alternate]"
+        />
         {/* <div className=""> */}
-        <TermsConditionsUser setData={tcPolicyUser} />
+        {/* <TermsConditionsUser setData={tcPolicyUser} /> */}
         {/* </div> */}
       </section>
     </>

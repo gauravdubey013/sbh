@@ -13,7 +13,7 @@ import { tcPolicyUser } from "@/context/terms-conditions";
 
 const SignUp = () => {
   const [tcClick, setTcClick] = useState(false);
-  // let [tcClick, setTcClick] = useState(false);
+  const router = useRouter();
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -25,8 +25,98 @@ const SignUp = () => {
   const [profCheckValue, setProfCheckValue] = useState("null");
 
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    emailE: "",
+    passwordE: "",
+    confirmPasswordE: "",
+  });
+  const [condition, setCondition] = useState({ email: true, password: true });
 
-  const router = useRouter();
+  const handleFirstname = (e) => {
+    let inputValue = e.target.value.replace(/[^a-z]/gi, "");
+    // setFirstname((prev) => ({ ...prev, inputValue }));
+    setFirstname(inputValue);
+  };
+  const handleLastname = (e) => {
+    let inputValue = e.target.value.replace(/[^a-z]/gi, "");
+    // setFirstname((prev) => ({ ...prev, inputValue }));
+    setLastname(inputValue);
+  };
+
+  const handleEmail = (e) => {
+    const inputValue = e.target.value;
+    setEmail(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ email: true });
+      setErrors({ emailE: "" });
+    } else {
+      setCondition({ email: false });
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(inputValue)) {
+        setErrors({ emailE: "Invalid email" });
+      } else {
+        setErrors({ emailE: "" });
+      }
+    }
+    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
+  };
+
+  const handlePassword = (e) => {
+    const inputValue = e.target.value;
+    setPassword(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ password: true });
+      setErrors({ passwordE: "" });
+    } else {
+      setCondition({ password: false });
+      setErrors({ passwordE: "" });
+      const passwordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!/(?=.*[a-z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one lowercase letter.",
+        });
+      } else if (!/(?=.*[A-Z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one uppercase letter.",
+        });
+      } else if (!/(?=.*\d)/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one digit.",
+        });
+      } else if (!/(?=.*[@$!%*?&])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one special character (@$!%*?&).",
+        });
+      } else if (inputValue.length < 8) {
+        setErrors({
+          passwordE: "Password must be at least 8 characters long.",
+        });
+      } else if (!passwordPattern.test(inputValue)) {
+        setErrors({ passwordE: "Invalid password" });
+      } else {
+        setErrors({ passwordE: "" });
+      }
+    }
+  };
+
+  const handleConfirmPassword = (e) => {
+    const cpswd = e.target.value;
+
+    if (cpswd.trim() === "") {
+      setErrors({ confirmPasswordE: "" });
+    } else {
+      if (cpswd !== password) {
+        setErrors({ confirmPasswordE: "Mismatch password!" });
+      } else {
+        setErrors({ confirmPasswordE: "" });
+      }
+    }
+    setConfirmPassword(cpswd);
+  };
 
   const handleProCheck = () => {
     setProfChecked(!profChecked);
@@ -53,10 +143,6 @@ const SignUp = () => {
     //   "\nprofCheckValue: ",
     //   profCheckValue
     // );
-
-    confirmPassword !== password
-      ? setError("Mismatch password!")
-      : setError("");
 
     try {
       const res = await fetch("/api/register", {
@@ -96,7 +182,7 @@ const SignUp = () => {
           <FormLayout
             setForm={
               <>
-                <div className="fontFam w-full h-auto flex flex-col justify-between gap-2 px-5 rounded-xl ease-in-out duration-300">
+                <div className="fontFam w-full h-auto flex flex-col justify-between gap-1 px-5 rounded-xl ease-in-out duration-300">
                   <div className="fontFam w-full h-auto text-[40px] md:text-[45px] lg:text-[60px] text-[#53c28b] text-center ease-in-out duration-300">
                     Register
                   </div>
@@ -131,7 +217,8 @@ const SignUp = () => {
                       <input
                         type="text"
                         name="firstname"
-                        onChange={(e) => setFirstname(e.target.value)}
+                        value={firstname}
+                        onChange={handleFirstname}
                         required
                         placeholder="Enter FirstName"
                         className="allFormInput h-[52px]"
@@ -139,38 +226,84 @@ const SignUp = () => {
                       <input
                         type="text"
                         name="lastname"
-                        onChange={(e) => setLastname(e.target.value)}
+                        value={lastname}
+                        onChange={handleLastname}
                         required
                         placeholder="Enter LastName"
                         className="allFormInput h-[52px]"
                       />
                     </div>
-                    <input
-                      type="text"
-                      name="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      placeholder="Enter E-mail"
-                      className="allFormInput h-[52px]"
-                    />
-                    <input
-                      type="password"
-                      name="password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      placeholder="Enter Password"
-                      className="allFormInput h-[52px]"
-                    />
-                    <input
-                      type="password"
-                      name="email"
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      placeholder="Confirm Password"
-                      className={`allFormInput h-[52px]
-                  ${error ? "border-red-500 text-red-500" : ""}`}
-                    />
-                    {error && <span className="text-red-500">{error}</span>}
+                    <div className="w-full h-auto">
+                      <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={handleEmail}
+                        required
+                        placeholder="Enter E-mail"
+                        className="allFormInput h-[52px]"
+                      />
+                      <div className="w-full h-auto overflow-hidden">
+                        <span
+                          className={`${
+                            condition.email == true
+                              ? "flex animate-slideDown"
+                              : "hidden"
+                          }`}
+                        >
+                          must be valid, ex: abc@gmail.com
+                        </span>
+                        {errors.emailE && (
+                          <span className="text-red-500 animate-slideDown">
+                            {errors.emailE}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full h-auto">
+                      <input
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={handlePassword}
+                        required
+                        placeholder="Enter Password"
+                        className="allFormInput h-[52px]"
+                      />
+                      <div className="w-full h-auto overflow-hidden">
+                        <span
+                          className={`${
+                            condition.password == true
+                              ? "flex animate-slideDown"
+                              : "hidden"
+                          }`}
+                        >
+                          keep the strong password!, ex: StrongP@ssw0rd
+                        </span>
+                        {errors.passwordE && (
+                          <span className="text-red-500 animate-slideDown">
+                            {errors.passwordE}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full h-auto overflow-hidden -mb-3">
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        onChange={handleConfirmPassword}
+                        required
+                        placeholder="Confirm Password"
+                        className={`allFormInput h-[52px]`}
+                      />
+                      <div className="w-full h-auto overflow-hidden">
+                        {errors.confirmPasswordE && (
+                          <span className="text-red-500 animate-slideDown">
+                            {errors.confirmPasswordE}
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
                     <div className="mt-4 flex items-center gap-2">
                       <input
@@ -200,6 +333,7 @@ const SignUp = () => {
                         </span>
                       </span>
                     </div>
+                    {error && <span className="text-red-500">{error}</span>}
                     <button
                       type="submit"
                       className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
