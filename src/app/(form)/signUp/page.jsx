@@ -233,7 +233,11 @@ const SignUp = () => {
                         className="allFormInput h-[52px]"
                       />
                     </div>
-                    <div className="w-full h-auto">
+                    <div
+                      className={`w-full h-auto ${
+                        condition.email || errors.emailE ? "-mb-2" : "mb-0"
+                      }`}
+                    >
                       <input
                         type="email"
                         name="email"
@@ -260,7 +264,13 @@ const SignUp = () => {
                         )}
                       </div>
                     </div>
-                    <div className="w-full h-auto">
+                    <div
+                      className={`w-full h-auto ${
+                        condition.password || errors.passwordE
+                          ? "-mb-2"
+                          : "mb-0"
+                      }`}
+                    >
                       <input
                         type="password"
                         name="password"
@@ -287,7 +297,11 @@ const SignUp = () => {
                         )}
                       </div>
                     </div>
-                    <div className="w-full h-auto overflow-hidden -mb-3">
+                    <div
+                      className={`w-full h-auto ${
+                        errors.confirmPasswordE ? "-mb-3" : "-mb-2"
+                      }`}
+                    >
                       <input
                         type="password"
                         name="confirmPassword"
