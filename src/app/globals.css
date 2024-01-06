@@ -93,7 +93,7 @@ html {
   @apply w-full fontFam focus:px-2 rounded-sm bg-transparent text-base md:text-xl placeholder:text-base md:placeholder:text-xl hover:placeholder:text-[#53c28b] focus:placeholder:text-[#53c28b] border-b-[1px] hover:border-[#53c28b] focus:border-[#53c28b] hover:shadow-md focus:shadow-md outline-none ease-in-out duration-300;
 }
 .ddl {
-  @apply text-xl rounded-sm bdbg border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none;
+  @apply text-base md:text-xl text-[#959ba7] rounded-sm bdbg border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none;
 }
 .numHide::-webkit-inner-spin-button,
 .numHide::-webkit-outer-spin-button {

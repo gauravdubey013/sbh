@@ -21,7 +21,7 @@ const RegistrationForm = (props) => {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({ emailE: "", passwordE: "" });
   const [condition, setCondition] = useState({ email: true, password: true });
-  
+
   const handelEmail = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
@@ -112,7 +112,7 @@ const RegistrationForm = (props) => {
       : setError("");
 
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

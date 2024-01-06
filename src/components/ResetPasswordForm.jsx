@@ -11,9 +11,10 @@ export default function ResetPasswordForm(props) {
   const [error, setError] = useState("");
   let tokenError = props.setErrorProps;
   let user = props.setUserProps;
-  let {} = props;
+  let verifiedToken = props.setVerifiedToken;
+  // let {setUserProps, setErrorProps} = props;
 
-  // Handle form submission
+  // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("password: ", password, "\nConfimePasswrod: ", confirmPassword);
@@ -24,7 +25,7 @@ export default function ResetPasswordForm(props) {
       setError("");
 
       try {
-        const res = await fetch("/api/reset-password", {
+        const res = await fetch("/api/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -81,7 +82,7 @@ export default function ResetPasswordForm(props) {
 
           <button
             type="submit"
-            disabled={tokenError.length > 0}
+            disabled={tokenError.length > 0 || verifiedToken}
             className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
           >
             Reset Password

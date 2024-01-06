@@ -7,11 +7,11 @@ import { signIn } from "next-auth/react";
 import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
 import { ImCancelCircle } from "react-icons/im";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { tcPolicyUser } from "@/context/terms-conditions";
 
 const SignUp = () => {
   const [tcClick, setTcClick] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
   const router = useRouter();
 
   const [firstname, setFirstname] = useState("");
@@ -19,6 +19,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPass, setShowPass] = useState("password");
+  const [showConfirmPass, setShowConfirmPass] = useState("password");
 
   const [profChecked, setProfChecked] = useState(false);
   const [profCheckValue, setProfCheckValue] = useState("null");
@@ -30,6 +32,7 @@ const SignUp = () => {
     confirmPasswordE: "",
   });
   const [condition, setCondition] = useState({ email: true, password: true });
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const handleFirstname = (e) => {
     let inputValue = e.target.value.replace(/[^a-z]/gi, "");
@@ -154,7 +157,7 @@ const SignUp = () => {
     } else {
       try {
         setDisableBtn(true);
-        const res = await fetch("/api/register", {
+        const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -174,7 +177,7 @@ const SignUp = () => {
           setDisableBtn(true);
           setError("");
           profChecked
-            ? router.push("/signUp/professionalSignUp")
+            ? router.push(`/signUp/professionalSignUp/${email}`)
             : router.push("/signIn");
         }
       } catch (error) {
@@ -281,15 +284,32 @@ const SignUp = () => {
                           : "mb-0"
                       }`}
                     >
-                      <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={handlePassword}
-                        required
-                        placeholder="Enter Password"
-                        className="allFormInput h-[52px]"
-                      />
+                      <div className="flex">
+                        <input
+                          type={showPass}
+                          name="password"
+                          value={password}
+                          onChange={handlePassword}
+                          required
+                          placeholder="Enter Password"
+                          className="allFormInput h-[52px]"
+                        />
+                        <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                          {showPass === "text" ? (
+                            <FaRegEyeSlash
+                              size={20}
+                              onClick={() => setShowPass("password")}
+                              className="w-full h-full active:scale-75 text-[#53c28b]"
+                            />
+                          ) : (
+                            <FaRegEye
+                              size={20}
+                              onClick={() => setShowPass("text")}
+                              className="w-full h-full active:scale-75"
+                            />
+                          )}
+                        </div>
+                      </div>
                       <div className="w-full h-auto overflow-hidden">
                         <span
                           className={`${
@@ -312,14 +332,31 @@ const SignUp = () => {
                         errors.confirmPasswordE ? "-mb-3" : "-mb-2"
                       }`}
                     >
-                      <input
-                        type="password"
-                        name="confirmPassword"
-                        onChange={handleConfirmPassword}
-                        required
-                        placeholder="Confirm Password"
-                        className={`allFormInput h-[52px]`}
-                      />
+                      <div className="flex">
+                        <input
+                          type={showConfirmPass}
+                          name="confirmPassword"
+                          onChange={handleConfirmPassword}
+                          required
+                          placeholder="Confirm Password"
+                          className={`allFormInput h-[52px]`}
+                        />
+                        <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                          {showConfirmPass === "text" ? (
+                            <FaRegEyeSlash
+                              size={20}
+                              onClick={() => setShowConfirmPass("password")}
+                              className="w-full h-full active:scale-75 text-[#53c28b]"
+                            />
+                          ) : (
+                            <FaRegEye
+                              size={20}
+                              onClick={() => setShowConfirmPass("text")}
+                              className="w-full h-full active:scale-75"
+                            />
+                          )}
+                        </div>
+                      </div>
                       <div className="w-full h-auto overflow-hidden">
                         {errors.confirmPasswordE && (
                           <span className="text-red-500 animate-slideDown">
@@ -367,7 +404,11 @@ const SignUp = () => {
                           : ""
                       }`}
                     >
-                      Register
+                      {disableBtn ? (
+                        <span className="animate-pulse">Registing...</span>
+                      ) : (
+                        "Register"
+                      )}
                     </button>
                     <div className="flex gap-1 justify-center mb-2">
                       Already have account?{" "}

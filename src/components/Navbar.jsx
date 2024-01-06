@@ -73,11 +73,16 @@ const Navbar = () => {
               {" "}
               <div className="open md:hidden">
                 <Hamburger
-                  size={25}
-                  easing="ease-in"
-                  color="#53c28b"
                   toggled={toggle}
                   toggle={setToggle}
+                  label="Show menu"
+                  size={25}
+                  color="#53c28b"
+                  hideOutline={false}
+                  easing="ease-in"
+                  distance="lg"
+                  // duration={0.6}
+                  rounded
                 />
               </div>
               <Link href={"/"} className="logoTitle text-[28px] w-auto h-auto">

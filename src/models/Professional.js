@@ -4,6 +4,11 @@ const { Schema } = mongoose;
 
 const professionalSchema = new Schema(
   {
+    userID: {
+      // unique: true,
+      type: String,
+      required: true,
+    },
     email: {
       unique: true,
       type: String,
@@ -37,10 +42,6 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
-    bio: {
-      type: String,
-      required: true,
-    },
     skillLevel: {
       type: String,
       required: true,
@@ -49,17 +50,21 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+    bio: {
+      type: String,
+      // required: true,
+    },
     resumePath: {
       type: String,
-      required: true,
+      // required: true,
     },
     sLOne: {
       type: String,
-      required: true,
+      // required: true,
     },
     sLTwo: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { timestamps: true }

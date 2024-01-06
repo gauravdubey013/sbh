@@ -12,7 +12,9 @@ export default function ForgetPasswordForm() {
 
   const [emailError, setEmailError] = useState("");
   const [condition, setCondition] = useState(true);
+  const [disableBtn, setDisableBtn] = useState(false);
 
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handelEmail = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
@@ -22,9 +24,8 @@ export default function ForgetPasswordForm() {
       setEmailError("");
     } else {
       setCondition(false);
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailPattern.test(inputValue)) {
-        setEmailError("Invalid email");
+        setEmailError("Please provide valid email!");
       } else {
         setEmailError("");
       }
@@ -37,26 +38,35 @@ export default function ForgetPasswordForm() {
     e.preventDefault();
 
     console.log("email: ", email);
+    if (!emailPattern.test(email)) {
+      setCondition(false);
+      setDisableBtn(false);
+      setEmailError("Please provide valid email!");
+    } else {
+      try {
+        setDisableBtn(true);
+        const res = await fetch("/api/auth/forget-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+          }),
+        });
 
-    try {
-      const res = await fetch("/api/forget-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-        }),
-      });
-
-      if (res.status === 400) {
-        setError("This e-mail doesn't exists");
+        if (res.status === 400) {
+          setDisableBtn(false);
+          setError("This e-mail doesn't exists");
+        }
+        if (res.status === 200) {
+          setDisableBtn(true);
+          setError("");
+          router.push("/signIn");
+        }
+      } catch (error) {
+        setDisableBtn(false);
+        setError(error);
+        console.log("Error", error);
       }
-      if (res.status === 200) {
-        setError("");
-        router.push("/signIn");
-      }
-    } catch (error) {
-      setError(error);
-      console.log("Error", error);
     }
   };
 
@@ -99,10 +109,19 @@ export default function ForgetPasswordForm() {
             </div>
           </div>
           <button
+            disabled={disableBtn}
             type="submit"
-            className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
+            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
+              disableBtn
+                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                : ""
+            }`}
           >
-            Send E-mail
+            {disableBtn ? (
+              <span className="animate-pulse">Sending E-mail...</span>
+            ) : (
+              "Send E-mail"
+            )}
           </button>
         </div>
         <div className="flex gap-1 justify-center mb-1">

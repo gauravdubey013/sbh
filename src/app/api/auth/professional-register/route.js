@@ -1,7 +1,8 @@
 import connect from "@/utils/db";
-import { NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
+import User from "@/models/User";
 import Professional from "@/models/Professional";
+import { writeFile } from "fs/promises";
+import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   try {
@@ -11,27 +12,36 @@ export const POST = async (request) => {
 
     const email = data.get("email");
     const profileImg = data.get("profileImg");
-    const resume = data.get("resume");
     const gender = data.get("gender");
     const dob = data.get("dob");
     const service = data.get("service");
     const address = data.get("address");
     const zipCode = data.get("zipCode");
     const phone = data.get("phone");
-    const bio = data.get("bio");
     const skillLevel = data.get("skillLevel");
     const workHistory = data.get("workHistory");
-    const sLOne = data.get("sLOne");
-    const sLTwo = data.get("sLTwo");
+    const bioCheck = data.get("bio");
+    const resume = data.get("resume");
+    const sLOneCheck = data.get("sLOne");
+    const sLTwoCheck = data.get("sLTwo");
 
     // console.log("Request received:", request.body);
-    const existingUser = await Professional.findOne({ email });
-    if (existingUser) {
-      return new NextResponse("User already exists!", { status: 400 });
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      return new NextResponse("Register first!", { status: 400 });
     }
 
+    const existingProf = await Professional.findOne({ email });
+    if (existingProf) {
+      return new NextResponse("User already exists!", { status: 401 });
+    }
+
+    var userID = `user_${userExists._id}`;
     let profileImgPath = "";
     let resumePath = "";
+    let bio = "";
+    let sLOne = "";
+    let sLTwo = "";
 
     if (profileImg) {
       const byteDataProfile = await profileImg.arrayBuffer();
@@ -53,9 +63,26 @@ export const POST = async (request) => {
       resumePath = "noResume";
     }
 
+    if (bioCheck.trim() === "") {
+      bio = bioCheck;
+    } else {
+      bio = "null";
+    }
+    if (sLOneCheck.trim() === "") {
+      sLOne = sLOneCheck;
+    } else {
+      sLOne = "null";
+    }
+    if (sLTwoCheck.trim() === "") {
+      sLTwo = sLTwoCheck;
+    } else {
+      sLTwo = "null";
+    }
+
     //working till here
 
     const newProfessional = new Professional({
+      userID,
       email,
       gender,
       dob,

@@ -4,97 +4,107 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function LoginForm() {
   // Define state variables for form fields and validation errors
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState("password");
   const router = useRouter();
+  const [disableBtn, setDisableBtn] = useState(false);
   const [errors, setErrors] = useState({ emailE: "", passwordE: "" });
-
-  const [condition, setCondition] = useState({ email: true, password: true });
   const [error, setError] = useState("");
 
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handelEmail = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
 
     if (inputValue.trim() === "") {
-      setCondition({ email: true });
       setErrors({ emailE: "" });
+      setDisableBtn(true);
     } else {
-      setCondition({ email: false });
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailPattern.test(inputValue)) {
         setErrors({ emailE: "Invalid email" });
+        setDisableBtn(true);
       } else {
         setErrors({ emailE: "" });
+        setDisableBtn(false);
       }
     }
-    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
   };
 
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const handelPassword = (e) => {
     const inputValue = e.target.value;
     setPassword(inputValue);
 
     if (inputValue.trim() === "") {
-      setCondition({ password: true });
       setErrors({ passwordE: "" });
+      setDisableBtn(true);
+    } else if (!/(?=.*[a-z])/.test(inputValue)) {
+      setErrors({
+        passwordE: "Include at least one lowercase letter.",
+      });
+      setDisableBtn(true);
+    } else if (!/(?=.*[A-Z])/.test(inputValue)) {
+      setErrors({
+        passwordE: "Include at least one uppercase letter.",
+      });
+      setDisableBtn(true);
+    } else if (!/(?=.*\d)/.test(inputValue)) {
+      setErrors({
+        passwordE: "Include at least one digit.",
+      });
+      setDisableBtn(true);
+    } else if (!/(?=.*[@$!%*?&])/.test(inputValue)) {
+      setErrors({
+        passwordE: "Include at least one special character (@$!%*?&).",
+      });
+      setDisableBtn(true);
+    } else if (inputValue.length < 8) {
+      setErrors({
+        passwordE: "Password must be at least 8 characters long.",
+      });
+      setDisableBtn(true);
+    } else if (!passwordPattern.test(inputValue)) {
+      setErrors({ passwordE: "Invalid password" });
+      setDisableBtn(true);
     } else {
-      setCondition({ password: false });
       setErrors({ passwordE: "" });
-      const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-      if (!/(?=.*[a-z])/.test(inputValue)) {
-        setErrors({
-          passwordE: "Include at least one lowercase letter.",
-        });
-      } else if (!/(?=.*[A-Z])/.test(inputValue)) {
-        setErrors({
-          passwordE: "Include at least one uppercase letter.",
-        });
-      } else if (!/(?=.*\d)/.test(inputValue)) {
-        setErrors({
-          passwordE: "Include at least one digit.",
-        });
-      } else if (!/(?=.*[@$!%*?&])/.test(inputValue)) {
-        setErrors({
-          passwordE: "Include at least one special character (@$!%*?&).",
-        });
-      } else if (inputValue.length < 8) {
-        setErrors({
-          passwordE: "Password must be at least 8 characters long.",
-        });
-      } else if (!passwordPattern.test(inputValue)) {
-        setErrors({ passwordE: "Invalid password" });
-      } else {
-        setErrors({ passwordE: "" });
-      }
+      setDisableBtn(false);
     }
   };
-  // Handle form submission
+  // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log("email: ", email, "\npassword: ", password);
     if (!email && !password) {
       setError("Please provide credentials!");
+      setDisableBtn(false);
       // alert("Please provide credentials!");
     } else {
-      setError("");
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-      if (res?.error) {
-        setError("Invalid email & password");
-        if (res?.url) router.replace("/");
-        else {
-          setError("");
+      try {
+        setError("");
+        const res = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        });
+        if (res?.error) {
+          setError("Invalid email & password");
+          if (res?.url) router.replace("/");
+          else {
+            setError("");
+          }
         }
+      } catch (error) {
+        setDisableBtn(false);
+        setError(error);
+        console.log("Error", error);
       }
     }
   };
@@ -109,7 +119,6 @@ function LoginForm() {
           Login
         </div>
 
-        {/* <div className="w-full h-auto"> */}
         <div className="w-full h-auto flex gap-4 justify-center items-center">
           <button
             onClick={() => signIn("github")}
@@ -150,13 +159,30 @@ function LoginForm() {
             </div>
           </div>
           <div className="h-16">
-            <input
-              type="text"
-              placeholder="Enter Password"
-              className={`allFormInput h-[52px] `}
-              value={password}
-              onChange={handelPassword}
-            />
+            <div className="flex">
+              <input
+                type={showPass}
+                placeholder="Enter Password"
+                className={`allFormInput h-[52px] `}
+                value={password}
+                onChange={handelPassword}
+              />
+              <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                {showPass === "text" ? (
+                  <FaRegEyeSlash
+                    size={20}
+                    onClick={() => setShowPass("password")}
+                    className="w-full h-full active:scale-75 text-[#53c28b]"
+                  />
+                ) : (
+                  <FaRegEye
+                    size={20}
+                    onClick={() => setShowPass("text")}
+                    className="w-full h-full active:scale-75"
+                  />
+                )}
+              </div>
+            </div>
             <div className="w-full h-auto overflow-hidden">
               {errors.passwordE && (
                 <span className="text-red-500 animate-slideDown">
@@ -166,15 +192,20 @@ function LoginForm() {
             </div>
           </div>
           <Link
-            className="hover:text-[#53c28b] text-sm no-underline flex justify-end active:scale-90 duration-300 ease-in-out"
+            className="hover:text-[#53c28b] border-none outline-none focus:underline text-sm no-underline flex justify-end active:scale-90 duration-300 ease-in-out"
             href="/forget-password"
           >
             Forgot your password?
           </Link>
           {error && <span className="text-red-500">{error}</span>}
           <button
+            disabled={disableBtn}
             type="submit"
-            className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
+            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
+              disableBtn
+                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                : ""
+            }`}
           >
             Login
           </button>
@@ -183,14 +214,12 @@ function LoginForm() {
           New User?
           <Link
             className="cursor-pointer font-semibold hover:shadow-md focus:shadow-md hover:scale-105 active:scale-90 duration-300 ease-in-out"
-            // text-[#fff]/80 hover:text-[#fff]
             href={"/signUp"}
           >
             <span className="underline underline-offset-2">Register</span>{" "}
             <span className="underline underline-offset-2">Now</span>
           </Link>
         </div>
-        {/* </div> */}
       </form>
     </>
   );

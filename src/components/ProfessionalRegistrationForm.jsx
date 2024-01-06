@@ -47,7 +47,7 @@ const ProfessionalRegistrationForm = () => {
     data.set("workHistory", workHistory);
 
     try {
-      const res = await fetch("/api/professionalRegister", {
+      const res = await fetch("/api/auth/professionalRegister", {
         method: "POST",
         body: data,
       });
