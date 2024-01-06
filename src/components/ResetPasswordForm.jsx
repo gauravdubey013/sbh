@@ -100,13 +100,10 @@ export default function ResetPasswordForm(props) {
     e.preventDefault();
     console.log("password: ", password, "\nConfimePasswrod: ", confirmPassword);
 
-    if (!passwordPattern.test(password)) {
-      setErrors({ passwordE: "Please recreate the strong password!" });
-    } else if (password != confirmPassword) {
-      setErrors({ confirmPasswordE: "Mismatch password!" });
+    if ((password.trim() && confirmPassword.trim()) === "") {
+      setError("Please create the password");
     } else {
       setError("");
-
       try {
         setDisableBtn(true);
         const res = await fetch("/api/auth/reset-password", {
