@@ -45,7 +45,6 @@ const professionalSignUp = ({ params }) => {
 
   var age;
   const handleDOB = (e) => {
-    console.log(email);
     const inputValue = e.target.value;
     setDOB(inputValue);
     var today = new Date();
@@ -121,7 +120,7 @@ const professionalSignUp = ({ params }) => {
           setError("User already exists!");
           setDisableBtn(false);
         } else if (res.status === 500) {
-          setError("Img & resume file not supported!");
+          setError("Img & resume file aren't supported!");
           setDisableBtn(false);
         } else if (res.status === 200) {
           setDisableBtn(true);
