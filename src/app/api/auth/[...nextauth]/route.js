@@ -6,6 +6,9 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import connect from "@/utils/db";
 
+let firstName = "setFirstName";
+let lastName = "setLastnameName";
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -55,6 +58,8 @@ export const authOptions = {
           if (!existingUser) {
             const newUser = new User({
               email: user.email,
+              firstName,
+              lastName,
             });
             await newUser.save();
             return true;
@@ -72,6 +77,8 @@ export const authOptions = {
           if (!existingUser) {
             const newUser = new User({
               email: user.email,
+              firstName,
+              lastName,
             });
             await newUser.save();
             return true;

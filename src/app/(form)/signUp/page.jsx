@@ -318,7 +318,7 @@ const SignUp = () => {
                               : "hidden"
                           }`}
                         >
-                          keep the strong password!, ex: StrongP@ssw0rd
+                          Keep the strong password!, ex: StrongP@ssw0rd
                         </span>
                         {errors.passwordE && (
                           <span className="text-red-500 animate-slideDown">

@@ -1,30 +1,114 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 export default function ResetPasswordForm(props) {
   // console.log(props.setParams);
   const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   let tokenError = props.setErrorProps;
   let user = props.setUserProps;
-  let verifiedToken = props.setVerifiedToken;
-  // let {setUserProps, setErrorProps} = props;
+  // let verifiedToken = props.setVerifiedToken;
+  // let { setUserProps, setErrorProps, setVerifiedToken } = props;
 
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [showPass, setShowPass] = useState("password");
+  const [showConfirmPass, setShowConfirmPass] = useState("password");
+
+  const [errors, setErrors] = useState({
+    emailE: "",
+    passwordE: "",
+    confirmPasswordE: "",
+  });
+  const [condition, setCondition] = useState({ email: true, password: true });
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [error, setError] = useState("");
+
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const handlePassword = (e) => {
+    const inputValue = e.target.value;
+    setPassword(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ password: true });
+      setErrors({ passwordE: "" });
+    } else {
+      setCondition({ password: false });
+      if (!/(?=.*[a-z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one lowercase letter.",
+        });
+        setDisableBtn(true);
+      } else if (!/(?=.*[A-Z])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one uppercase letter.",
+        });
+        setDisableBtn(true);
+      } else if (!/(?=.*\d)/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one digit.",
+        });
+        setDisableBtn(true);
+      } else if (!/(?=.*[@$!%*?&])/.test(inputValue)) {
+        setErrors({
+          passwordE: "Include at least one special character (@$!%*?&).",
+        });
+        setDisableBtn(true);
+      } else if (inputValue.length < 8) {
+        setErrors({
+          passwordE: "Password must be at least 8 characters long.",
+        });
+        setDisableBtn(true);
+      } else if (!passwordPattern.test(inputValue)) {
+        setErrors({ passwordE: "Invalid password" });
+        setDisableBtn(true);
+      } else {
+        setErrors({ passwordE: "" });
+        setDisableBtn(false);
+      }
+    }
+  };
+
+  const handleConfirmPassword = (e) => {
+    const cpswd = e.target.value;
+
+    if (cpswd.trim() === "") {
+      setErrors({ confirmPasswordE: "" });
+    } else {
+      if (cpswd !== password) {
+        setErrors({ confirmPasswordE: "Mismatch password!" });
+        setDisableBtn(true);
+      } else {
+        setErrors({ confirmPasswordE: "" });
+        setDisableBtn(false);
+      }
+    }
+    setConfirmPassword(cpswd);
+  };
+
+  useEffect(() => {
+    if (tokenError.length > 0) {
+      setDisableBtn(true);
+    }
+  });
   // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("password: ", password, "\nConfimePasswrod: ", confirmPassword);
 
-    if (password != confirmPassword) {
-      setError("Password mismatch!");
+    if (!passwordPattern.test(password)) {
+      setErrors({ passwordE: "Please recreate the strong password!" });
+    } else if (password != confirmPassword) {
+      setErrors({ confirmPasswordE: "Mismatch password!" });
     } else {
       setError("");
 
       try {
+        setDisableBtn(true);
         const res = await fetch("/api/auth/reset-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -36,14 +120,17 @@ export default function ResetPasswordForm(props) {
 
         if (res.status === 400) {
           setError("Something went wrong!");
+          setDisableBtn(false);
         }
         if (res.status === 200) {
           setError("");
+          setDisableBtn(true);
           router.push("/signIn");
         }
       } catch (error) {
         setError("Error: Something went wrong!");
         console.log("Error: ", error);
+        setDisableBtn(false);
       }
     }
   };
@@ -60,32 +147,104 @@ export default function ResetPasswordForm(props) {
         </div>
 
         <div className="w-full h-auto flex flex-col gap-4 overflow-hidden">
-          <div className="h-16">
-            <input
-              type="text"
-              placeholder="Enter Password"
-              className={`allFormInput h-[52px]`}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div
+            className={`w-full h-auto ${
+              condition.password || errors.passwordE ? "-mb-2" : "mb-0"
+            }`}
+          >
+            <div className="flex">
+              <input
+                type={showPass}
+                name="password"
+                value={password}
+                onChange={handlePassword}
+                required
+                placeholder="Enter Password"
+                className="allFormInput h-[52px]"
+              />
+              <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                {showPass === "text" ? (
+                  <FaRegEyeSlash
+                    size={20}
+                    onClick={() => setShowPass("password")}
+                    className="w-full h-full active:scale-75 text-[#53c28b]"
+                  />
+                ) : (
+                  <FaRegEye
+                    size={20}
+                    onClick={() => setShowPass("text")}
+                    className="w-full h-full active:scale-75"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="w-full h-auto overflow-hidden">
+              <span
+                className={`${
+                  condition.password == true
+                    ? "flex animate-slideDown"
+                    : "hidden"
+                }`}
+              >
+                Keep the strong password!, ex: StrongP@ssw0rd
+              </span>
+              {errors.passwordE && (
+                <span className="text-red-500 animate-slideDown">
+                  {errors.passwordE}
+                </span>
+              )}
+            </div>
           </div>
-          <div className="h-auto">
-            <input
-              type="text"
-              placeholder="Confirm Password"
-              className={`allFormInput h-[52px]`}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            {error && <span className="text-red-500">{error}</span>}
+          <div
+            className={`w-full h-auto ${
+              errors.confirmPasswordE ? "-mb-3" : "-mb-2"
+            }`}
+          >
+            <div className="flex">
+              <input
+                type={showConfirmPass}
+                name="confirmPassword"
+                onChange={handleConfirmPassword}
+                required
+                placeholder="Confirm Password"
+                className={`allFormInput h-[52px]`}
+              />
+              <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                {showConfirmPass === "text" ? (
+                  <FaRegEyeSlash
+                    size={20}
+                    onClick={() => setShowConfirmPass("password")}
+                    className="w-full h-full active:scale-75 text-[#53c28b]"
+                  />
+                ) : (
+                  <FaRegEye
+                    size={20}
+                    onClick={() => setShowConfirmPass("text")}
+                    className="w-full h-full active:scale-75"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="w-full h-auto overflow-hidden">
+              {errors.confirmPasswordE && (
+                <span className="text-red-500 animate-slideDown">
+                  {errors.confirmPasswordE}
+                </span>
+              )}
+            </div>
           </div>
 
+          {error && <span className="text-red-500 mb-1">{error}</span>}
           <button
+            disabled={disableBtn}
             type="submit"
-            disabled={tokenError.length > 0 || verifiedToken}
-            className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
+            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
+              disableBtn
+                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                : ""
+            }`}
           >
-            Reset Password
+            Reset
           </button>
         </div>
         {tokenError && <span className="text-red-500">{tokenError}</span>}
