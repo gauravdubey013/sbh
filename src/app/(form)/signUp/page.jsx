@@ -8,11 +8,10 @@ import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
 import { ImCancelCircle } from "react-icons/im";
 import { tcPolicyUser } from "@/context/terms-conditions";
-// import { signIn } from "next-auth/react";
-// import RegistrationForm from "@/components/RegistrationForm";
 
 const SignUp = () => {
   const [tcClick, setTcClick] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
   const router = useRouter();
 
   const [firstname, setFirstname] = useState("");
@@ -43,6 +42,7 @@ const SignUp = () => {
     setLastname(inputValue);
   };
 
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handleEmail = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
@@ -52,7 +52,6 @@ const SignUp = () => {
       setErrors({ emailE: "" });
     } else {
       setCondition({ email: false });
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailPattern.test(inputValue)) {
         setErrors({ emailE: "Invalid email" });
       } else {
@@ -62,6 +61,8 @@ const SignUp = () => {
     // setEmail((prevUser) => ({ ...prevUser, inputValue }));
   };
 
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const handlePassword = (e) => {
     const inputValue = e.target.value;
     setPassword(inputValue);
@@ -72,8 +73,6 @@ const SignUp = () => {
     } else {
       setCondition({ password: false });
       setErrors({ passwordE: "" });
-      const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
       if (!/(?=.*[a-z])/.test(inputValue)) {
         setErrors({
@@ -129,48 +128,60 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(
-    //   "firstname: ",
-    //   firstname,
-    //   "\nlastname: ",
-    //   lastname,
-    //   "\nemail: ",
-    //   email,
-    //   "\npassword: ",
-    //   password,
-    //   "\nconfirmPassword: ",
-    //   confirmPassword,
-    //   "\nprofCheckValue: ",
-    //   profCheckValue
-    // );
+    console.log(
+      "firstname: ",
+      firstname,
+      "\nlastname: ",
+      lastname,
+      "\nemail: ",
+      email,
+      "\npassword: ",
+      password,
+      "\nconfirmPassword: ",
+      confirmPassword,
+      "\nprofCheckValue: ",
+      profCheckValue
+    );
 
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstname,
-          lastname,
-          email,
-          password,
-          profCheckValue,
-        }),
+    if (!emailPattern.test(email)) {
+      setErrors({
+        emailE: "Please provide valid email!",
       });
+    } else if (!passwordPattern.test(password)) {
+      setErrors({ passwordE: "Please recreate the strong password!" });
+    } else if (password != confirmPassword) {
+      setErrors({ confirmPasswordE: "Mismatch password!" });
+    } else {
+      try {
+        setDisableBtn(true);
+        const res = await fetch("/api/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            email,
+            password,
+            profCheckValue,
+          }),
+        });
 
-      if (res.status === 400) {
-        setError("User already exists!");
-      }
-      if (res.status === 200) {
-        setError("");
-        if (password == confirmPassword) {
+        if (res.status === 400) {
+          setError("User already exists!");
+          setDisableBtn(false);
+        }
+        if (res.status === 200) {
+          setDisableBtn(true);
+          setError("");
           profChecked
             ? router.push("/signUp/professionalSignUp")
             : router.push("/signIn");
         }
+      } catch (error) {
+        setDisableBtn(false);
+        setError(error);
+        console.log("Error", error);
       }
-    } catch (error) {
-      setError(error);
-      console.log("Error", error);
     }
   };
 
@@ -178,7 +189,6 @@ const SignUp = () => {
     <>
       <div className="w-full h-full relative">
         <div className="w-full h-full z-10">
-          {/* <RegistrationForm /> */}
           <FormLayout
             setForm={
               <>
@@ -255,7 +265,7 @@ const SignUp = () => {
                               : "hidden"
                           }`}
                         >
-                          must be valid, ex: abc@gmail.com
+                          Must be valid, ex: abc@gmail.com
                         </span>
                         {errors.emailE && (
                           <span className="text-red-500 animate-slideDown">
@@ -349,8 +359,13 @@ const SignUp = () => {
                     </div>
                     {error && <span className="text-red-500">{error}</span>}
                     <button
+                      disabled={disableBtn}
                       type="submit"
-                      className="allBtn w-[rem] h-[3rem] text-xl rounded-3xl"
+                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
+                        disableBtn
+                          ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                          : ""
+                      }`}
                     >
                       Register
                     </button>
@@ -358,7 +373,6 @@ const SignUp = () => {
                       Already have account?{" "}
                       <Link
                         className="cursor-pointer font-semibold hover:shadow-md focus:shadow-md hover:scale-105 active:scale-90 duration-300 ease-in-out"
-                        // text-[#fff]/80 hover:text-[#fff]
                         href={"/signIn"}
                       >
                         <span className="underline underline-offset-2">

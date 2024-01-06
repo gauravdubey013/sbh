@@ -56,14 +56,9 @@ html {
   .allFormInput {
     @apply border-[#000300] placeholder:text-[#000300];
   }
-  /* .formContainer {
-    @apply shadow-[0_14px_28px_rgba(0,0,0,0.25),0_10px_10px_rgba(0,0,0,0.22)];
-    transition: 1s all ease;
-  } */
-  /* .bothForm {
-    @apply bg-white;
-    transition: 1s all ease;
-  } */
+  .ddl {
+    @apply border-b-[#000];
+  }
 }
 .dark {
   @apply bg-[#000300] text-[#fff]/[0.8];
@@ -85,11 +80,9 @@ html {
     @apply bg-[#000300];
     transition: 1s all ease;
   }
-
-  /* .bothForm {
-    @apply bg-[#000300];
-    transition: 1s all ease;
-  } */
+  .ddl {
+    @apply border-b-[#fff];
+  }
 }
 
 .hoverText {
@@ -98,6 +91,9 @@ html {
 
 .allFormInput {
   @apply w-full fontFam focus:px-2 rounded-sm bg-transparent text-base md:text-xl placeholder:text-base md:placeholder:text-xl hover:placeholder:text-[#53c28b] focus:placeholder:text-[#53c28b] border-b-[1px] hover:border-[#53c28b] focus:border-[#53c28b] hover:shadow-md focus:shadow-md outline-none ease-in-out duration-300;
+}
+.ddl {
+  @apply text-xl rounded-sm bdbg border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none;
 }
 .numHide::-webkit-inner-spin-button,
 .numHide::-webkit-outer-spin-button {

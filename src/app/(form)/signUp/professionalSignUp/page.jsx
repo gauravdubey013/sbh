@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
@@ -11,7 +10,7 @@ import { tcPolicyProf } from "@/context/terms-conditions";
 
 const professionalSignUp = () => {
   const [tcClick, setTcClick] = useState(false);
-
+  const [disableBtn, setDisableBtn] = useState(false);
   const router = useRouter();
 
   const [profileImg, setProfileImg] = useState();
@@ -32,6 +31,49 @@ const professionalSignUp = () => {
   const [workHistory, setWorkHistory] = useState("");
 
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    emailE: "",
+    phoneE: "",
+    sLOneE: "",
+    sLTwoE: "",
+  });
+  const [condition, setCondition] = useState({ emailC: true, phoneC: true });
+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const handleEmail = (e) => {
+    const inputValue = e.target.value;
+    setEmail(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ emailC: true });
+      setErrors({ emailE: "" });
+    } else {
+      setCondition({ emailC: false });
+      if (!emailPattern.test(inputValue)) {
+        setErrors({ emailE: "Invalid email" });
+      } else {
+        setErrors({ emailE: "" });
+      }
+    }
+    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
+  };
+  const handlePhone = (e) => {
+    const inputValue = e.target.value;
+    setPhone(inputValue);
+
+    if (inputValue.trim() === "") {
+      setCondition({ phoneC: true });
+      setErrors({ phoneE: "" });
+    } else {
+      setCondition({ phoneC: false });
+      if (!emailPattern.test(inputValue)) {
+        setErrors({ phoneE: "Invalid email" });
+      } else {
+        setErrors({ phoneE: "" });
+      }
+    }
+    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,14 +131,36 @@ const professionalSignUp = () => {
                     onSubmit={handleSubmit}
                     className="w-full h-full flex flex-col gap-4"
                   >
-                    <input
-                      type="email"
-                      name="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Re-enter your e-mail"
-                      className="allFormInput h-[52px]"
-                      required
-                    />
+                    <div
+                      className={`w-full h-auto ${
+                        condition.emailC || errors.emailE ? "-mb-2" : "mb-0"
+                      }`}
+                    >
+                      <input
+                        type="email"
+                        name="email"
+                        onChange={handleEmail}
+                        placeholder="Re-enter your e-mail"
+                        className="allFormInput h-[52px]"
+                        required
+                      />
+                      <div className="w-full h-auto overflow-hidden">
+                        <span
+                          className={`${
+                            condition.emailC == true
+                              ? "flex animate-slideDown"
+                              : "hidden"
+                          }`}
+                        >
+                          Must be valid, ex: abc@xyz.com
+                        </span>
+                        {errors.emailE && (
+                          <span className="text-red-500 animate-slideDown">
+                            {errors.emailE}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                     <div className="w-full h-[20vh] flex flex-col items-center justify-between border-[1px] hover:border-[#53c28b] hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
                       <label className="text-xl">Add Profile</label>
                       <div className=" w-auto h-auto text-center md:px-10">
@@ -110,14 +174,26 @@ const professionalSignUp = () => {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <input
-                        type="text"
+                      <select
                         name="gender"
                         onChange={(e) => setGender(e.target.value)}
                         required
-                        placeholder="Enter Gender"
-                        className="allFormInput h-[52px]"
-                      />
+                        className="w-full h-[52px] ddl"
+                      >
+                        <option
+                          value=""
+                          disabled
+                          selected
+                          hidden
+                          className="text-gray-500"
+                        >
+                          Select Gender
+                        </option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">other?</option>
+                      </select>
+
                       <input
                         type="date"
                         name="dob"
@@ -132,9 +208,11 @@ const professionalSignUp = () => {
                       onChange={(e) => setService(e.target.value)}
                       placeholder="Freelancer Category"
                       required
-                      className="w-full h-[52px] fontFam hover:text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
+                      className="w-full h-[52px] ddl"
                     >
-                      <option value="">Select Service</option>
+                      <option value="" disabled selected hidden>
+                        Select Service
+                      </option>
                       <option value="web_development">Web Development</option>
                       <option value="graphic_design">Graphic Design</option>
                       <option value="writing">Writing</option>
@@ -155,6 +233,7 @@ const professionalSignUp = () => {
                       required
                       className="allFormInput h-[52px]"
                     />
+
                     <div className="flex gap-2">
                       <input
                         type="text"
@@ -163,21 +242,44 @@ const professionalSignUp = () => {
                         readOnly
                         className="w-[3rem] h-[52px] fontFam text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
                       />
-                      <input
-                        type="number"
-                        name="phone"
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="Phone Number"
-                        required
-                        className="allFormInput h-[52px] appearance-none numHide"
-                        style={{
-                          WebkitAppearance: "none",
-                          MozAppearance: "textfield",
-                          appearance: "textfield",
-                          margin: 0,
-                        }}
-                      />
+                      <div
+                        className={`w-full h-auto ${
+                          condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
+                        }`}
+                      >
+                        <input
+                          type="number"
+                          name="phone"
+                          onChange={handlePhone}
+                          placeholder="Phone Number"
+                          required
+                          className="allFormInput h-[52px] appearance-none numHide"
+                          style={{
+                            WebkitAppearance: "none",
+                            MozAppearance: "textfield",
+                            appearance: "textfield",
+                            margin: 0,
+                          }}
+                        />
+                        <div className="w-full h-auto overflow-hidden">
+                          <span
+                            className={`${
+                              condition.phoneC == true
+                                ? "flex animate-slideDown"
+                                : "hidden"
+                            }`}
+                          >
+                            number must be 10 digits
+                          </span>
+                          {errors.emailE && (
+                            <span className="text-red-500 animate-slideDown">
+                              {errors.emailE}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
+
                     <textarea
                       name="bio"
                       onChange={(e) => setBio(e.target.value)}
