@@ -120,12 +120,15 @@ const professionalSignUp = ({ params }) => {
         } else if (res.status === 401) {
           setError("User already exists!");
           setDisableBtn(false);
+        } else if (res.status === 500) {
+          setError("Img & resume file not supported!");
+          setDisableBtn(false);
         } else if (res.status === 200) {
           setDisableBtn(true);
           setError("");
           router.push("/signIn");
         }
-        setDisableBtn(false);
+        // setDisableBtn(false);
       } catch (error) {
         setDisableBtn(false);
         setError(error);
