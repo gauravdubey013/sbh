@@ -6,8 +6,10 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import connect from "@/utils/db";
 
-let firstName = "setFirstName";
-let lastName = "setLastnameName";
+var lastnameGoogle = "google";
+var lastnameGithub = "gitHub";
+var password = "setPassword";
+var profCheckValue = "oAuth";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -37,13 +39,13 @@ export const authOptions = {
         }
       },
     }),
-    GithubProvider({
-      clientId: process.env.GITHUB_ID ?? "",
-      clientSecret: process.env.GITHUB_SECRET ?? "",
-    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID ?? "",
+      clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
     // ...add more providers here
   ],
@@ -51,15 +53,20 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "credentials") return true;
-      if (account?.provider === "github") {
-        await connect();
+
+      if (account.provider === "google") {
+        const { name, email } = user;
         try {
-          const existingUser = await User.findOne({ email: user.email });
-          if (!existingUser) {
+          await connect();
+          const userExists = await User.findOne({ email: user.email });
+
+          if (!userExists) {
             const newUser = new User({
-              email: user.email,
-              firstName,
-              lastName,
+              firstname: name,
+              lastname: lastnameGoogle,
+              email,
+              password,
+              profCheckValue,
             });
             await newUser.save();
             return true;
@@ -70,15 +77,18 @@ export const authOptions = {
           return false;
         }
       }
-      if (account?.provider === "google") {
+
+      if (account?.provider === "github") {
         await connect();
         try {
-          const existingUser = await User.findOne({ email: user.email });
-          if (!existingUser) {
+          const userExists = await User.findOne({ email: user.email });
+          if (!userExists) {
             const newUser = new User({
+              firstname: user.name,
+              lastname: lastnameGithub,
               email: user.email,
-              firstName,
-              lastName,
+              password,
+              profCheckValue,
             });
             await newUser.save();
             return true;
