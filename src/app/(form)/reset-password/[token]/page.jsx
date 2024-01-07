@@ -22,7 +22,7 @@ const ResetPassword = ({ params }) => {
         });
 
         if (res.status === 400) {
-          setError("Token has expired or it is Invalid!");
+          setError("Invalid Token or has expired!");
           setVerified(true);
         }
         if (res.status === 200) {

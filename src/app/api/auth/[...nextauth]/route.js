@@ -9,7 +9,7 @@ import connect from "@/utils/db";
 var lastnameGoogle = "google";
 var lastnameGithub = "gitHub";
 var password = "setPassword";
-var profCheckValue = "oAuth";
+var role = "user_oAuth";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -66,7 +66,7 @@ export const authOptions = {
               lastname: lastnameGoogle,
               email,
               password,
-              profCheckValue,
+              role,
             });
             await newUser.save();
             return true;
@@ -78,7 +78,7 @@ export const authOptions = {
         }
       }
 
-      if (account?.provider === "github") {
+      if (account.provider === "github") {
         await connect();
         try {
           const userExists = await User.findOne({ email: user.email });
@@ -88,7 +88,7 @@ export const authOptions = {
               lastname: lastnameGithub,
               email: user.email,
               password,
-              profCheckValue,
+              role,
             });
             await newUser.save();
             return true;

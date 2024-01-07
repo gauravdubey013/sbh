@@ -7,6 +7,7 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import ServiceCompo from "@/components/ServiceCompo";
 import Carousel from "./Carousel";
 import Contact from "./Contact";
+import { aboutUs } from "@/context/data";
 
 export default function Hero() {
   let ref = useRef(null);
@@ -167,29 +168,33 @@ export const AboutContext = (props) => {
   const yAxis = props.aboutY;
   return (
     <>
-      <div className="w-full md:w-[60%] lg:w-1/2 h-full flex flex-col gap-2 p-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] z-20 ease-in-out duration-300">
+      <div className="w-full md:w-[60%] lg:w-1/2 h-full scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory flex flex-col gap-2 p-[20px] sm:px-[30px] md:px-[45px] lg:px-6 lg:translate-x-3 z-20 ease-in-out duration-300">
         <h3 className="text-[#53c28b] font-extrabold text-xl">About us</h3>
-        <span className="text-3xl font-bold">Our Experts Are the Finest</span>
-        <div className="">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi
-            totam animi deleniti reiciendis error veritatis delectus similique
-            maxime cumque sapiente quasi, odit eaque earum ipsum illum nobis
-            impedit minus non ipsa nihil quaerat. Fuga quasi asperiores nam
-            accusamus officia quae laudantium vitae, laborum eius. Maiores
-            assumenda architecto asperiores autem? Our Experts Are the Finest
-            <br />
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            quia laudantium quam ullam maiores? Laborum perspiciatis modi
-            ducimus nemo natus laudantium nobis vero dolore commodi rerum cum
-            recusandae voluptas corrupti deleniti debitis quidem maiores, culpa
-            aspernatur? Nulla facilis totam repudiandae atque minima blanditiis,
-            incidunt dignissimos natus eos fugit beatae laudantium officia,
-            praesentium labore in, distinctio ex eligendi suscipit corrupti.
-            Corporis deleniti natus eum eveniet quas !
+        <span className="text-2xl font-bold">
+          Welcome to SkillBeHired, where skills take center stage and talent
+          finds its spotlight!
+        </span>
+        <div className="flex flex-col gap-1">
+          <h4 className="text-xl font-bold text-[#53c28b]">Our Mission</h4>
+          <p className="text-md p-1 md:px-2 text-justify">
+            At SkillBeHired, our mission is to revolutionize the way job seekers
+            and clients connect in the professional world. We understand the
+            evolving landscape of the job market, where the demand for skilled
+            professionals is at an all-time high. However, traditional hiring
+            practices often prioritize formal certifications, leaving many
+            talented individuals overlooked. Our platform is designed to disrupt
+            this status quo by putting skills at the forefront.
           </p>
         </div>
+        <h4 className="text-xl font-bold text-[#53c28b]">Why SkillBeHired?</h4>
+        {aboutUs.map((au) => (
+          <div key={au.id} className="flex flex-col gap-1">
+            <h4 className="text-lg font-semibold text-[#53c28b]">
+              {au.header} :
+            </h4>
+            <p className="text-md p-1 md:px-2 text-justify">{au.desc}</p>
+          </div>
+        ))}
       </div>
       <div className="w=full md:w-[40%] lg:w-1/2 h-full md:rounded-l-3xl overflow-hidden">
         <div className="w=full h-full z-10 -scale-x-100 scale-125 md:rounded-r-3xl overflow-hidden">

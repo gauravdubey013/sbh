@@ -35,3 +35,26 @@ export const tabs = [
     url: "/test",
   },
 ];
+
+export const aboutUs = [
+  {
+    id: 1,
+    header: "Bridging the Gap",
+    desc: "In today's rapidly evolving job market, the disparity between formal qualifications and practical abilities has become evident. SkillBeHired aims to bridge this gap by empowering individuals with valuable skills and expertise, irrespective of formal certifications.",
+  },
+  {
+    id: 2,
+    header: "Inclusive Marketplace",
+    desc: "We firmly believe that practical abilities and hands-on experience should be celebrated and given equal weight alongside formal qualifications. SkillBeHired creates an inclusive and dynamic marketplace where both job seekers and clients thrive.",
+  },
+  {
+    id: 3,
+    header: "Empowering Freelancers",
+    desc: "For freelancers, SkillBeHired is a platform to showcase their skills, connect with clients, and build a successful freelance career. We provide a space where freelancers can be recognized for their talents and expertise beyond traditional hiring criteria.",
+  },
+  {
+    id: 4,
+    header: "Join SkillBeHired Today!",
+    desc: "Whether you're a skilled professional looking to showcase your talents or a company seeking top-notch freelancers, SkillBeHired is the platform for you. Join us today and be part of a community where skills are celebrated, connections are made, and opportunities abound.",
+  },
+];

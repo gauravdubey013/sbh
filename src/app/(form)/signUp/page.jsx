@@ -23,7 +23,7 @@ const SignUp = () => {
   const [showConfirmPass, setShowConfirmPass] = useState("password");
 
   const [profChecked, setProfChecked] = useState(false);
-  const [profCheckValue, setProfCheckValue] = useState("null");
+  const [profCheckValue, setProfCheckValue] = useState("user");
 
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({

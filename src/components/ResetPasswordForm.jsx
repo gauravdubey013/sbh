@@ -237,7 +237,7 @@ export default function ResetPasswordForm(props) {
             type="submit"
             className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
               disableBtn
-                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                 : ""
             }`}
           >

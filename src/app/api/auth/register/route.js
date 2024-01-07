@@ -21,7 +21,7 @@ export const POST = async (request) => {
     lastname,
     email,
     password: hashPassword,
-    profCheckValue,
+    role: profCheckValue,
   });
 
   try {

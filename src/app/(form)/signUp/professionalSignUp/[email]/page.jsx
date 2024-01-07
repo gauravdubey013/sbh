@@ -54,7 +54,7 @@ const professionalSignUp = ({ params }) => {
     if (age <= 17) {
       setCondition({ emailC: false });
       setErrors({
-        dobE: "Must be at least 16 years older to be registered",
+        dobE: "Must be at least 18 years older to be registered",
       });
     } else {
       setErrors({ dobE: "" });
