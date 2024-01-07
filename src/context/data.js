@@ -58,3 +58,26 @@ export const aboutUs = [
     desc: "Whether you're a skilled professional looking to showcase your talents or a company seeking top-notch freelancers, SkillBeHired is the platform for you. Join us today and be part of a community where skills are celebrated, connections are made, and opportunities abound.",
   },
 ];
+
+export const adBanner = [
+  {
+    id: 1,
+    alt: "banner",
+    img: "/adBanner/banner1.jpg",
+  },
+  {
+    id: 2,
+    alt: "banner",
+    img: "/adBanner/banner2.webp",
+  },
+  {
+    id: 3,
+    alt: "banner",
+    img: "/adBanner/banner3.jpeg",
+  },
+  {
+    id: 4,
+    alt: "banner",
+    img: "/adBanner/banner4.jpg",
+  },
+];

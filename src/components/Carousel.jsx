@@ -47,11 +47,11 @@ const Carousel = (props) => {
       <Slider {...settings} className="rounded-lg bg-whi">
         {slides.map((slide) => (
           <div
-            key={slide.id}
             className={`w-auto ${props.defH} ${props.mdH} ${props.lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
+              key={slide.id}
               className={`w-full h-full ${bg} scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
             >
               {" "}
@@ -91,18 +91,6 @@ const Carousel = (props) => {
                   </div>
                 </div>
               </div>
-              {/* <div className="w-full z-20 h-auto rounded-t-lg flex justify-center ease-in-out duration-300">
-                
-              </div> */}
-              {/* <Image
-                src={slide.url}
-                alt="url"
-                fill="true"
-                className="rounded-md hover:scale-105"
-              />
-              <div className="text-[#53c28b] absolute w-full h-auto bottom-0 translate-y-5 rounded-b-md">
-                ok
-              </div> */}
             </div>
           </div>
         ))}

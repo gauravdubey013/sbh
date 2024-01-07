@@ -5,9 +5,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
 import { FaMapLocationDot } from "react-icons/fa6";
 import ServiceCompo from "@/components/ServiceCompo";
-import Carousel from "./Carousel";
+import AdBannerCarousel from "./AdBannerCarousel";
+// import Carousel from "./Carousel";
 import Contact from "./Contact";
-import { aboutUs } from "@/context/data";
+import { aboutUs, adBanner } from "@/context/data";
 
 export default function Hero() {
   let ref = useRef(null);
@@ -73,9 +74,11 @@ export default function Hero() {
         >
           {/* slider */}
           <div className="bg-transparent -translate-y-20">
-            <Carousel
+            <AdBannerCarousel
               bg="bg-[#53c28b]"
-              btext="BANNER"
+              abdData={adBanner}
+              // adb="flex"
+              // btext="BANNER"
               profile={"hidden"}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
