@@ -1,40 +1,32 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-
 import { CiSearch } from "react-icons/ci";
 import { FaMapLocationDot } from "react-icons/fa6";
-import ServiceCompo from "@/components/ServiceCompo";
-import AdBannerCarousel from "./AdBannerCarousel";
-// import Carousel from "./Carousel";
-import Contact from "./Contact";
 import { aboutUs, adBanner } from "@/context/data";
+import AdBannerCarousel from "./AdBannerCarousel";
+import ServiceCompo from "@/components/ServiceCompo";
+import Contact from "./Contact";
 
-export default function Hero() {
+export default function HeroTest() {
   let ref = useRef(null);
   let { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
   let by = useTransform(scrollYProgress, [0, 1], ["0%", "250%"]);
-  let opacity = useTransform(scrollYProgress, [0, 1], ["80%", "-100%"]);
+  let opacity = useTransform(scrollYProgress, [0, 1], ["100%", "-100%"]);
   let scale = useTransform(scrollYProgress, [0, 1], ["100%", "150%"]);
 
   let ay = useTransform(scrollYProgress, [0, 1], ["-160%", "120%"]);
 
   return (
     <>
-      <div className="overflow-hidden -translate-y-[66px] md:-translate-y-[101px] -mb-[100px]">
+      <main className="-translate-y-[66px] md:-translate-y-[97px] -mb-[66px] md:-mb-[96px] overflow-hidden border-px]">
         {/* top-Banner-bg */}
-        <section ref={ref.current} className="relative">
+        <section ref={ref.current} className="relative border-[px]">
           <motion.div
-            className="inset-0 absolute z-0 bg-[#000300]"
-            style={{
-              y: by,
-            }}
-          />
-          <motion.div
-            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[7px]"
+            className="inset-0 absolute z-10 backdrop-filter backdrop-blur-[8px]"
             style={{
               y: by,
             }}
@@ -65,20 +57,14 @@ export default function Hero() {
           {/* top-Banner */}
           <HeroContext />
         </section>
-
-        {/* service */}
         <section
-          id="service"
+          className="animate-fade-in-down bbg relative z-20 border-[px] -mb-[3.8rem]"
           ref={ref.current}
-          className="animate-fade-in-down bdbg relative z-20"
         >
-          {/* slider */}
-          <div className="bg-transparent -translate-y-20">
+          <div className="bg-transparent -translate-y-16">
             <AdBannerCarousel
               bg="bg-[#53c28b]"
               abdData={adBanner}
-              // adb="flex"
-              // btext="BANNER"
               profile={"hidden"}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
@@ -93,29 +79,32 @@ export default function Hero() {
               slidesToShow640={1}
             />
           </div>
-          <div
-            id="services"
-            className="w-full h-auto p-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px] z-20 -translate-y-20"
+        </section>
+        <section className="w-full h-auto z-30 bbg relative border-[px]">
+          {/* service */}
+          <section id="service" className="animate-fade-in-down">
+            <div
+              id="services"
+              className="w-full h-auto p-[20px] sm:px-[30px] md:px-[45px] lg:px-[80px]"
+            >
+              {/* slider */}
+              <h3 className="text-[#53c28b] font-extrabold text-xl">Service</h3>
+              <ServiceCompo />
+            </div>
+          </section>
+          {/* about-section */}
+          <section
+            id="about"
+            className="w-full h-screen flex flex-col md:flex-row"
           >
-            <h3 className="text-[#53c28b] font-extrabold text-xl">Service</h3>
-            <ServiceCompo />
-          </div>
+            <AboutContext aboutY={ay} />
+          </section>
+          {/* contact-section */}
+          <section id="contact" className="h-auto mt-1 mb-4" ref={ref.current}>
+            <Contact />
+          </section>
         </section>
-        {/* about-section */}
-        <section
-          id="about"
-          className="w-full h-screen z-30 relative -translate-y-20 flex flex-col md:flex-row bdbg"
-        >
-          <AboutContext aboutY={ay} />
-        </section>
-        {/* contact-section */}
-        <section
-          id="contact"
-          className="relative -translate-y-20 z-30 h-auto -mb-8 bdbg border-[px]"
-        >
-          <Contact />
-        </section>
-      </div>
+      </main>
     </>
   );
 }
@@ -171,35 +160,40 @@ export const AboutContext = (props) => {
   const yAxis = props.aboutY;
   return (
     <>
-      <div className="w-full md:w-[60%] lg:w-1/2 h-full scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory flex flex-col gap-2 p-[20px] sm:px-[30px] md:px-[45px] lg:px-6 lg:translate-x-3 z-20 ease-in-out duration-300">
+      <div className="w-full md:w-[60%] lg:w-1/2 h-full flex flex-col gap-2 p-[20px] sm:px-[30px] md:px-[45px] lg:px-[35px] md:translate-x-7 border-[] ease-in-out duration-300 overflow-hidden">
         <h3 className="text-[#53c28b] font-extrabold text-xl">About us</h3>
-        <span className="text-2xl font-bold">
-          Welcome to SkillBeHired, where skills take center stage and talent
-          finds its spotlight!
-        </span>
-        <div className="flex flex-col gap-1">
-          <h4 className="text-xl font-bold text-[#53c28b]">Our Mission</h4>
-          <p className="text-md p-1 md:px-2 text-justify">
-            At SkillBeHired, our mission is to revolutionize the way job seekers
-            and clients connect in the professional world. We understand the
-            evolving landscape of the job market, where the demand for skilled
-            professionals is at an all-time high. However, traditional hiring
-            practices often prioritize formal certifications, leaving many
-            talented individuals overlooked. Our platform is designed to disrupt
-            this status quo by putting skills at the forefront.
-          </p>
-        </div>
-        <h4 className="text-xl font-bold text-[#53c28b]">Why SkillBeHired?</h4>
-        {aboutUs.map((au) => (
-          <div key={au.id} className="flex flex-col gap-1">
-            <h4 className="text-lg font-semibold text-[#53c28b]">
-              {au.header} :
-            </h4>
-            <p className="text-md p-1 md:px-2 text-justify">{au.desc}</p>
+        <div className="w-full h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory">
+          <span className="text-2xl font-bold">
+            Welcome to SkillBeHired, where skills take center stage and talent
+            finds its spotlight!
+          </span>
+          <div className="flex flex-col gap-1">
+            <h4 className="text-xl font-bold text-[#53c28b]">Our Mission</h4>
+            <p className="text-md p-1 md:px-2 text-justify">
+              At SkillBeHired, our mission is to revolutionize the way job
+              seekers and clients connect in the professional world. We
+              understand the evolving landscape of the job market, where the
+              demand for skilled professionals is at an all-time high. However,
+              traditional hiring practices often prioritize formal
+              certifications, leaving many talented individuals overlooked. Our
+              platform is designed to disrupt this status quo by putting skills
+              at the forefront.
+            </p>
           </div>
-        ))}
+          <h4 className="text-xl font-bold text-[#53c28b]">
+            Why SkillBeHired?
+          </h4>
+          {aboutUs.map((au) => (
+            <div key={au.id} className="flex flex-col gap-1">
+              <h4 className="text-lg font-semibold text-[#53c28b]">
+                {au.header} :
+              </h4>
+              <p className="text-md p-1 md:px-2 text-justify">{au.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="w=full md:w-[40%] lg:w-1/2 h-full md:rounded-l-3xl overflow-hidden">
+      <div className="w-full md:w-[40%] lg:w-1/2 h-full md:rounded-l-3xl overflow-hidden">
         <div className="w=full h-full z-10 -scale-x-100 scale-125 md:rounded-r-3xl overflow-hidden">
           <motion.div
             style={{

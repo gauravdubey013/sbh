@@ -108,9 +108,9 @@ export const POST = async (request) => {
     console.error(error);
 
     // Check if the error is a duplicate key violation
-    if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
-      return new NextResponse("Email is already registered!", { status: 400 });
-    }
+    // if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
+    //   return new NextResponse("Email is already registered!", { status: 400 });
+    // }
 
     return new NextResponse("Internal Server Error", { status: 500 });
   }

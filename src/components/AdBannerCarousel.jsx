@@ -6,34 +6,47 @@ import Image from "next/image";
 // import Link from "next/link";
 
 const AdBannerCarousel = (props) => {
-  let { bg, btext, abdData } = props;
+  let {
+    defH,
+    mdH,
+    lgH,
+    bg,
+    abdData,
+    slidesToShowDefault,
+    slidesToScroll,
+    autoplay,
+    autoplaySpeed,
+    slidesToShow1024,
+    slidesToShow768,
+    slidesToShow640,
+  } = props;
 
   const settings = {
     dots: false,
-    slidesToShow: props.slidesToShowDefault,
-    slidesToScroll: props.slidesToScroll,
-    autoplay: props.autoplay,
-    autoplaySpeed: props.autoplaySpeed,
+    slidesToShow: slidesToShowDefault,
+    slidesToScroll: slidesToScroll,
+    autoplay: autoplay,
+    autoplaySpeed: autoplaySpeed,
     pauseOnHover: true,
     infinite: true,
     speed: props.speed,
     responsive: [
       {
-        breakpoint: 1124,
+        breakpoint: 1024,
         settings: {
-          slidesToShow: props.slidesToShow1024,
+          slidesToShow: slidesToShow1024,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: props.slidesToShow768,
+          slidesToShow: slidesToShow768,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: props.slidesToShow640,
+          slidesToShow: slidesToShow640,
         },
       },
     ],
@@ -46,19 +59,19 @@ const AdBannerCarousel = (props) => {
       <Slider {...settings} className="rounded-lg bg-whi">
         {abdData.map((adb) => (
           <div
-            className={`w-auto ${props.defH} ${props.mdH} ${props.lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
+            className={`w-auto ${defH} ${mdH} ${lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
               key={adb.id}
               className={`w-full h-full ${bg} relative scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg overflow-hidden`}
             >
-              <div className="w-auto h-auto absolute text-blue-500 bg-[#00000026] right-0 rounded-l-lg z-20 px-2 hover:underline">
-                <span className="w-full h-full hover:scale-110 active:scale-75"></span>
-                Ad
+              <div className="w-auto h-auto absolute text-xs text-blue-500 bg-[#00000026] right-0 rounded-l-lg z-20 px-2 hover:underline">
+                <span className="w-full h-full hover:scale-110 active:scale-75">
+                  Ad
+                </span>
               </div>
               <Image
-                // key={adb.id}
                 src={adb.img}
                 alt={adb.alt}
                 // fill="true"

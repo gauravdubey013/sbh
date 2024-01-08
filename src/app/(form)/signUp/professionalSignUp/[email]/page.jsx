@@ -153,36 +153,6 @@ const professionalSignUp = ({ params }) => {
                     onSubmit={handleSubmit}
                     className="w-full h-full flex flex-col gap-4"
                   >
-                    {/* <div
-                      className={`w-full h-auto ${
-                        condition.emailC || errors.emailE ? "-mb-2" : "mb-0"
-                      }`}
-                    >
-                      <input
-                        type="email"
-                        name="email"
-                        onChange={handleEmail}
-                        placeholder="Re-enter your e-mail"
-                        className="allFormInput h-[52px]"
-                        required
-                      />
-                      <div className="w-full h-auto overflow-hidden">
-                        <span
-                          className={`${
-                            condition.emailC == true
-                              ? "flex animate-slideDown"
-                              : "hidden"
-                          }`}
-                        >
-                          Must be registered email.
-                        </span>
-                        {errors.emailE && (
-                          <span className="text-red-500 animate-slideDown">
-                            {errors.emailE}
-                          </span>
-                        )}
-                      </div>
-                    </div> */}
                     <div className="w-full h-[20vh] overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl text-[#959ba7] hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
                       {/* <label className="text-xl text-[#959ba7]"> */}
                       Add Profile

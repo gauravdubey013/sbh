@@ -46,29 +46,31 @@ const Navbar = () => {
   return (
     <>
       <section className="fontFam z-40 w-full flex justify-center flex-col">
-        <div className="hidden h-[30px] backdrop-filter backdrop-blur-sm md:flex items-center justify-end gap-7 text-[13px] mr-7 ease-in-out duration-300">
-          <Link href={"/"} className="hover:text-[#53c28b] duration-200">
-            India
-          </Link>
-          <Link href={"/"} className="hover:text-[#53c28b] duration-200">
-            English
-          </Link>
-          <Link
-            href={"/#contact"}
-            className="hover:text-[#53c28b] duration-200"
-          >
-            Contact Us
-          </Link>
+        <div className="hidden md:flex h-auto py-1 backdrop-filter backdrop-blur-md">
+          <div className="w-full h-auto mr-5 flex items-center justify-end gap-7 text-xs ease-in-out duration-300">
+            <Link href={"/"} className="hover:text-[#53c28b] duration-200">
+              India
+            </Link>
+            <Link href={"/"} className="hover:text-[#53c28b] duration-200">
+              English
+            </Link>
+            <Link
+              href={"/#contact"}
+              className="hover:text-[#53c28b] duration-200"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
         <Headroom>
           <div
-            className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-sm rounded-b-[20px] animate-slideDown md:animate-none ${
+            className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${
               !toggle
                 ? `hidden`
                 : `flex border-b-[1px] border-[#53c28b] md:border-none`
             } ease-in-out duration-200`}
           />
-          <div className="sticky z-40 w-full h-[66px] ease-in-out backdrop-filter backdrop-blur-sm animate-fade-in-down">
+          <div className="sticky z-40 w-full h-[66px] ease-in-out backdrop-filter backdrop-blur-md animate-fade-in-down">
             <div className="containerNav w-full flex justify-between items-center gap-5 px-2 md:px-4 translate-y-3 ease-in-out">
               {" "}
               <div className="open md:hidden">

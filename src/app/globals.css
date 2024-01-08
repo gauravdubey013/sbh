@@ -4,13 +4,14 @@
 
 * {
   @apply p-0 m-0;
+  font-family: "Play", sans-serif;
 }
 html {
   /* --scroll-behavior: smooth !important; */
   scroll-behavior: smooth !important;
 }
-::-webkit-scrollbar {
-  @apply w-[0.5px];
+body {
+  @apply bbg;
 }
 ::-webkit-scrollbar-track {
   @apply bg-[#000300];
@@ -18,15 +19,22 @@ html {
 ::-webkit-scrollbar-thumb {
   @apply rounded-full bg-[#53c28b];
 }
+::-webkit-scrollbar {
+  @apply w-[0.5px];
+}
+.scrollDiv::-webkit-scrollbar {
+  display: none;
+}
+.numHide::-webkit-inner-spin-button,
+.numHide::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-.container {
-  @apply scroll-smooth max-w-full min-h-full flex flex-col justify-between mx-auto my-0 py-0 duration-300;
-}
-.logoTitle {
-  @apply fontFam font-extrabold  animate-fade-in-down duration-500;
-}
-.fontFam {
-  font-family: "Play", sans-serif;
+.numHide {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;
+  margin: 0; /* May be needed depending on styling */
 }
 .theme {
   transition: 1s all ease;
@@ -49,7 +57,7 @@ html {
   .footer {
     @apply bg-[#048b4a]/[0.05];
   }
-  .bdbg {
+  .bbg {
     @apply bg-[#fff];
     transition: 1s all ease;
   }
@@ -76,7 +84,7 @@ html {
   .footer {
     @apply bg-[#000300];
   }
-  .bdbg {
+  .bbg {
     @apply bg-[#000300];
     transition: 1s all ease;
   }
@@ -85,32 +93,24 @@ html {
   }
 }
 
+.container {
+  @apply scroll-smooth max-w-full min-h-full flex flex-col justify-between mx-auto my-0 py-0 duration-300;
+}
+.logoTitle {
+  @apply font-extrabold  animate-fade-in-down duration-500;
+}
+
 .hoverText {
   @apply relative flex items-center before:content-[''] before:absolute before:w-full before:h-full before:md:h-[1px] before:rounded-full before:bg-[#53c28b]/60 before:md:bg-[#53c28b]/90 hover:text-[#53c28b] hover:duration-700 before:origin-right before:transition-transform before:duration-[0.3s] before:ease-[ease-in-out] before:scale-x-0 before:left-0 before:bottom-0 hover:before:origin-left hover:before:scale-x-100;
 }
 
 .allFormInput {
-  @apply w-full fontFam focus:px-2 rounded-sm bg-transparent text-base md:text-xl placeholder:text-base md:placeholder:text-xl hover:placeholder:text-[#53c28b] focus:placeholder:text-[#53c28b] border-b-[1px] hover:border-[#53c28b] focus:border-[#53c28b] hover:shadow-md focus:shadow-md outline-none ease-in-out duration-300;
+  @apply w-full  focus:px-2 rounded-sm bg-transparent text-base md:text-xl placeholder:text-base md:placeholder:text-xl hover:placeholder:text-[#53c28b] focus:placeholder:text-[#53c28b] border-b-[1px] hover:border-[#53c28b] focus:border-[#53c28b] hover:shadow-md focus:shadow-md outline-none ease-in-out duration-300;
 }
 .ddl {
-  @apply text-base md:text-xl text-[#959ba7] rounded-sm bdbg border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none;
-}
-.numHide::-webkit-inner-spin-button,
-.numHide::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.numHide {
-  -moz-appearance: textfield; /* Firefox */
-  appearance: textfield;
-  margin: 0; /* May be needed depending on your styling */
+  @apply text-base md:text-xl text-[#959ba7] rounded-sm bbg border-b-[1px] hover:border-b-[#53c28b] focus:border-b-[#53c28b] focus:text-[#53c28b] hover:text-[#53c28b] hover:shadow-md focus:shadow-md outline-none;
 }
 
 .allBtn {
-  @apply fontFam active:text-lg active:scale-90 font-extrabold cursor-pointer backdrop-filter backdrop-blur-sm bg-[#53c28b] hover:bg-[#53c28b]/[0.6] scale-95 hover:scale-100 shadow-sm flex justify-center items-center hover:shadow-md focus:shadow-md ease-[ease] duration-200;
-}
-
-.scrollDiv::-webkit-scrollbar {
-  display: none;
+  @apply active:text-lg active:scale-90 font-extrabold cursor-pointer backdrop-filter backdrop-blur-sm bg-[#53c28b] hover:bg-[#53c28b]/[0.6] scale-95 hover:scale-100 shadow-sm flex justify-center items-center hover:shadow-md focus:shadow-md ease-[ease] duration-200;
 }
