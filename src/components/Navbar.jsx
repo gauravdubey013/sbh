@@ -1,28 +1,25 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { Squash as Hamburger } from "hamburger-react";
-import DarkModeToggle from "./DarkModeToggle";
-import { motion } from "framer-motion";
-import Headroom from "react-headroom";
-import Image from "next/image";
-
 import { signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Squash as Hamburger } from "hamburger-react";
 import { tabs } from "@/context/data";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import DarkModeToggle from "./DarkModeToggle";
+import Headroom from "react-headroom";
 import Dropdown from "./DropDownList";
-import Loading from "@/app/loading";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { data: session, status: sessionStatus } = useSession();
 
   const [toggle, setToggle] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
-  const pathname = usePathname();
   const [hashTagValue, setHashTagValue] = useState("");
-  const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
     const activeTabFinder = tabs.find(

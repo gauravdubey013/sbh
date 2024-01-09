@@ -46,10 +46,11 @@ export const POST = async (request) => {
     if (profileImg) {
       const byteDataProfile = await profileImg.arrayBuffer();
       const bufferProfile = Buffer.from(byteDataProfile);
-      profileImgPath = `./public/users/profiles/${
+      profileImgPathPublic = `./public/users/profiles/${
         email + "_" + profileImg.name
       }`;
-      await writeFile(profileImgPath, bufferProfile);
+      profileImgPath = `/users/profiles/${email + "_" + profileImg.name}`;
+      await writeFile(profileImgPathPublic, bufferProfile);
     } else {
       profileImgPath = "noProfile";
     }
@@ -57,8 +58,9 @@ export const POST = async (request) => {
     if (resume) {
       const byteDataResume = await resume.arrayBuffer();
       const bufferResume = Buffer.from(byteDataResume);
-      resumePath = `./public/users/resumes/${email + "_" + resume.name}`;
-      await writeFile(resumePath, bufferResume);
+      resumePathPublic = `./public/users/resumes/${email + "_" + resume.name}`;
+      resumePath = `/users/resumes/${email + "_" + resume.name}`;
+      await writeFile(resumePathPublic, bufferResume);
     } else {
       resumePath = "noResume";
     }

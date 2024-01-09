@@ -9,7 +9,7 @@ import connect from "@/utils/db";
 var lastnameGoogle = "google";
 var lastnameGithub = "gitHub";
 var password = "setPassword";
-var role = "user_oAuth";
+var role = "user";
 
 export const authOptions = {
   // Configure one or more authentication providers

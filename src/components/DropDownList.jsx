@@ -1,12 +1,16 @@
+"user client";
 import { useState } from "react";
+import Link from "next/link";
 
 const Dropdown = (props) => {
+  const { userEmail, btnOnClick, btnName } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  // console.log("user: ", user);
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}
@@ -28,14 +32,20 @@ const Dropdown = (props) => {
           >
             {/* Dropdown Items */}
             <div className="block text-sm" role="menuitem">
-              {props.userEmail}
+              {userEmail}
             </div>
+            <Link
+              href={`/profile/${userEmail}`}
+              className="viewProfile allBtn w-[7rem] h-[2rem] text-md rounded-md"
+            >
+              View Profile
+            </Link>
             <button
-              onClick={props.btnOnClick}
-              role="menuitem"
+              onClick={btnOnClick}
+              role="userLogout"
               className="signout allBtn w-full h-[2rem] text-md rounded-md"
             >
-              {props.btnName}
+              {btnName}
             </button>
           </div>
         </div>
