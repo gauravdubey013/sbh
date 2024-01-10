@@ -60,15 +60,18 @@ const Profile = ({ params }) => {
         console.log("Error", error);
       }
     };
-    userInfo();
-  }, [email, userData]);
+    if (userData == null) {
+      userInfo();
+    }
+  }, [email]);
 
   if (userData != null) {
     user = userData[0].user;
     prof = userData[1].prof;
   }
-
   const age = calculateAge(prof?.dob);
+
+  console.log(userData);
   return (
     <>
       {/* <div className="p-6 md:p-13 lg:px-16">
