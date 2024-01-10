@@ -1,9 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+// import Link from "next/link";
 import { GiBackup } from "react-icons/gi";
 import { RiContactsBookFill } from "react-icons/ri";
 import { BsChatLeftTextFill } from "react-icons/bs";
+import Loading from "@/app/loading";
 
 export const calculateAge = (birthdate) => {
   const today = new Date();
@@ -28,6 +32,8 @@ export const calculateAge = (birthdate) => {
 const ProfileCompo = (props) => {
   const { setEmail } = props;
   const email = setEmail;
+  const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
 
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState("");
@@ -72,13 +78,26 @@ const ProfileCompo = (props) => {
     age = prof ? calculateAge(prof?.dob) : "18+";
   } else prof = null;
 
-  //   console.log(userData);
+  const handleSignOutAndRedirect = async () => {
+    try {
+      await signOut();
+      router.push(`/signUp/professionalSignUp/${email}`);
+    } catch (error) {
+      console.error("Error during signOut:", error);
+    }
+  };
 
+  //   console.log(userData);
   //   console.log("user: ", user);
   //   console.log("prof: ", prof);
+
+  if (user === undefined || prof === undefined) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <div className="h-full flex flex-col  shadow-xl overflow-y-scroll">
+      <div className="h-full flex flex-col  shadow-xl overflow-y-scroll animate-fade-in-down">
         {/* <div className="ml-3 h-7 flex justify-end items-center">
           <button
             type="button"
@@ -102,12 +121,12 @@ const ProfileCompo = (props) => {
             </svg>
           </button>
         </div> */}
-        <div className="bg-green-300 shadow-lg pb-3 rounded-b-3xl">
+        <div className="bg-green-300 shadow-lg pb-3 rounded-b-3xl overflow-hidden">
           <div className="flex rounded-b-3xl bbg space-y-5 flex-col items-center py-7">
-            <div className="w-32 h-32 bg-[#000] border-[0.5px] border-[#53c28b] shadow-lg rounded-full overflow-hidden ">
+            <div className="w-32 h-32 bg-[#000] border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
                 src={
-                  prof?.profileImgPath == undefined
+                  user?.role == "user" || user?.role == "admin"
                     ? "/assets/loading3d360Rotate.gif"
                     : prof?.profileImgPath
                 }
@@ -120,40 +139,97 @@ const ProfileCompo = (props) => {
             </div>
             <a href="#">
               {" "}
-              <span className="text-h1">
+              <span className="text-xl">
                 {user?.lastname == "google" || user?.lastname == "github"
-                  ? user?.firstname == undefined
-                    ? "Gaurav"
-                    : user?.firstname
-                  : user?.firstname == undefined
-                  ? "Gaurav"
+                  ? user?.firstname
                   : `${user?.firstname} ${user?.lastname}`}
-                , <span className="font-light text-gray-500">{age}</span>
+                <span className="font-light">
+                  , {age == undefined ? "18+" : age}
+                </span>
               </span>
             </a>
           </div>
-          <div className="grid px-7 py-2 -mb-3 text-[#000]  items-center justify-around grid-cols-3 gap-4 divide-x divide-solid">
-            <div class="col-span-1 flex flex-col items-center ">
-              <span class="text-2xl font-bold">
-                <GiBackup />
-              </span>
-              <span class="text-lg font-medium 0">Social Links</span>
+          <div
+            className={`${
+              user?.role != "user" ? "hidden" : "flex"
+            } w-full h-10 mt-3 flex gap-1 items-center justify-center text-md md:text-lg text-[#000] px-3`}
+          >
+            <span className="text-lg">
+              Want to be a Professional / Freelancer..?
+            </span>
+            <button
+              role="userToProfessional"
+              className="allBtn w-auto h-auto py-1 px-3 rounded-xl"
+              onClick={handleSignOutAndRedirect}
+            >
+              Yes
+            </button>
+          </div>
+          <div
+            className={`${
+              user?.role == "user" ? "hidden" : "grid"
+            } px-7 py-2 -mb-3 text-[#000] items-center justify-around grid-cols-3 gap-4 divide-x divide-solid divide-zinc-950`}
+          >
+            <div className="col-span-1 flex flex-col items-center text-lg font-medium">
+              <GiBackup size={25} />
+              <span>Social Links</span>
             </div>
-            <div class="col-span-1 px-3 flex flex-col items-center ">
-              <span class="text-2xl font-bold">
-                <RiContactsBookFill />
-              </span>
-              <span class="text-lg font-medium">Contact</span>
+            <div className="col-span-1 px-3 flex flex-col items-center text-lg font-medium ">
+              <RiContactsBookFill size={25} />
+              <span>Contact</span>
             </div>
-            <div class="col-span-1 px-3 flex flex-col items-center ">
-              <span class="text-2xl font-bold">
-                <BsChatLeftTextFill />
-              </span>
-              <span class="text-lg font-medium">Chat</span>
+            <div className="col-span-1 px-3 flex flex-col items-center text-lg font-medium">
+              <BsChatLeftTextFill size={25} />
+              <span>Chat</span>
             </div>
           </div>
         </div>
-        <div className="grid rounded-2xl divide-y divide-dashed hover:divide-solid  justify-evenly bg-gray-50 dark:bg-gray-300 m-3 mt-10 grid-cols-3">
+        <div className="w-full h-auto mt-6 p-4">
+          <div className="w-full h-full rounded-3xl border border-green-300 text-md flex flex-col gap-1 p-2 sm:p-4 md:px-6">
+            <div className="w-full h-auto flex gap-1 items-start justify-start md:justify-between">
+              <div className="text-green-300 w-auto md:w-[12%] h-auto">
+                Gender
+              </div>
+              :
+              <div className="w-auto md:w-[80%] h-auto">
+                {prof?.gender ?? "none"}
+              </div>
+            </div>
+            <div className="flex gap-1 items-start justify-start md:justify-between">
+              <div className="text-green-300 w-auto md:w-[12%] h-auto">
+                Date-of-birth
+              </div>
+              :
+              <div className="w-auto md:w-[80%] h-auto">
+                {prof?.dob ?? "none"}
+              </div>
+            </div>
+            <div className="flex gap-1 items-start justify-start md:justify-between">
+              <div className="text-green-300 w-auto md:w-[12%] h-auto">Zip</div>
+              :
+              <div className="w-auto md:w-[80%] h-auto">
+                {prof?.zipCode ?? "none"}
+              </div>
+            </div>
+            <div className="flex gap-1 items-start justify-start md:justify-between">
+              <div className="text-green-300 w-auto md:w-[12%] h-auto">
+                Address
+              </div>
+              :
+              <div className="w-auto md:w-[80%] h-auto">
+                {prof?.address ?? "none"}
+              </div>
+            </div>
+            <div className="flex gap-1 items-start justify-start md:justify-between">
+              <div className="text-green-300 w-auto md:w-[12%] h-auto">Bio</div>
+              :
+              <div className="w-auto md:w-[80%] h-auto">
+                {prof?.bio ?? "none"}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="grid rounded-2xl divide-y divide-dashed hover:divide-solid  justify-evenly bg-gray-50 dark:bg-gray-300 m-3 mt-10 grid-cols-3">
           <div class="col-span-1  p-3">
             <div class="flex flex-col items-center ">
               <a href="">
@@ -297,7 +373,7 @@ const ProfileCompo = (props) => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

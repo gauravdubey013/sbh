@@ -22,8 +22,14 @@ const Dropdown = (props) => {
       />
 
       {/* Dropdown */}
-      {isOpen && (
-        <div className="ease-in-out backdrop-filter backdrop-blur-sm animate-fade-in-down origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none">
+      {
+        <div
+          className={` ${
+            !isOpen
+              ? "hidden animate-fade-in-up duration-300"
+              : "opacity-100 animate-fade-in-down duration-300"
+          } backdrop-filter backdrop-blur-sm origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
+        >
           <div
             className="p-1 flex flex-col items-center justify-center gap-2"
             role="menu"
@@ -36,6 +42,7 @@ const Dropdown = (props) => {
             </div>
             <Link
               href={`/profile/${userEmail}`}
+              onClick={() => setIsOpen(!isOpen)}
               className="viewProfile allBtn w-[7rem] h-[2rem] text-md rounded-md"
             >
               View Profile
@@ -49,7 +56,7 @@ const Dropdown = (props) => {
             </button>
           </div>
         </div>
-      )}
+      }
     </div>
   );
 };

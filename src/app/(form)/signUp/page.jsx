@@ -123,7 +123,7 @@ const SignUp = () => {
   const handleProCheck = () => {
     setProfChecked(!profChecked);
     !profChecked
-      ? setProfCheckValue("Professional")
+      ? setProfCheckValue("professional")
       : setProfCheckValue("null");
     // console.log(profCheckValue);
   };

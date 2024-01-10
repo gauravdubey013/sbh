@@ -8,8 +8,9 @@ import connect from "@/utils/db";
 
 var lastnameGoogle = "google";
 var lastnameGithub = "gitHub";
-var password = "setPassword";
 var role = "user";
+var password = "setPassword@123";
+const hashPassword = await bcrypt.hash(password, 5);
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -65,7 +66,7 @@ export const authOptions = {
               firstname: name,
               lastname: lastnameGoogle,
               email,
-              password,
+              password: hashPassword,
               role,
             });
             await newUser.save();
@@ -87,7 +88,7 @@ export const authOptions = {
               firstname: user.name,
               lastname: lastnameGithub,
               email: user.email,
-              password,
+              password: hashPassword,
               role,
             });
             await newUser.save();
