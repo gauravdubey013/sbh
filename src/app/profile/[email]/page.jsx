@@ -11,7 +11,7 @@ const Profile = ({ params }) => {
 
   useEffect(() => {
     if (sessionStatus !== "authenticated") {
-      router.replace("/signUp");
+      router.replace("/signIn");
     }
   }, [sessionStatus, router]);
   if (sessionStatus === "loading") {
