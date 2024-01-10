@@ -191,6 +191,10 @@ const ProfileCompo = (props) => {
                 <span> {prof?.service}</span>
               </div>
               <div className="flex flex-col md:flex-row gap-1">
+                <span className="text-[#53c28b]">Year of Experience :</span>
+                <span>{prof?.skillLevel}</span>
+              </div>
+              <div className="flex flex-col md:flex-row gap-1">
                 <span className="text-[#53c28b]">Work History :</span>
                 <span>{prof?.workHistory}</span>
               </div>
