@@ -29,11 +29,6 @@ export const tabs = [
     label: "Contact",
     url: "/#contact",
   },
-  {
-    id: 5,
-    label: "test",
-    url: "/test",
-  },
 ];
 
 export const aboutUs = [
