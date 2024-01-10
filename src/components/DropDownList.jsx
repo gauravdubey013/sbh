@@ -43,14 +43,14 @@ const Dropdown = (props) => {
             <Link
               href={`/profile/${userEmail}`}
               onClick={() => setIsOpen(!isOpen)}
-              className="viewProfile allBtn w-[7rem] h-[2rem] text-md rounded-md"
+              className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
             >
               View Profile
             </Link>
             <button
               onClick={btnOnClick}
               role="userLogout"
-              className="signout allBtn w-full h-[2rem] text-md rounded-md"
+              className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
             >
               {btnName}
             </button>
