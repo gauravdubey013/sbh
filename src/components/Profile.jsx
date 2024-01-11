@@ -157,10 +157,10 @@ const ProfileCompo = (props) => {
                   {prof?.sLOne ?? "sbh"}
                 </Link>
                 <Link
-                  href={prof?.sLOne ?? "https://sbh.vercel.app/"}
+                  href={prof?.sLTwo ?? "https://sbh.vercel.app/"}
                   target="_blank"
                 >
-                  {prof?.sLOne ?? "sbh"}
+                  {prof?.sLTwo ?? "sbh"}
                 </Link>
               </div>
             </div>

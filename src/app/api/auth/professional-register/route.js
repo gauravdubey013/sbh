@@ -70,17 +70,17 @@ export const POST = async (request) => {
     if (bioCheck.trim() !== "") {
       bio = bioCheck;
     } else {
-      bio = "null";
+      bio = "NaN";
     }
     if (sLOneCheck.trim() !== "") {
       sLOne = sLOneCheck;
     } else {
-      sLOne = "null";
+      sLOne = "NaN";
     }
     if (sLTwoCheck.trim() !== "") {
       sLTwo = sLTwoCheck;
     } else {
-      sLTwo = "null";
+      sLTwo = "NaN";
     }
 
     //working till here

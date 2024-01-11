@@ -94,10 +94,13 @@ function LoginForm() {
           email,
           password,
         });
+        setDisableBtn(true);
         if (res?.error) {
           setError("Invalid email & password");
+          setDisableBtn(false);
           if (res?.url) router.replace("/");
           else {
+            setDisableBtn(true);
             setError("");
           }
         }
@@ -148,6 +151,12 @@ function LoginForm() {
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               value={email}
               onChange={handelEmail}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
               className={`allFormInput h-[52px]`}
             />
             <div className="w-full h-auto overflow-hidden">
@@ -166,6 +175,12 @@ function LoginForm() {
                 className={`allFormInput h-[52px] `}
                 value={password}
                 onChange={handelPassword}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }
+                }}
               />
               <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
                 {showPass === "text" ? (

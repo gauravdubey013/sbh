@@ -336,6 +336,12 @@ const SignUp = () => {
                         <input
                           type={showConfirmPass}
                           name="confirmPassword"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                              e.preventDefault();
+                              handleSubmit(e);
+                            }
+                          }}
                           onChange={handleConfirmPassword}
                           required
                           placeholder="Confirm Password"
