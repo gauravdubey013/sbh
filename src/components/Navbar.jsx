@@ -157,6 +157,7 @@ const Navbar = () => {
                     <>
                       <Dropdown
                         userEmail={session.user?.email}
+                        userName={session?.authUser?.role}
                         btnOnClick={() => {
                           signOut();
                           router.push("/signIn");

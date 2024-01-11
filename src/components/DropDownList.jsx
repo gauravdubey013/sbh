@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 const Dropdown = (props) => {
-  const { userEmail, btnOnClick, btnName } = props;
+  const { userEmail, userName, btnOnClick, btnName } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -40,8 +40,11 @@ const Dropdown = (props) => {
             <div className="block text-sm" role="menuitem">
               {userEmail}
             </div>
+            <div className="block text-sm" role="menuitem">
+              {userName ?? "role"}
+            </div>
             <Link
-              href={`/profile/${userEmail}`}
+              href={`/user-profile/${userEmail}`}
               onClick={() => setIsOpen(!isOpen)}
               className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
             >
