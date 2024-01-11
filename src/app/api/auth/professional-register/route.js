@@ -67,17 +67,17 @@ export const POST = async (request) => {
       resumePath = "noResume";
     }
 
-    if (bioCheck.trim() === "") {
+    if (bioCheck.trim() !== "") {
       bio = bioCheck;
     } else {
       bio = "null";
     }
-    if (sLOneCheck.trim() === "") {
+    if (sLOneCheck.trim() !== "") {
       sLOne = sLOneCheck;
     } else {
       sLOne = "null";
     }
-    if (sLTwoCheck.trim() === "") {
+    if (sLTwoCheck.trim() !== "") {
       sLTwo = sLTwoCheck;
     } else {
       sLTwo = "null";
