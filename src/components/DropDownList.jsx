@@ -44,7 +44,7 @@ const Dropdown = (props) => {
               {userName ?? "role"}
             </div>
             <Link
-              href={`/user-profile/${userEmail}`}
+              href={`/profile/${userEmail}`}
               onClick={() => setIsOpen(!isOpen)}
               className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
             >

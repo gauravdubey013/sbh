@@ -147,7 +147,7 @@ const ProfileCompo = (props) => {
                 socialToggle
                   ? "opacity-100 animate-fade-in-down"
                   : "opacity-0 animate-fade-in-up"
-              } w-full md:w-[34.5%] h-[61%] md:h-[70%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              } w-full md:w-[34.5%] h-[61%] md:h-[71%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="flex flex-col gap-1 items-center justify-center p-2">
                 <Link
@@ -169,7 +169,7 @@ const ProfileCompo = (props) => {
                 contactToggle
                   ? "opacity-100 animate-fade-in-down"
                   : "opacity-0 animate-fade-in-up"
-              } w-full md:w-[32.5%] h-[61%] md:h-[70%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              } w-full md:w-[32.5%] h-[61%] md:h-[71%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="flex flex-col gap-1 items-center justify-center p-2">
                 <div className="flex gap-1">
