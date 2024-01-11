@@ -31,8 +31,6 @@ export const calculateAge = (birthdate) => {
   return age;
 };
 
-// Import other necessary dependencies
-
 const ProfileCompo = (props) => {
   const { setEmail } = props;
   const email = setEmail;
@@ -105,65 +103,89 @@ const ProfileCompo = (props) => {
       <div className="h-full flex flex-col  shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
         {/* <div className="w-full h-full flex flex-col relative z-10">
         </div> */}
-
-        {user?.role != "user" && (
-          <div
-            className={`${
-              socialToggle
-                ? "opacity-100 animate-fade-in-down"
-                : "opacity-0 animate-fade-in-up"
-            } w-full md:w-[34.5%] h-[66%] md:h-[73.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
-          >
-            <div className="flex flex-col gap-1 items-center justify-center p-2">
-              <Link href={prof?.sLOne} target="_blank">
-                {prof?.sLOne}
-              </Link>
-              <Link href={prof?.sLOne} target="_blank">
-                {prof?.sLOne}
-              </Link>
+        {session.user?.email === prof?.email && (
+          <>
+            <div
+              className={`w-full h-auto px-4 flex justify-between ${
+                !editToggle ? "absolute" : "fixed"
+              } z-50`}
+            >
+              <div
+                className="flex text-lg items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300"
+                onClick={() => router.back()}
+              >
+                <IoMdArrowRoundBack size={25} />
+                Back
+              </div>
+              <div
+                className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
+                onClick={() => setEditToggle(!editToggle)}
+              >
+                {!editToggle ? (
+                  <FaUserEdit size={25} />
+                ) : (
+                  <MdCancel size={25} />
+                )}
+              </div>
             </div>
-          </div>
+            <div
+              className={` ${
+                !editToggle
+                  ? "hidden opacity-0 animate-fade-in-up absolute"
+                  : "opacity-100 animate-fade-in-down fixed"
+              } w-full h-full bg-[00000055] backdrop-blur-sm flex items-cente justify-center z-40`}
+            >
+              {/*  h-[150vh] -translate-y-32 mt-40*/}
+              <div className="w-[50%] h-[73vh] fixed mt-14 bg-[#000] border border-[#53c28b] shadow-lg rounded-3xl flex items-center justify-center">
+                edit form
+              </div>
+            </div>
+          </>
         )}
 
         {user?.role != "user" && (
-          <div
-            className={` ${
-              contactToggle
-                ? "opacity-100 animate-fade-in-down"
-                : "opacity-0 animate-fade-in-up"
-            } w-full md:w-[32.5%] h-[66%] md:h-[73.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
-          >
-            <div className="flex flex-col gap-1 items-center justify-center p-2">
-              <div className="flex gap-1">
-                <span className="cursor-pointer text-[#53c28b]">Email :</span>
-                <span className="cursor-pointer">{prof?.email}</span>
-              </div>
-              <div className="flex gap-1">
-                <span className="cursor-pointer text-[#53c28b]">
-                  Phone no. :
-                </span>
-                <span className="cursor-pointer">{prof?.phone}</span>
+          <>
+            <div
+              className={`${
+                socialToggle
+                  ? "opacity-100 animate-fade-in-down"
+                  : "opacity-0 animate-fade-in-up"
+              } w-full md:w-[34.5%] h-[66%] md:h-[74.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+            >
+              <div className="flex flex-col gap-1 items-center justify-center p-2">
+                <Link href={prof?.sLOne} target="_blank">
+                  {prof?.sLOne}
+                </Link>
+                <Link href={prof?.sLOne} target="_blank">
+                  {prof?.sLOne}
+                </Link>
               </div>
             </div>
-          </div>
+            <div
+              className={` ${
+                contactToggle
+                  ? "opacity-100 animate-fade-in-down"
+                  : "opacity-0 animate-fade-in-up"
+              } w-full md:w-[32.5%] h-[66%] md:h-[74.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+            >
+              <div className="flex flex-col gap-1 items-center justify-center p-2">
+                <div className="flex gap-1">
+                  <span className="cursor-pointer text-[#53c28b]">Email :</span>
+                  <span className="cursor-pointer">{prof?.email}</span>
+                </div>
+                <div className="flex gap-1">
+                  <span className="cursor-pointer text-[#53c28b]">
+                    Phone no. :
+                  </span>
+                  <span className="cursor-pointer">{prof?.phone}</span>
+                </div>
+              </div>
+            </div>
+          </>
         )}
 
         <div className="w-full h-full bg-[#53c28b] shadow-lg pb-3 rounded-b-3xl overflow-hidden z-10">
-          <div className="w-full h-auto px-4 bbg flex justify-between">
-            <div
-              className="flex text-lg items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300"
-              onClick={() => router.back()}
-            >
-              <IoMdArrowRoundBack size={25} />
-              Back
-            </div>
-            <div
-              className="flex gap-1 items-center justify-center hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
-              onClick={() => setEditToggle(!editToggle)}
-            >
-              {!editToggle ? <FaUserEdit size={25} /> : <MdCancel size={25} />}
-            </div>
-          </div>
+          {/*  */}
           <div className="flex rounded-b-3xl bbg space-y-5 flex-col items-center py-7">
             <div className="w-32 h-32 bg-[#000] border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
@@ -179,12 +201,15 @@ const ProfileCompo = (props) => {
                 className="w-full h-full shadow-md z-10"
               />
             </div>
-            <span className="text-xl">
-              {user?.lastname == "google" || user?.lastname == "github"
-                ? user?.firstname
-                : `${user?.firstname} ${user?.lastname}`}
-              <span className="font-light">, {age}</span>
-            </span>
+            <div className="flex gap-1 text-xl">
+              <span className="text-[#53c28b] capitalize">{user?.role} :</span>
+              <span className="text-xl">
+                {user?.lastname == "google" || user?.lastname == "github"
+                  ? user?.firstname
+                  : `${user?.firstname} ${user?.lastname}`}
+                <span className="font-light">, {age}</span>
+              </span>
+            </div>
             <div className="flex flex-col items-center justify-center px-4">
               <div className="flex flex-row gap-1">
                 <span className="text-[#53c28b]">Service :</span>
@@ -222,7 +247,7 @@ const ProfileCompo = (props) => {
             } px-7 py-2 -mb-3 text-[#000] items-center justify-around grid-cols-3 gap-4 divide-x divide-solid divide-zinc-950`}
           >
             <div
-              className="col-span-1 flex flex-col items-center text-lg font-medium cursor-pointer active:translate-y-1 duration-200"
+              className="col-span-1 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
               onClick={() => {
                 setSocialToggle(!socialToggle);
                 contactToggle ? setContactToggle(!contactToggle) : "";
@@ -232,7 +257,7 @@ const ProfileCompo = (props) => {
               <span>Social Links</span>
             </div>
             <div
-              className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer active:translate-y-1 duration-200"
+              className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
               onClick={() => {
                 setContactToggle(!contactToggle);
                 socialToggle ? setSocialToggle(!socialToggle) : "";
@@ -241,7 +266,14 @@ const ProfileCompo = (props) => {
               <RiContactsBookFill size={25} />
               <span>Contact</span>
             </div>
-            <div className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer">
+            <div
+              onClick={() => {
+                // setContactToggle(!contactToggle);
+                socialToggle ? setSocialToggle(!socialToggle) : "";
+                contactToggle ? setContactToggle(!contactToggle) : "";
+              }}
+              className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
+            >
               <BsChatLeftTextFill size={25} />
               <span>Chat</span>
             </div>

@@ -18,19 +18,19 @@ const ServiceCompo = () => {
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
           <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel onClickBtn={"/services/rak"} />
+            <Carousel onClickBtn="/profile/dubeygaurav520@gmail.com" />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Health & Wellness</h2>
           <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel />
+            <Carousel onClickBtn="/profile/rakxalva@gmail.com" />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Events & Entertainers</h2>
           <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel />
+            <Carousel onClickBtn="/profile/tf@xyz.in" />
           </div>
         </div>
         {/* <Link href={"/services/chomu"} >Click me</Link> */}

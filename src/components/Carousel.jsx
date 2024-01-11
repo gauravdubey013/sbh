@@ -84,7 +84,7 @@ const Carousel = (props) => {
                       review
                     </div>
                     <Link
-                      href={props.onClickBtn}
+                      href={`${props.onClickBtn}`}
                       className="allBtn w-full h-[3.25rem] text-sm rounded-3xl flex items-center justify-center"
                     >
                       View more
