@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DarkModeToggle from "./DarkModeToggle";
 import Headroom from "react-headroom";
-import Dropdown from "./DropDownList";
+// import Dropdown from "./DropDownList";
 
 const Navbar = () => {
   const router = useRouter();
@@ -32,6 +32,7 @@ const Navbar = () => {
   useEffect(() => {
     setHashTagValue(window.location.hash);
   }, []);
+  console.log(session);
 
   // console.log(activeTab);
 
@@ -51,12 +52,12 @@ const Navbar = () => {
             <Link href={"/"} className="hover:text-[#53c28b] duration-200">
               English
             </Link>
-            <Link
+            {/* <Link
               href={"/#contact"}
               className="hover:text-[#53c28b] duration-200"
             >
               Contact Us
-            </Link>
+            </Link> */}
           </div>
         </div>
         <Headroom>
@@ -117,7 +118,7 @@ const Navbar = () => {
                         setToggle(!toggle);
                         setActiveTab(tab.id);
                       }}
-                      className="menuLinks relative rounded-full px-3 fontFam"
+                      className="menuLinks relative rounded-full px-3"
                     >
                       {activeTab === tab.id && (
                         <motion.div
@@ -156,8 +157,11 @@ const Navbar = () => {
                   ) : (
                     <>
                       <Dropdown
-                        userEmail={session.user?.email}
-                        userName={session?.user?.name}
+                        userEmail={session.user?.user?.email ?? ""}
+                        userName={session.user?.user?.firstname ?? ""}
+                        userRole={
+                          session?.user?.role || session.user?.user?.role
+                        }
                         btnOnClick={() => {
                           signOut();
                           router.push("/signIn");
@@ -177,3 +181,65 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+export const Dropdown = (props) => {
+  const { userEmail, userName, userRole, btnOnClick, btnName } = props;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // console.log("user: ", user);
+  return (
+    <div className="relative inline-block text-left">
+      {/* Profile Image */}
+      <img
+        onClick={handleToggle}
+        className="h-6 w-6 rounded-full cursor-pointer active:scale-75 ease-in-out duration-200"
+        src="/assets/bg6.png"
+        alt="Profile"
+      />
+
+      {/* Dropdown */}
+      {
+        <div
+          className={` ${
+            !isOpen
+              ? "hidden animate-fade-in-up duration-300"
+              : "opacity-100 animate-fade-in-down duration-300"
+          } backdrop-filter backdrop-blur-md z-50 bg-[#000000a1] origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
+        >
+          <div
+            className="p-1 flex flex-col items-center justify-center gap-2"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+            {/* Dropdown Items */}
+            <div className="block text-sm" role="menuitem">
+              {userName ?? "name"}
+            </div>
+            <div className="block text-sm" role="menuitem">
+              {userRole ?? "role"}
+            </div>
+            <Link
+              href={`/profile/${userEmail}`}
+              onClick={() => setIsOpen(!isOpen)}
+              className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+            >
+              View Profile
+            </Link>
+            <button
+              onClick={btnOnClick}
+              role="userLogout"
+              className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
+            >
+              {btnName}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  );
+};

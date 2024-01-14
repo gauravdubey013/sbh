@@ -69,10 +69,10 @@ export const authOptions = {
               password: hashPassword,
               role,
             });
-            await newUser.save();
-            return true;
+            const user = await newUser.save();
+            return user;
           }
-          return true;
+          return userExists;
         } catch (error) {
           console.log("Error storing onto the db : ", error);
           return false;
@@ -91,15 +91,38 @@ export const authOptions = {
               password: hashPassword,
               role,
             });
-            await newUser.save();
-            return true;
+            const user = await newUser.save();
+            return user;
           }
-          return true;
+          return userExists;
         } catch (error) {
           console.log("Error storing onto the db : ", error);
           return false;
         }
       }
+    },
+    async jwt({ token, user }) {
+      if (typeof user !== "undefined") {
+        token.user = user;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (typeof token?.user !== "undefined") {
+        const userExists = await User.findOne({ email: token?.user?.email });
+        if (
+          userExists.lastname !== "google" ||
+          userExists.lastname !== "gitHub"
+        ) {
+          session.user = {
+            user: userExists,
+            authUser: token.user,
+          };
+        } else {
+          session.user = { user: token.user };
+        }
+      }
+      return session;
     },
   },
 };

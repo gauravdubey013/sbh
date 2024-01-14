@@ -35,7 +35,7 @@ const Profile = (props) => {
   const { setEmail } = props;
   const email = setEmail;
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
+  const { data: session, status: sessionStuser } = useSession();
 
   const [userData, setUserData] = useState(null);
   const [editToggle, setEditToggle] = useState(false);
@@ -111,7 +111,7 @@ const Profile = (props) => {
             <IoMdArrowRoundBack size={25} />
             Back
           </div>
-          {prof?.email === session?.user?.email && (
+          {prof?.email === session?.user?.user?.email && (
             <div
               className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
               onClick={() => setEditToggle(!editToggle)}
@@ -120,7 +120,7 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        {prof?.email === session?.user?.email && (
+        {prof?.email === session?.user?.user?.email && (
           <>
             <div
               className={` ${
@@ -148,7 +148,7 @@ const Profile = (props) => {
               className={`${
                 socialToggle
                   ? "opacity-100 animate-fade-in-down"
-                  : "opacity-0 animate-fade-in-up"
+                  : "opacity-0 animate-fade-in-up -top-[100%]"
               } w-full md:w-[34.5%] h-[51vh] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
@@ -174,7 +174,7 @@ const Profile = (props) => {
               className={` ${
                 contactToggle
                   ? "opacity-100 animate-fade-in-down"
-                  : "opacity-0 animate-fade-in-up"
+                  : "opacity-0 animate-fade-in-up -top-[100%]"
               } w-full md:w-[32.5%] h-[51vh] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
@@ -217,9 +217,9 @@ const Profile = (props) => {
             <div className="flex gap-1 text-xl">
               <span className="text-[#53c28b] capitalize">{user?.role} :</span>
               <span className="text-xl">
-                {user?.lastname !== "google" || user?.lastname != "github"
-                  ? user?.firstname
-                  : `${user?.firstname} ${user?.lastname}`}
+                {user?.lastname !== "google" && user?.lastname !== "gitHub"
+                  ? `${user?.firstname} ${user?.lastname}`
+                  : user?.firstname}
                 <span className="font-light">, {age}</span>
               </span>
             </div>

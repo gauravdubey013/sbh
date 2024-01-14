@@ -301,8 +301,8 @@ const professionalSignUp = ({ params }) => {
                     <input
                       type="range"
                       name="skillLevel"
-                      value={skillLevel ?? "0"}
-                      onChange={(e) => setSkillLevel(e.target.value)}
+                      value={skillLevel}
+                      onChange={(e) => setSkillLevel(e.target.value ?? "0")}
                       step="1"
                       min="0"
                       max="5"
