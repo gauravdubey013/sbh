@@ -2,10 +2,10 @@
 import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import ProfileCompo from "@/components/Profile";
+import Profile from "@/components/Profile";
 import Loading from "@/app/loading";
 
-const Profile = ({ params }) => {
+const ProfilePage = ({ params }) => {
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
 
@@ -21,11 +21,11 @@ const Profile = ({ params }) => {
     sessionStatus === "authenticated" && (
       <>
         <div className="">
-          <ProfileCompo setEmail={decodeURIComponent(params.email)} />
+          <Profile setEmail={decodeURIComponent(params.email)} />
         </div>
       </>
     )
   );
 };
 
-export default Profile;
+export default ProfilePage;

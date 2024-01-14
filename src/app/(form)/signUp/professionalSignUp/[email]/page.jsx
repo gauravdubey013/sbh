@@ -61,15 +61,14 @@ const professionalSignUp = ({ params }) => {
     }
   };
   const handlePhone = (e) => {
-    const inputValue = e.target.value;
+    let inputValue = e.target.value.replace(/[^\d]/g, "").slice(0, 10);
     setPhone(inputValue);
-
     if (inputValue.trim() === "") {
       setCondition({ phoneC: true });
       setErrors({ phoneE: "" });
     } else {
       setCondition({ phoneC: false });
-      if (inputValue.length < 10 || inputValue.length > 10) {
+      if (inputValue.length < 10) {
         setErrors({ phoneE: "Number must be 10 digits and valid" });
       } else {
         setErrors({ phoneE: "" });
@@ -204,11 +203,15 @@ const professionalSignUp = ({ params }) => {
                         />
                       </div>
                       <div className="w-full h-auto overflow-hidden">
-                        {errors.dobE && (
-                          <span className="text-red-500 animate-slideDown text-end">
-                            {errors.dobE}
-                          </span>
-                        )}
+                        <span
+                          className={`${
+                            errors.dobE.trim() !== ""
+                              ? "flex text-red-500 animate-slideDown"
+                              : "hidden"
+                          }`}
+                        >
+                          {errors.dobE}
+                        </span>
                       </div>
                     </div>
                     <select
@@ -225,23 +228,6 @@ const professionalSignUp = ({ params }) => {
                       <option value="graphic_design">Graphic Design</option>
                       <option value="writing">Writing</option>
                     </select>
-                    <textarea
-                      name="address"
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Address"
-                      rows={3}
-                      required
-                      className="allFormInput h-auto"
-                    />
-                    <input
-                      type="text"
-                      name="zipCode"
-                      onChange={(e) => setZipCode(e.target.value)}
-                      placeholder="ZIP/Postal Code"
-                      required
-                      className="allFormInput h-[52px]"
-                    />
-
                     <div className="flex gap-2">
                       <input
                         type="text"
@@ -256,20 +242,13 @@ const professionalSignUp = ({ params }) => {
                         }`}
                       >
                         <input
-                          type="number"
+                          type="text"
                           name="phone"
+                          maxlength="10"
+                          value={phone}
                           onChange={handlePhone}
                           placeholder="Phone Number"
-                          pattern="[0-9]{10}"
-                          // title="Please enter a 10-digit phone number"
-                          required
-                          className="allFormInput h-[52px] appearance-none numHide"
-                          style={{
-                            WebkitAppearance: "none",
-                            MozAppearance: "textfield",
-                            appearance: "textfield",
-                            margin: 0,
-                          }}
+                          className="allFormInput h-[52px]"
                         />
                         <div className="w-full h-auto overflow-hidden">
                           <span
@@ -281,14 +260,38 @@ const professionalSignUp = ({ params }) => {
                           >
                             number must be 10 digits
                           </span>
-                          {errors.phoneE && (
-                            <span className="text-red-500 animate-slideDown">
-                              {errors.phoneE}
-                            </span>
-                          )}
+                          <span
+                            className={`${
+                              errors.phoneE.trim() !== ""
+                                ? "flex text-red-500 animate-slideDown"
+                                : "hidden"
+                            }`}
+                          >
+                            {errors.phoneE}
+                          </span>
                         </div>
                       </div>
                     </div>
+                    <textarea
+                      name="address"
+                      onChange={(e) => setAddress(e.target.value)}
+                      placeholder="Address"
+                      rows={3}
+                      required
+                      className="allFormInput h-auto"
+                    />
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={zipCode}
+                      onChange={(e) =>
+                        setZipCode(e.target.value.replace(/[^\d]/g, ""))
+                      }
+                      placeholder="ZIP/Postal Code"
+                      required
+                      className="allFormInput h-[52px]"
+                    />
+
                     <label className="text-base md:text-xl text-[#959ba7]">
                       Years of Experience -{" "}
                       <span className="text-[#53c28b] scale-110">

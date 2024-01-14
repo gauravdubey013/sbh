@@ -31,7 +31,7 @@ export const calculateAge = (birthdate) => {
   return age;
 };
 
-const ProfileCompo = (props) => {
+const Profile = (props) => {
   const { setEmail } = props;
   const email = setEmail;
   const router = useRouter();
@@ -69,10 +69,11 @@ const ProfileCompo = (props) => {
       }
     };
 
-    if (!userData) {
-      userInfo();
-    }
+    // if (!userData) {
+    userInfo();
+    // }
   }, [email, userData, error]);
+  // console.log(userData);
 
   // Optional chaining to avoid undefined errors
   const user = userData?.[0]?.user;
@@ -80,8 +81,8 @@ const ProfileCompo = (props) => {
   if (user?.role == "professional") {
     prof = userData?.[1]?.prof;
   } else prof = null;
-
   const age = prof ? calculateAge(prof?.dob) : "18+";
+
   const handleSignOutAndRedirect = async () => {
     try {
       router.push(`/signUp/professionalSignUp/${email}`);
@@ -91,19 +92,17 @@ const ProfileCompo = (props) => {
     }
   };
 
-  //   console.log(userData);
-
   if (user === undefined || prof === undefined) {
     return <Loading />;
   }
 
   return (
     <>
-      <div className="w-full h-full min-h-[78vh] flex flex-col  shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
+      <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
         {prof?.email === session?.user?.email && (
           <>
             <div
-              className={`w-full h-auto px-4 flex justify-between ${
+              className={`w-full h-auto px-4 py-2 md:py-0 flex justify-between ${
                 !editToggle ? "absolute" : "fixed"
               } z-50`}
             >
@@ -133,8 +132,13 @@ const ProfileCompo = (props) => {
               } w-full h-full bg-[00000055] backdrop-blur-sm flex items-cente justify-center z-40`}
             >
               {/*  h-[150vh] -translate-y-32 mt-40*/}
-              <div className="w-[50%] h-[73vh] fixed mt-14 bg-[#000] border border-[#53c28b] shadow-lg rounded-3xl flex items-center justify-center">
-                edit form
+              <div className="w-[90%] sm:w-[85%] md:w-[70%] lg:w-[50%] h-[73vh] ease-in-out duration-300 fixed mt-14 bg-[#000] border border-[#53c28b] shadow-lg rounded-3xl p-4 overflow-hidden flex items-center justify-center">
+                <div className="w-full h-full flex flex-col items-center justify-center gap-2 md:p-2 borde rounded-3xl">
+                  <span className="text-3xl text-[#53c28b]">Edit</span>
+                  <div className="w-full h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+                    <EditProfile prof={prof ?? "NaN"} />
+                  </div>
+                </div>
               </div>
             </div>
           </>
@@ -147,20 +151,24 @@ const ProfileCompo = (props) => {
                 socialToggle
                   ? "opacity-100 animate-fade-in-down"
                   : "opacity-0 animate-fade-in-up"
-              } w-full md:w-[34.5%] h-[61%] md:h-[71%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              } w-full md:w-[34.5%] h-[51vh] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
-              <div className="flex flex-col gap-1 items-center justify-center p-2">
+              <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <Link
                   href={prof?.sLOne ?? "https://sbh.vercel.app/"}
                   target="_blank"
+                  className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
                 >
-                  {prof?.sLOne ?? "sbh"}
+                  Link One
+                  {/* {prof?.sLOne ?? "sbh"} */}
                 </Link>
                 <Link
                   href={prof?.sLTwo ?? "https://sbh.vercel.app/"}
                   target="_blank"
+                  className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
                 >
-                  {prof?.sLTwo ?? "sbh"}
+                  Link Two
+                  {/* {prof?.sLTwo ?? "sbh"} */}
                 </Link>
               </div>
             </div>
@@ -169,16 +177,16 @@ const ProfileCompo = (props) => {
                 contactToggle
                   ? "opacity-100 animate-fade-in-down"
                   : "opacity-0 animate-fade-in-up"
-              } w-full md:w-[32.5%] h-[61%] md:h-[71%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              } w-full md:w-[32.5%] h-[51vh] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
-              <div className="flex flex-col gap-1 items-center justify-center p-2">
-                <div className="flex gap-1">
+              <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
+                <div className="w-[80%] h-[2.3rem] text-md flex gap-1 items-center justify-center">
                   <span className="cursor-pointer text-[#53c28b]">Email :</span>
                   <span className="cursor-pointer">
                     {prof?.email ?? "sbh@skillbehired.com"}
                   </span>
                 </div>
-                <div className="flex gap-1">
+                <div className="w-[80%] h-[2.3rem] text-md flex gap-1 items-center justify-center">
                   <span className="cursor-pointer text-[#53c28b]">
                     Phone no. :
                   </span>
@@ -223,7 +231,7 @@ const ProfileCompo = (props) => {
                   <span className="text-[#53c28b]">Service :</span>
                   <span> {prof?.service ?? "none"}</span>
                 </div>
-                <div className="flex flex-col md:flex-row gap-1">
+                <div className="flex gap-1">
                   <span className="text-[#53c28b]">Year of Experience :</span>
                   <span>{prof?.skillLevel ?? "none"}</span>
                 </div>
@@ -364,4 +372,255 @@ const ProfileCompo = (props) => {
   );
 };
 
-export default ProfileCompo;
+export default Profile;
+
+export const EditProfile = (props) => {
+  const { prof } = props;
+  const [profEdit, setProfEdit] = useState({
+    phone: "",
+    skillLevel: "",
+    workHistory: "",
+    zipCode: "",
+    address: "",
+    bio: "",
+    sLOne: "",
+    sLTwo: "",
+  });
+  const [condition, setCondition] = useState({
+    phoneC: true,
+  });
+  const [errors, setErrors] = useState({
+    phoneE: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+
+  const handlePhone = (e) => {
+    let inputValue = e.target.value.replace(/[^\d]/g, "").slice(0, 10);
+    // setProfEdit({ phone: inputValue });
+    setProfEdit((prev) => ({
+      ...prev,
+      phone: inputValue,
+    }));
+    if (inputValue.trim() === "") {
+      setCondition({ phoneC: true });
+      setErrors({ phoneE: "" });
+    } else {
+      setCondition({ phoneC: false });
+      if (inputValue.length !== 10) {
+        setErrors({ phoneE: "Number must be 10 digits and valid" });
+      } else {
+        setErrors({ phoneE: "" });
+      }
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfEdit({
+      ...profEdit,
+      [name]: value,
+    });
+  };
+  // console.log(profEdit);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(profEdit);
+
+    const data = new FormData();
+    data.set("email", prof?.email);
+    // data.set("profileImg", profileImg);
+    // data.set("resume", resume);
+    data.set("phone", profEdit.phone);
+    data.set("skillLevel", profEdit.skillLevel);
+    data.set("workHistory", profEdit.workHistory);
+    data.set("zipCode", profEdit.zipCode);
+    data.set("address", profEdit.address);
+    data.set("bio", profEdit.bio);
+    data.set("sLOne", profEdit.sLOne);
+    data.set("sLTwo", profEdit.sLTwo);
+
+    console.log(data);
+
+    if (profEdit.phone.trim() !== "" && profEdit.phone.length !== 10) {
+      setDisableBtn(false);
+      setCondition({ phoneC: false });
+      setErrors({ phoneE: "Number must be 10 digits and valid" });
+      setError("Number must be 10 digits and valid");
+    } else if (!data) {
+      setError("Nothing to update");
+    } else {
+      console.log(profEdit.phone);
+      console.log(data);
+      setError("");
+      setDisableBtn(true);
+      try {
+        const res = await fetch("/api/auth/professional-update", {
+          method: "POST",
+          body: data,
+        });
+        if (res.status === 400) {
+          setError("Invalid user! try again later");
+          setDisableBtn(false);
+        } else if (res.status === 500) {
+          setError("Img & resume file aren't supported!");
+          setDisableBtn(false);
+        } else if (res.status === 200) {
+          setDisableBtn(true);
+          // setError("Professional update successfully!");
+          setSuccess(true);
+        }
+        setDisableBtn(false);
+      } catch (error) {
+        setDisableBtn(false);
+        setError(error);
+        console.error("Error", error);
+      }
+    }
+  };
+
+  return (
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full h-auto flex flex-col gap-2"
+      >
+        <div className="flex flex-row gap-1">
+          <input
+            type="text"
+            name="countryCode"
+            value="+91"
+            // readOnly
+            disabled
+            className="w-[2.5rem] h-[52px] fontFam text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
+          />
+          <div
+            className={`w-full h-auto ${
+              condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
+            }`}
+          >
+            <input
+              type="text"
+              name="phone"
+              maxlength="10"
+              value={profEdit.phone}
+              onChange={handlePhone}
+              placeholder={`Phone Number - ${prof.phone ?? "NaN"}`}
+              className="allFormInput h-[52px]"
+            />
+            <div className="w-full h-auto overflow-hidden">
+              <span
+                className={`${
+                  condition.phoneC == true ? "flex animate-slideDown" : "hidden"
+                }`}
+              >
+                number must be 10 digits
+              </span>
+              <span
+                className={`${
+                  errors.phoneE.trim() !== ""
+                    ? "flex text-red-500 animate-slideDown"
+                    : "hidden"
+                }`}
+              >
+                {errors.phoneE}
+              </span>
+            </div>
+          </div>
+        </div>
+        <input
+          type="text"
+          name="skillLevel"
+          maxlength="2"
+          value={profEdit.skillLevel}
+          onChange={(e) =>
+            setProfEdit((prev) => ({
+              ...prev,
+              skillLevel: e.target.value.replace(/[^\d]/g, ""),
+            }))
+          }
+          placeholder={`Year's of Experience - ${prof.skillLevel ?? "NaN"}`}
+          className="allFormInput h-[52px]"
+        />
+        <textarea
+          name="workHistory"
+          value={profEdit.workHistory}
+          onChange={handleChange}
+          placeholder={`Work History - ${prof.workHistory ?? "NaN"}`}
+          rows={4}
+          className="allFormInput h-auto"
+        ></textarea>
+        <input
+          type="text"
+          name="zipCode"
+          value={profEdit.zipCode}
+          onChange={(e) =>
+            setProfEdit((prev) => ({
+              ...prev,
+              zipCode: e.target.value.replace(/[^\d]/g, ""),
+            }))
+          }
+          placeholder={`Zip Code - ${prof.zipCode ?? "NaN"}`}
+          className="allFormInput h-[52px]"
+        />
+        <textarea
+          name="address"
+          value={profEdit.address}
+          onChange={handleChange}
+          placeholder={`Address - ${prof.address ?? "NaN"}`}
+          rows={3}
+          className="allFormInput h-auto"
+        ></textarea>
+        <textarea
+          name="bio"
+          value={profEdit.bio}
+          onChange={handleChange}
+          placeholder={`Bio - ${prof.bio ?? "NaN"}`}
+          rows={4}
+          className="allFormInput h-auto"
+        ></textarea>
+        <input
+          type="url"
+          name="sLOne"
+          value={profEdit.sLOne}
+          onChange={handleChange}
+          placeholder={`Social link 1 - ${prof.sLOne ?? "NaN"}`}
+          className="allFormInput h-[52px]"
+        />
+        <input
+          type="url"
+          name="sLTwo"
+          value={profEdit.sLTwo}
+          onChange={handleChange}
+          placeholder={`Social link 2 - ${prof.sLTwo ?? "NaN"}`}
+          className="allFormInput h-[52px]"
+        />
+        {error && <span className="text-red-500">{error}</span>}
+        <span
+          className={`${
+            success ? "flex text-[#53c28b] animate-slideDown" : "hidden"
+          }`}
+        >
+          Updated successfully!
+        </span>
+        <button
+          disabled={disableBtn}
+          type="submit"
+          className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
+            disableBtn
+              ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+              : ""
+          }`}
+        >
+          {disableBtn ? (
+            <span className="animate-pulse">Updating...</span>
+          ) : (
+            "Update"
+          )}
+        </button>
+      </form>
+    </>
+  );
+};

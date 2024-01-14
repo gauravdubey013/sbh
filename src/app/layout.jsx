@@ -41,7 +41,7 @@ export default async function RootLayout({ children }) {
                 <Navbar />
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </div>
-              <Footer title="SkillBeHired" />
+              <Footer title="SkillBeHired" rights="GD & RA" />
             </div>
           </AuthProvider>
         </ThemeProvider>
