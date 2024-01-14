@@ -10,7 +10,6 @@ import Link from "next/link";
 import Image from "next/image";
 import DarkModeToggle from "./DarkModeToggle";
 import Headroom from "react-headroom";
-// import Dropdown from "./DropDownList";
 
 const Navbar = () => {
   const router = useRouter();
@@ -158,12 +157,15 @@ const Navbar = () => {
                     <>
                       <Dropdown
                         userEmail={session.user?.user?.email ?? ""}
-                        userName={session.user?.user?.firstname ?? ""}
-                        userRole={
-                          session?.user?.role || session.user?.user?.role
+                        userPfp={
+                          (session.user?.prof?.profileImgPath ||
+                            session.user?.authUser?.image) ??
+                          "/assets/bg6.png"
                         }
-                        btnOnClick={() => {
-                          signOut();
+                        userName={session.user?.user?.firstname ?? "name"}
+                        userRole={session.user?.user?.role ?? "role"}
+                        btnOnClick={async () => {
+                          await signOut();
                           router.push("/signIn");
                         }}
                         btnName={"LogOut"}
@@ -183,7 +185,7 @@ const Navbar = () => {
 export default Navbar;
 
 export const Dropdown = (props) => {
-  const { userEmail, userName, userRole, btnOnClick, btnName } = props;
+  const { userEmail, userPfp, userName, userRole, btnOnClick, btnName } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -194,11 +196,14 @@ export const Dropdown = (props) => {
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}
-      <img
-        onClick={handleToggle}
-        className="h-6 w-6 rounded-full cursor-pointer active:scale-75 ease-in-out duration-200"
-        src="/assets/bg6.png"
+      <Image
+        src={userPfp ?? "/assets/loading3d360Rotate.gif"}
         alt="Profile"
+        onClick={handleToggle}
+        priority={true}
+        width={800}
+        height={800}
+        className="h-6 w-6 rounded-full cursor-pointer active:scale-75 ease-in-out duration-200"
       />
 
       {/* Dropdown */}

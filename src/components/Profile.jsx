@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -32,8 +33,8 @@ export const calculateAge = (birthdate) => {
 };
 
 const Profile = (props) => {
-  const { setEmail } = props;
-  const email = setEmail;
+  // const { setEmail } = props;
+  const email = props.setEmail;
   const router = useRouter();
   const { data: session, status: sessionStuser } = useSession();
 
@@ -85,8 +86,8 @@ const Profile = (props) => {
 
   const handleSignOutAndRedirect = async () => {
     try {
-      router.push(`/signUp/professionalSignUp/${email}`);
       await signOut();
+      router.push(`/signUp/professionalSignUp/${email}`);
     } catch (error) {
       console.error("Error during signOut:", error);
     }
@@ -203,11 +204,12 @@ const Profile = (props) => {
             <div className="w-32 h-32 bg-[#000] border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
                 src={
-                  user?.role == "user" || user?.role == "admin"
-                    ? "/assets/loading3d360Rotate.gif"
+                  user?.lastname == "google" || user?.lastname == "gitHub"
+                    ? session?.user?.authUser?.image ??
+                      "/assets/loading3d360Rotate.gif"
                     : prof?.profileImgPath ?? "/assets/loading3d360Rotate.gif"
                 }
-                alt={`${user?.firstname}`}
+                alt={"userProfile"}
                 priority={true}
                 width={800}
                 height={800}
@@ -233,10 +235,6 @@ const Profile = (props) => {
                   <span className="text-[#53c28b]">Year of Experience :</span>
                   <span>{prof?.skillLevel ?? "none"}</span>
                 </div>
-                {/* <div className="flex flex-col md:flex-row gap-1">
-                  <span className="text-[#53c28b]">Work History :</span>
-                  <span>{prof?.workHistory ?? "none"}</span>
-                </div> */}
               </div>
             )}
           </div>
@@ -396,7 +394,6 @@ export const EditProfile = (props) => {
 
   const handlePhone = (e) => {
     let inputValue = e.target.value.replace(/[^\d]/g, "").slice(0, 10);
-    // setProfEdit({ phone: inputValue });
     setProfEdit((prev) => ({
       ...prev,
       phone: inputValue,
@@ -420,17 +417,15 @@ export const EditProfile = (props) => {
       [name]: value,
     });
   };
-  // console.log(profEdit);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(profEdit);
 
     const data = new FormData();
     data.set("email", prof?.email);
     // data.set("profileImg", profileImg);
     // data.set("resume", resume);
+    console.log(profEdit.phone);
     data.set("phone", profEdit.phone);
     data.set("skillLevel", profEdit.skillLevel);
     data.set("workHistory", profEdit.workHistory);
@@ -440,20 +435,20 @@ export const EditProfile = (props) => {
     data.set("sLOne", profEdit.sLOne);
     data.set("sLTwo", profEdit.sLTwo);
 
-    console.log(data);
-
     if (profEdit.phone.trim() !== "" && profEdit.phone.length !== 10) {
       setDisableBtn(false);
       setCondition({ phoneC: false });
       setErrors({ phoneE: "Number must be 10 digits and valid" });
       setError("Number must be 10 digits and valid");
-    } else if (!data) {
-      setError("Nothing to update");
-    } else {
-      console.log(profEdit.phone);
-      console.log(data);
+    }
+    //  else if (data !== null) {
+    //   setSuccess(false);
+    //   setError("Nothing to update");
+    // }
+    else {
       setError("");
       setDisableBtn(true);
+      setSuccess(false);
       try {
         const res = await fetch("/api/auth/professional-update", {
           method: "POST",
@@ -462,10 +457,12 @@ export const EditProfile = (props) => {
         if (res.status === 400) {
           setError("Invalid user! try again later");
           setDisableBtn(false);
+          setSuccess(false);
         } else if (res.status === 500) {
           setError("Img & resume file aren't supported!");
           setDisableBtn(false);
         } else if (res.status === 200) {
+          setError("");
           setSuccess(true);
           setProfEdit({
             phone: "",
@@ -603,7 +600,13 @@ export const EditProfile = (props) => {
           placeholder={`Social link 2 - ${prof.sLTwo ?? "NaN"}`}
           className="allFormInput h-[52px]"
         />
-        {error && <span className="text-red-500">{error}</span>}
+        <span
+          className={`${
+            error ? "flex text-red-500 animate-slideDown" : "hidden"
+          }`}
+        >
+          {error}
+        </span>
         <span
           className={`${
             success ? "flex text-[#53c28b] animate-slideDown" : "hidden"

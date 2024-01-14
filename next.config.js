@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["lh3.googleusercontent.com", "avatars.githubusercontent.com"],
+  },
+};
 
-// module.exports = {
-//   nextConfig,
-//   env: {
-//     GITHUB_ID: process.env.GITHUB_ID,
-//     GITHUB_SECRET: process.env.GITHUB_SECRET,
-//     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-//     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-//   },
-// };
 module.exports = nextConfig;

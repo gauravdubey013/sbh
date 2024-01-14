@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import connect from "@/utils/db";
+import Professional from "@/models/Professional";
 
 var lastnameGoogle = "google";
 var lastnameGithub = "gitHub";
@@ -108,9 +109,18 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
+      await connect();
       if (typeof token?.user !== "undefined") {
         const userExists = await User.findOne({ email: token?.user?.email });
-        if (
+        const profExists = await Professional.findOne({
+          email: token?.user?.email,
+        });
+        if (userExists?.role === "professional") {
+          session.user = {
+            user: token.user,
+            prof: profExists,
+          };
+        } else if (
           userExists.lastname !== "google" ||
           userExists.lastname !== "gitHub"
         ) {

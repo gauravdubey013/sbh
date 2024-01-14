@@ -65,7 +65,7 @@ export default function HeroTest() {
             <AdBannerCarousel
               bg="bg-[#53c28b]"
               abdData={adBanner}
-              profile={"hidden"}
+              // profile={"hidden"}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
               lgH="lg:h-[20rem]"

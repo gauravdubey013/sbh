@@ -22,7 +22,6 @@ export const POST = async (request) => {
     const updSLTwo = data.get("sLTwo");
 
     const existingProf = await Professional.findOne({ email });
-    // console.log(existingProf);
     if (!existingProf) {
       return new NextResponse(
         "User already exists! - Invalid user! try again later",
@@ -30,30 +29,14 @@ export const POST = async (request) => {
       );
     }
 
-    if (updPhone.trim() !== "" && updPhone.length !== 10) {
-      existingProf.phone = updPhone;
-    }
-    if (updSkillLevel.trim() !== "") {
-      existingProf.skillLevel = updSkillLevel;
-    }
-    if (updWorkHistory.trim() !== "") {
-      existingProf.workHistory = updWorkHistory;
-    }
-    if (updZipCode.trim() !== "") {
-      existingProf.zipCode = updZipCode;
-    }
-    if (updAddress.trim() !== "") {
-      existingProf.address = updAddress;
-    }
-    if (updBio.trim() !== "") {
-      existingProf.bio = updBio;
-    }
-    if (updSLOne.trim() !== "") {
-      existingProf.sLOne = updSLOne;
-    }
-    if (updSLTwo.trim() !== "") {
-      existingProf.sLTwo = updSLTwo;
-    }
+    if (/^\d{10}$/.test(updPhone)) existingProf.phone = updPhone;
+    if (updSkillLevel) existingProf.skillLevel = updSkillLevel;
+    if (updWorkHistory) existingProf.workHistory = updWorkHistory;
+    if (updZipCode) existingProf.zipCode = updZipCode;
+    if (updAddress) existingProf.address = updAddress;
+    if (updBio) existingProf.bio = updBio;
+    if (updSLOne) existingProf.sLOne = updSLOne;
+    if (updSLTwo) existingProf.sLTwo = updSLTwo;
 
     await existingProf.save();
     return new NextResponse("Professional update successfully!", {
