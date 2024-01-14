@@ -99,31 +99,29 @@ const Profile = (props) => {
   return (
     <>
       <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
+        <div
+          className={`w-full h-auto px-4 py-2 md:py-0 flex justify-between ${
+            !editToggle ? "absolute" : "fixed"
+          } z-50`}
+        >
+          <div
+            className="flex text-lg items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300"
+            onClick={() => router.back()}
+          >
+            <IoMdArrowRoundBack size={25} />
+            Back
+          </div>
+          {prof?.email === session?.user?.email && (
+            <div
+              className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
+              onClick={() => setEditToggle(!editToggle)}
+            >
+              {!editToggle ? <FaUserEdit size={25} /> : <MdCancel size={25} />}
+            </div>
+          )}
+        </div>
         {prof?.email === session?.user?.email && (
           <>
-            <div
-              className={`w-full h-auto px-4 py-2 md:py-0 flex justify-between ${
-                !editToggle ? "absolute" : "fixed"
-              } z-50`}
-            >
-              <div
-                className="flex text-lg items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300"
-                onClick={() => router.back()}
-              >
-                <IoMdArrowRoundBack size={25} />
-                Back
-              </div>
-              <div
-                className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
-                onClick={() => setEditToggle(!editToggle)}
-              >
-                {!editToggle ? (
-                  <FaUserEdit size={25} />
-                ) : (
-                  <MdCancel size={25} />
-                )}
-              </div>
-            </div>
             <div
               className={` ${
                 !editToggle
