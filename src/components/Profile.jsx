@@ -74,8 +74,6 @@ const Profile = (props) => {
     userInfo();
     // }
   }, [email, userData, error]);
-  // console.log(userData);
-
   // Optional chaining to avoid undefined errors
   const user = userData?.[0]?.user;
   let prof;
@@ -425,7 +423,6 @@ export const EditProfile = (props) => {
     data.set("email", prof?.email);
     // data.set("profileImg", profileImg);
     // data.set("resume", resume);
-    console.log(profEdit.phone);
     data.set("phone", profEdit.phone);
     data.set("skillLevel", profEdit.skillLevel);
     data.set("workHistory", profEdit.workHistory);

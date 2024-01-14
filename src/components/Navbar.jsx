@@ -31,7 +31,7 @@ const Navbar = () => {
   useEffect(() => {
     setHashTagValue(window.location.hash);
   }, []);
-  console.log(session);
+  // console.log(session);
 
   // console.log(activeTab);
 
