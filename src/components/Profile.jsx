@@ -440,12 +440,7 @@ export const EditProfile = (props) => {
       setCondition({ phoneC: false });
       setErrors({ phoneE: "Number must be 10 digits and valid" });
       setError("Number must be 10 digits and valid");
-    }
-    //  else if (data !== null) {
-    //   setSuccess(false);
-    //   setError("Nothing to update");
-    // }
-    else {
+    } else {
       setError("");
       setDisableBtn(true);
       setSuccess(false);
