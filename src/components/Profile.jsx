@@ -468,9 +468,17 @@ export const EditProfile = (props) => {
           setError("Img & resume file aren't supported!");
           setDisableBtn(false);
         } else if (res.status === 200) {
-          setDisableBtn(true);
-          // setError("Professional update successfully!");
           setSuccess(true);
+          setProfEdit({
+            phone: "",
+            skillLevel: "",
+            workHistory: "",
+            zipCode: "",
+            address: "",
+            bio: "",
+            sLOne: "",
+            sLTwo: "",
+          });
         }
         setDisableBtn(false);
       } catch (error) {
