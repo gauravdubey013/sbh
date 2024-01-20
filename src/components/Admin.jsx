@@ -41,7 +41,7 @@ const Admin = () => {
   const contactUsCollection = dBCollection?.contactUsCollection;
   return (
     <>
-      <section className="w-full h-[78vh] flex flex-row">
+      <section className="w-full h-[78vh] flex flex-row animate-slideDown">
         <div className="adminNav w-[20%] h-full p-2 border-r-[0.5px] border-[#53c28b] flex flex-col gap-4">
           <div
             onClick={() => {
@@ -80,11 +80,21 @@ const Admin = () => {
             Contact Us
           </div>
         </div>
-        <div className="adminNav w-[80%] h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
-          {isUserOpen && <UserData usersCollection={usersCollection} />}
-          {isProfOpen && <ProfData profsCollection={profsCollection} />}
+        <div className="adminNav w-[80%] h-auto animate-fade-in-down scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+          {isUserOpen && (
+            <div className="animate-fade-in-down">
+              <UserData usersCollection={usersCollection} />
+            </div>
+          )}
+          {isProfOpen && (
+            <div className="animate-fade-in-down">
+              <ProfData profsCollection={profsCollection} />
+            </div>
+          )}
           {isContactUsOpen && (
-            <ContactUsData contactUsCollection={contactUsCollection} />
+            <div className="animate-fade-in-down">
+              <ContactUsData contactUsCollection={contactUsCollection} />
+            </div>
           )}
         </div>
       </section>

@@ -219,11 +219,6 @@ export const Dropdown = (props) => {
           >
             {/* Dropdown Items */}
             <div className="block text-sm" role="menuitem">
-              {/* {authUser?.user?.signInWith === "google" ||
-              authUser?.user?.signInWith === "gitHub"
-                ? authUser?.user?.name ?? "name"
-                : `${authUser?.user?.firstname} ${authUser?.user?.lastname}` ??
-                  "name"} */}
               {authUser?.user?.name ?? "name"}
             </div>
             <div className="block text-sm" role="menuitem">
@@ -236,16 +231,16 @@ export const Dropdown = (props) => {
             >
               View Profile
             </Link>
-            {authUser?.user?.role === "admin" ||
-              (authUser?.user?.role === "superAdmin" && (
-                <Link
-                  href={`/admin/${authUser?.user?.email ?? ""}`}
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
-                >
-                  Admin
-                </Link>
-              ))}
+            {(authUser?.user?.role === "admin" ||
+              authUser?.user?.role === "superAdmin") && (
+              <Link
+                href={`/admin/${authUser?.user?.email ?? ""}`}
+                onClick={() => setIsOpen(!isOpen)}
+                className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+              >
+                Admin
+              </Link>
+            )}
             <button
               onClick={btnOnClick}
               role="userLogout"
