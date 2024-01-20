@@ -80,7 +80,7 @@ const Profile = (props) => {
   if (user?.role == "professional") {
     prof = userData?.[1]?.prof;
   } else prof = null;
-  const age = prof ? calculateAge(prof?.dob) : "18+";
+  const age = prof ? calculateAge(prof?.dob) : "";
 
   const handleSignOutAndRedirect = async () => {
     try {
@@ -129,7 +129,7 @@ const Profile = (props) => {
               } w-full h-full bg-[00000055] backdrop-blur-sm flex items-cente justify-center z-40`}
             >
               {/*  h-[150vh] -translate-y-32 mt-40*/}
-              <div className="w-[90%] sm:w-[85%] md:w-[70%] lg:w-[50%] h-[73vh] ease-in-out duration-300 fixed mt-14 bg-[#000] border border-[#53c28b] shadow-lg rounded-3xl p-4 overflow-hidden flex items-center justify-center">
+              <div className="w-[90%] sm:w-[85%] md:w-[70%] lg:w-[50%] h-[73vh] ease-in-out duration-300 fixed mt-14 bbg border border-[#53c28b] shadow-lg rounded-3xl p-4 overflow-hidden flex items-center justify-center">
                 <div className="w-full h-full flex flex-col items-center justify-center gap-2 md:p-2 borde rounded-3xl">
                   <span className="text-3xl text-[#53c28b]">Edit</span>
                   <div className="w-full h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
@@ -199,7 +199,7 @@ const Profile = (props) => {
         <div className="w-full h-full bg-[#53c28b] shadow-lg pb-3 rounded-b-3xl overflow-hidden z-10">
           {/*  */}
           <div className="flex rounded-b-3xl bbg space-y-5 flex-col items-center py-7">
-            <div className="w-32 h-32 bg-[#000] border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
+            <div className="w-32 h-32 bbg border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
                 src={
                   user?.lastname == "google" || user?.lastname == "gitHub"
@@ -502,7 +502,7 @@ export const EditProfile = (props) => {
               maxlength="10"
               value={profEdit.phone}
               onChange={handlePhone}
-              placeholder={`Phone Number - ${prof.phone ?? "NaN"}`}
+              placeholder={`Phone Number : ${prof.phone ?? "NaN"}`}
               className="allFormInput h-[52px]"
             />
             <div className="w-full h-auto overflow-hidden">
@@ -536,7 +536,7 @@ export const EditProfile = (props) => {
               skillLevel: e.target.value.replace(/[^\d]/g, ""),
             }))
           }
-          placeholder={`Year's of Experience - ${prof.skillLevel ?? "NaN"}`}
+          placeholder={`Year's of Experience : ${prof.skillLevel ?? "NaN"}`}
           className="allFormInput h-[52px]"
         />
         <textarea

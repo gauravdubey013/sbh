@@ -156,14 +156,7 @@ const Navbar = () => {
                   ) : (
                     <>
                       <Dropdown
-                        userEmail={session.user?.user?.email ?? ""}
-                        userPfp={
-                          (session.user?.prof?.profileImgPath ||
-                            session.user?.authUser?.image) ??
-                          "/assets/bg6.png"
-                        }
-                        userName={session.user?.user?.firstname ?? "name"}
-                        userRole={session.user?.user?.role ?? "role"}
+                        authUser={session.user ?? ""}
                         btnOnClick={async () => {
                           await signOut();
                           router.push("/signIn");
@@ -185,19 +178,22 @@ const Navbar = () => {
 export default Navbar;
 
 export const Dropdown = (props) => {
-  const { userEmail, userPfp, userName, userRole, btnOnClick, btnName } = props;
+  const { authUser, btnOnClick, btnName } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // console.log("user: ", user);
+  // console.log("user: ", authUser?.user?.lastname);
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}
       <Image
-        src={userPfp ?? "/assets/loading3d360Rotate.gif"}
+        src={
+          (authUser?.prof?.profileImgPath || authUser?.authUser?.image) ??
+          "/assets/bg6.png"
+        }
         alt="Profile"
         onClick={handleToggle}
         priority={true}
@@ -223,18 +219,32 @@ export const Dropdown = (props) => {
           >
             {/* Dropdown Items */}
             <div className="block text-sm" role="menuitem">
-              {userName ?? "name"}
+              {authUser?.user?.lastname === "google" ||
+              authUser?.user?.lastname === "gitHub"
+                ? authUser?.user?.firstname ?? "name"
+                : `${authUser?.user?.firstname} ${authUser?.user?.lastname}` ??
+                  "name"}
             </div>
             <div className="block text-sm" role="menuitem">
-              {userRole ?? "role"}
+              {authUser?.user?.role ?? "role"}
             </div>
             <Link
-              href={`/profile/${userEmail}`}
+              href={`/profile/${authUser?.user?.email ?? ""}`}
               onClick={() => setIsOpen(!isOpen)}
               className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
             >
               View Profile
             </Link>
+            {authUser?.user?.role === "admin" ||
+              (authUser?.user?.role === "superAdmin" && (
+                <Link
+                  href={`/admin/${authUser?.user?.email ?? ""}`}
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+                >
+                  Admin
+                </Link>
+              ))}
             <button
               onClick={btnOnClick}
               role="userLogout"

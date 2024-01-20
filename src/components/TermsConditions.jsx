@@ -4,7 +4,7 @@ const TermsConditions = (props) => {
   let { setHead, setDes, setData } = props;
   return (
     <>
-      <div className="bdbg w-[90%] h-[90%] border-[1px] border-[#53c28b] shadow-2xl rounded-2xl py-4 overflow-hidden">
+      <div className="bbg w-[90%] h-[90%] border-[1px] border-[#53c28b] shadow-2xl rounded-2xl py-4 overflow-hidden">
         <div className="scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory w-full h-full p-2 md:px-4">
           <h2 className="text-center font-extrabold text-3xl text-[#53c28b] underline underline-offset-4 mb-4">
             {setHead}

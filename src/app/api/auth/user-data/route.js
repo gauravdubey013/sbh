@@ -12,7 +12,7 @@ export const POST = async (request) => {
   var userData = [];
 
   if (!user) {
-    return new NextResponse("Invalid token or has expired", {
+    return new NextResponse("Doesn't exists", {
       status: 400,
     });
   }

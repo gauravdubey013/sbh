@@ -205,7 +205,7 @@ const professionalSignUp = ({ params }) => {
                       <div className="w-full h-auto overflow-hidden">
                         <span
                           className={`${
-                            errors.dobE.trim() !== ""
+                            errors.dobE
                               ? "flex text-red-500 animate-slideDown"
                               : "hidden"
                           }`}
@@ -262,7 +262,7 @@ const professionalSignUp = ({ params }) => {
                           </span>
                           <span
                             className={`${
-                              errors.phoneE.trim() !== ""
+                              errors.phoneE
                                 ? "flex text-red-500 animate-slideDown"
                                 : "hidden"
                             }`}

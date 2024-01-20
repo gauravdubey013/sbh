@@ -59,11 +59,11 @@ const AdBannerCarousel = (props) => {
       <Slider {...settings} className="rounded-lg bg-whi">
         {abdData.map((adb) => (
           <div
+            key={adb.id}
             className={`w-auto ${defH} ${mdH} ${lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
-              key={adb.id}
               className={`w-full h-full ${bg} relative scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg overflow-hidden`}
             >
               <div className="w-auto h-auto absolute text-xs text-blue-500 bg-[#00000026] right-0 rounded-l-lg z-20 px-2 hover:underline">

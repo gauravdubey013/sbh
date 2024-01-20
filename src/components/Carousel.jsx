@@ -49,10 +49,10 @@ const Carousel = (props) => {
         {slides.map((slide) => (
           <div
             className={`w-auto ${props.defH} ${props.mdH} ${props.lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
+            key={slide.id}
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
-              key={slide.id}
               className={`w-full h-full ${bg} scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
             >
               {" "}
@@ -72,7 +72,7 @@ const Carousel = (props) => {
                 </div>
                 <div className="fontFam w-full h-auto z-10 -translate-y-20 lg:-translate-y-16 bg-transparent text-black bottom-0 rounded-lg p-2 overflow-hidden flex flex-col gap-1">
                   <h2 className="text-md md:text-lg font-semibold">
-                    Name chomu
+                    Name Rakhsita
                   </h2>
                   <span className="text-sm line-clamp-3 -mt-2">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
