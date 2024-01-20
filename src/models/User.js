@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    firstname: {
+    name: {
       type: String,
       required: true,
     },
-    lastname: {
+    signInWith: {
       type: String,
       required: true,
     },

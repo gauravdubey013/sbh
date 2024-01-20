@@ -17,8 +17,8 @@ export const POST = async (request) => {
   const hashPassword = await bcrypt.hash(password, 5);
 
   const newUser = new User({
-    firstname,
-    lastname,
+    name: firstname + " " + lastname,
+    signInWith: "Email&Password",
     email,
     password: hashPassword,
     role: profCheckValue,

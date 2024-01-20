@@ -18,23 +18,12 @@ export const POST = async (request) => {
   }
 
   if (prof) {
-    userData = [
-      {
-        user: user,
-      },
-      {
-        prof: prof,
-      },
-    ];
+    userData = { user, prof };
     return new NextResponse(JSON.stringify(userData), {
       status: 200,
     });
   } else {
-    userData = [
-      {
-        user: user,
-      },
-    ];
+    userData = { user: user };
     return new NextResponse(JSON.stringify(userData), {
       status: 200,
     });

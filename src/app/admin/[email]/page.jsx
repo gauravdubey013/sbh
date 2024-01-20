@@ -4,8 +4,6 @@ import React from "react";
 const AdminPage = ({ params }) => {
   return (
     <>
-      {/* <div>AdminPage</div> */}
-      {/* <div className="">{params.email}</div> */}
       <Admin />
     </>
   );

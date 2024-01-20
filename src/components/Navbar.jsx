@@ -156,7 +156,7 @@ const Navbar = () => {
                   ) : (
                     <>
                       <Dropdown
-                        authUser={session.user ?? ""}
+                        authUser={session ?? ""}
                         btnOnClick={async () => {
                           await signOut();
                           router.push("/signIn");
@@ -219,11 +219,12 @@ export const Dropdown = (props) => {
           >
             {/* Dropdown Items */}
             <div className="block text-sm" role="menuitem">
-              {authUser?.user?.lastname === "google" ||
-              authUser?.user?.lastname === "gitHub"
-                ? authUser?.user?.firstname ?? "name"
+              {/* {authUser?.user?.signInWith === "google" ||
+              authUser?.user?.signInWith === "gitHub"
+                ? authUser?.user?.name ?? "name"
                 : `${authUser?.user?.firstname} ${authUser?.user?.lastname}` ??
-                  "name"}
+                  "name"} */}
+              {authUser?.user?.name ?? "name"}
             </div>
             <div className="block text-sm" role="menuitem">
               {authUser?.user?.role ?? "role"}

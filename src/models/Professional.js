@@ -50,21 +50,22 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+
     bio: {
       type: String,
-      // required: true,
+      required: false,
     },
     resumePath: {
       type: String,
-      // required: true,
+      required: false,
     },
     sLOne: {
       type: String,
-      // required: true,
+      required: false,
     },
     sLTwo: {
       type: String,
-      // required: true,
+      required: false,
     },
   },
   { timestamps: true }

@@ -7,10 +7,10 @@ import bcrypt from "bcryptjs";
 import connect from "@/utils/db";
 import Professional from "@/models/Professional";
 
-var lastnameGoogle = "google";
-var lastnameGithub = "gitHub";
-var role = "user";
-var password = "setPassword@123";
+const signInWithGoogle = "google";
+const signInWithGithub = "gitHub";
+const role = "user";
+const password = "setPassword@123";
 const hashPassword = await bcrypt.hash(password, 5);
 
 export const authOptions = {
@@ -57,16 +57,15 @@ export const authOptions = {
       if (account?.provider === "credentials") return true;
 
       if (account.provider === "google") {
-        const { name, email } = user;
         try {
           await connect();
           const userExists = await User.findOne({ email: user.email });
 
           if (!userExists) {
             const newUser = new User({
-              firstname: name,
-              lastname: lastnameGoogle,
-              email,
+              name: user.name,
+              signInWith: signInWithGoogle,
+              email: user.email,
               password: hashPassword,
               role,
             });
@@ -86,8 +85,8 @@ export const authOptions = {
           const userExists = await User.findOne({ email: user.email });
           if (!userExists) {
             const newUser = new User({
-              firstname: user.name,
-              lastname: lastnameGithub,
+              name: user.name,
+              signInWith: signInWithGithub,
               email: user.email,
               password: hashPassword,
               role,
@@ -121,8 +120,8 @@ export const authOptions = {
             prof: profExists,
           };
         } else if (
-          userExists.lastname !== "google" ||
-          userExists.lastname !== "gitHub"
+          userExists.signInWith !== "google" ||
+          userExists.signInWith !== "gitHub"
         ) {
           session.user = {
             user: userExists,
@@ -132,8 +131,34 @@ export const authOptions = {
           session.user = { user: token.user };
         }
       }
-      return session;
+      return session.user;
     },
+    // async session({ session, token }) {
+    //   await connect();
+    //   if (typeof token?.user !== "undefined") {
+    //     const userExists = await User.findOne({ email: token?.user?.email });
+    //     const profExists = await Professional.findOne({
+    //       email: token?.user?.email,
+    //     });
+    //     if (userExists?.role === "professional") {
+    //       session.user = {
+    //         user: token.user,
+    //         prof: profExists,
+    //       };
+    //     } else if (
+    //       userExists.lastname !== "google" ||
+    //       userExists.lastname !== "gitHub"
+    //     ) {
+    //       session.user = {
+    //         user: userExists,
+    //         authUser: token.user,
+    //       };
+    //     } else {
+    //       session.user = { user: token.user };
+    //     }
+    //   }
+    //   return session;
+    // },
   },
 };
 

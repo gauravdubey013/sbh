@@ -74,11 +74,12 @@ const Profile = (props) => {
     userInfo();
     // }
   }, [email, userData, error]);
+
   // Optional chaining to avoid undefined errors
-  const user = userData?.[0]?.user;
+  const user = userData?.user;
   let prof;
   if (user?.role == "professional") {
-    prof = userData?.[1]?.prof;
+    prof = userData?.prof;
   } else prof = null;
   const age = prof ? calculateAge(prof?.dob) : "";
 
@@ -94,7 +95,7 @@ const Profile = (props) => {
   if (user === undefined || prof === undefined) {
     return <Loading />;
   }
-
+  // console.log(session?.user?.email);
   return (
     <>
       <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
@@ -110,7 +111,7 @@ const Profile = (props) => {
             <IoMdArrowRoundBack size={25} />
             Back
           </div>
-          {prof?.email === session?.user?.user?.email && (
+          {prof?.email === session?.user?.email && (
             <div
               className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
               onClick={() => setEditToggle(!editToggle)}
@@ -119,7 +120,7 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        {prof?.email === session?.user?.user?.email && (
+        {prof?.email === session?.user?.email && (
           <>
             <div
               className={` ${
@@ -202,8 +203,8 @@ const Profile = (props) => {
             <div className="w-32 h-32 bbg border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
                 src={
-                  user?.lastname == "google" || user?.lastname == "gitHub"
-                    ? session?.user?.authUser?.image ??
+                  user?.signInWith == "google" || user?.signInWith == "gitHub"
+                    ? session?.authUser?.image ??
                       "/assets/loading3d360Rotate.gif"
                     : prof?.profileImgPath ?? "/assets/loading3d360Rotate.gif"
                 }
@@ -217,9 +218,7 @@ const Profile = (props) => {
             <div className="flex gap-1 text-xl">
               <span className="text-[#53c28b] capitalize">{user?.role} :</span>
               <span className="text-xl">
-                {user?.lastname !== "google" && user?.lastname !== "gitHub"
-                  ? `${user?.firstname} ${user?.lastname}`
-                  : user?.firstname}
+                {user?.name}
                 <span className="font-light">, {age}</span>
               </span>
             </div>
