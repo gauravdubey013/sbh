@@ -487,14 +487,25 @@ export const DeletedUserData = (props) => {
                 />
               </div>
               <div className="w-auto flex flex-col gap-[1px] text-cente p-1">
-                <span className="font-bold">{i?.name ?? "name"}</span>
-                <span className="text-sm">{i?.email ?? "email"}</span>
-                <span className="text-sm">{i?.role ?? "role"}</span>
-                <span className="text-sm">
-                  SignInWith : {i?.signInWith ?? "signInWith"}
+                <span className="font-bold">
+                  <span className="text-[#53c28b]">Name : </span>
+                  {i?.name ?? "name"}
                 </span>
                 <span className="text-sm">
-                  Delete time : {i?.createdAt ?? "createdAt"}
+                  <span className="text-[#53c28b]">Email : </span>
+                  {i?.email ?? "email"}
+                </span>
+                <span className="text-sm">
+                  <span className="text-[#53c28b]">Role : </span>
+                  {i?.role ?? "role"}
+                </span>
+                <span className="text-sm">
+                  <span className="text-[#53c28b]">SignInWith : </span>
+                  {i?.signInWith ?? "signInWith"}
+                </span>
+                <span className="text-sm">
+                  <span className="text-[#53c28b]">Deleted Date&Time : </span>
+                  {i?.createdAt ?? "createdAt"}
                 </span>
               </div>
             </div>
