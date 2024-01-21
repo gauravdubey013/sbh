@@ -8,10 +8,11 @@ const Admin = () => {
   const [isUserOpen, setIsUserOpen] = useState(true);
   const [isProfOpen, setIsProfOpen] = useState(false);
   const [isContactUsOpen, setIsContactUsOpen] = useState(false);
+  const [isDelUserOpen, setIsDelUserOpen] = useState(false);
   const activeCss = "bg-[#53c28b]";
 
   useEffect(() => {
-    const dbCollectionInfo = async () => {
+    const fetchDBCollectionInfo = async () => {
       try {
         const res = await fetch("/api/get-db-collection", {
           method: "GET",
@@ -32,11 +33,15 @@ const Admin = () => {
     };
 
     if (!dBCollection) {
-      dbCollectionInfo();
+      fetchDBCollectionInfo();
+    }
+    for (let index = 0; index < 1500; index++) {
+      if (index < 10) setDBCollection(null);
     }
   }, [dBCollection]);
 
   const usersCollection = dBCollection?.usersCollection;
+  const deletedUsersCollection = dBCollection?.deletedUsersCollection;
   const profsCollection = dBCollection?.profsCollection;
   const contactUsCollection = dBCollection?.contactUsCollection;
   return (
@@ -48,6 +53,7 @@ const Admin = () => {
               !isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${
               isUserOpen == true ? activeCss : ""
@@ -60,6 +66,7 @@ const Admin = () => {
               !isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${
               isProfOpen == true ? activeCss : ""
@@ -72,12 +79,26 @@ const Admin = () => {
               !isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${
               isContactUsOpen == true ? activeCss : ""
             } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             Contact Us
+          </div>
+          <div
+            onClick={() => {
+              !isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+            }}
+            className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${
+              isDelUserOpen == true ? activeCss : ""
+            } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+          >
+            Deleted User
           </div>
         </div>
         <div className="adminNav w-[80%] h-auto animate-fade-in-down scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
@@ -94,6 +115,13 @@ const Admin = () => {
           {isContactUsOpen && (
             <div className="animate-fade-in-down">
               <ContactUsData contactUsCollection={contactUsCollection} />
+            </div>
+          )}
+          {isDelUserOpen && (
+            <div className="animate-fade-in-down">
+              <DeletedUserData
+                deletedUsersCollection={deletedUsersCollection}
+              />
             </div>
           )}
         </div>
@@ -176,8 +204,10 @@ export const UserEditPanel = (props) => {
     role: "",
   });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
+  const [updSuccess, setUpdSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updDisableBtn, setUpdDisableBtn] = useState(false);
+  const [delDisableBtn, setDelDisableBtn] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -197,34 +227,62 @@ export const UserEditPanel = (props) => {
     data.set("role", userEdit.role);
 
     try {
-      const res = await fetch("/api/auth/admin-user-edit", {
+      const res = await fetch("/api/admin-user-edit", {
         method: "POST",
         body: data,
       });
       if (res.status === 400) {
         setError("Invalid user! try again later");
-        setDisableBtn(false);
-        setSuccess(false);
+        setUpdDisableBtn(false);
+        setUpdSuccess(false);
       } else if (res.status === 500) {
         setError("Img & resume file aren't supported!");
-        setDisableBtn(false);
+        setUpdDisableBtn(false);
       } else if (res.status === 200) {
         setError("");
-        setSuccess(true);
+        setUpdSuccess(true);
         setUserEdit({
           name: "",
           email: "",
           role: "",
         });
       }
-      setDisableBtn(false);
+      setUpdDisableBtn(false);
     } catch (error) {
-      setDisableBtn(false);
+      setUpdDisableBtn(false);
       setError(error);
       console.error("Error", error);
     }
   };
 
+  const handleDelete = async () => {
+    const email = editData?.email ?? "email99";
+
+    setDelDisableBtn(true);
+    try {
+      const res = await fetch("/api/admin-user-delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+        }),
+      });
+
+      if (res.status === 400) {
+        setError("User doesn't exists!");
+        setDelDisableBtn(false);
+      }
+      if (res.status === 200) {
+        console.log("Successfully deleted!");
+        setDelDisableBtn(true);
+        setError("");
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Check console for error");
+    }
+  };
   return (
     <>
       <form
@@ -264,27 +322,46 @@ export const UserEditPanel = (props) => {
         </span>
         <span
           className={`${
-            success ? "flex text-[#53c28b] animate-slideDown" : "hidden"
+            updSuccess ? "flex text-[#53c28b] animate-slideDown" : "hidden"
           }`}
         >
-          Updated successfully!
+          Updated updSuccessfully!
         </span>
         <button
-          disabled={disableBtn}
+          disabled={updDisableBtn ?? true}
           type="submit"
           className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
-            disableBtn
+            updDisableBtn
               ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
               : ""
           }`}
         >
-          {disableBtn ? (
+          {updDisableBtn ? (
             <span className="animate-pulse">Updating...</span>
           ) : (
             "Update"
           )}
         </button>
+        <span
+          className={`${
+            deleteSuccess ? "flex text-[#53c28b] animate-slideDown" : "hidden"
+          }`}
+        >
+          User Deleted Successfully!
+        </span>
       </form>
+      <button
+        type="button"
+        disabled={delDisableBtn ?? true}
+        onClick={handleDelete}
+        className={`allBtn w-full h-[3rem] text-xl rounded-3xl mb-4 ${
+          delDisableBtn
+            ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+            : ""
+        }`}
+      >
+        Delete User
+      </button>
     </>
   );
 };
@@ -340,7 +417,7 @@ export const ContactUsData = (props) => {
       setData(contactUsCollection);
     }
   }, [contactUsCollection]);
-  console.log(contactUsCollection);
+  // console.log(contactUsCollection);
 
   return (
     <>
@@ -369,6 +446,56 @@ export const ContactUsData = (props) => {
                 </div>
                 <div className="text-sm">{i?.email ?? "email"}</div>
                 <div className="text-sm">{i?.message ?? "message"}</div>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    </>
+  );
+};
+export const DeletedUserData = (props) => {
+  const { deletedUsersCollection } = props;
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (deletedUsersCollection) {
+      setData(deletedUsersCollection);
+    }
+  }, [deletedUsersCollection]);
+  // console.log(deletedUsersCollection);
+
+  return (
+    <>
+      <section className="w-full max-w-[100vh h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 gap-2 overflow-hidden ease-in-out duration-300">
+        {data.map((i) => {
+          //   console.log(i?.email ?? "email");
+          return (
+            <div
+              key={i._id}
+              className="w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
+            >
+              <div className="w-auto borde rounded-full text-center overflow-hidden">
+                {/* pfp */}
+                <Image
+                  src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                  alt={"userProfile"}
+                  priority={true}
+                  width={800}
+                  height={800}
+                  className="w-auto h-full shadow-md z-10"
+                />
+              </div>
+              <div className="w-auto flex flex-col gap-[1px] text-cente p-1">
+                <span className="font-bold">{i?.name ?? "name"}</span>
+                <span className="text-sm">{i?.email ?? "email"}</span>
+                <span className="text-sm">{i?.role ?? "role"}</span>
+                <span className="text-sm">
+                  SignInWith : {i?.signInWith ?? "signInWith"}
+                </span>
+                <span className="text-sm">
+                  Delete time : {i?.createdAt ?? "createdAt"}
+                </span>
               </div>
             </div>
           );

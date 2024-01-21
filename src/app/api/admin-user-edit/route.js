@@ -9,7 +9,7 @@ export const POST = async (request) => {
     const data = await request.formData();
 
     const oldEmail = data.get("oldEmail");
-    console.log(oldEmail);
+
     const updEmail = data.get("email");
     const updName = data.get("name");
     const updRole = data.get("role");

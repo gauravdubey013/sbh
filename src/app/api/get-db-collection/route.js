@@ -2,6 +2,7 @@ import connect from "@/utils/db";
 import User from "@/models/User";
 import Professional from "@/models/Professional";
 import ContactUsMessage from "@/models/ContactUsMessage";
+import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -15,6 +16,7 @@ export const GET = async () => {
     // }
 
     const usersCollection = await User.find({});
+    const deletedUsersCollection = await DeletedUser.find({});
     const profsCollection = await Professional.find({});
     const contactUsCollection = await ContactUsMessage.find({});
 
@@ -28,6 +30,7 @@ export const GET = async () => {
       usersCollection,
       profsCollection,
       contactUsCollection,
+      deletedUsersCollection: deletedUsersCollection ?? "NaN",
     };
     return new NextResponse(JSON.stringify(dbCollections), {
       status: 200,

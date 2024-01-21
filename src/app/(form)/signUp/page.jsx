@@ -131,20 +131,20 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "firstname: ",
-      firstname,
-      "\nlastname: ",
-      lastname,
-      "\nemail: ",
-      email,
-      "\npassword: ",
-      password,
-      "\nconfirmPassword: ",
-      confirmPassword,
-      "\nprofCheckValue: ",
-      profCheckValue
-    );
+    // console.log(
+    //   "firstname: ",
+    //   firstname,
+    //   "\nlastname: ",
+    //   lastname,
+    //   "\nemail: ",
+    //   email,
+    //   "\npassword: ",
+    //   password,
+    //   "\nconfirmPassword: ",
+    //   confirmPassword,
+    //   "\nprofCheckValue: ",
+    //   profCheckValue
+    // );
 
     if (!emailPattern.test(email)) {
       setErrors({
