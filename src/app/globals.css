@@ -101,7 +101,7 @@ body {
 }
 
 .hoverText {
-  @apply relative flex items-center before:content-[''] before:absolute before:w-full before:h-full before:md:h-[1px] before:rounded-full before:bg-[#53c28b]/60 before:md:bg-[#53c28b]/90 hover:text-[#53c28b] hover:duration-700 before:origin-right before:transition-transform before:duration-[0.3s] before:ease-in-out before:scale-x-0 before:left-0 before:bottom-0 hover:before:origin-left hover:before:scale-x-100 active:text-[1px];
+  @apply relative flex items-center before:content-[''] before:absolute hover:active:scale-75 before:w-full before:h-full before:md:h-[1px] before:rounded-full before:bg-[#53c28b]/60 before:md:bg-[#53c28b]/90 hover:text-[#53c28b] hover:duration-700 before:origin-right before:transition-transform before:duration-[0.3s] before:ease-in-out before:scale-x-0 before:left-0 before:bottom-0 hover:before:origin-left hover:before:scale-x-100;
 }
 
 .allFormInput {

@@ -31,10 +31,6 @@ const Navbar = () => {
   useEffect(() => {
     setHashTagValue(window.location.hash);
   }, []);
-  // console.log(session);
-
-  // console.log(activeTab);
-
   // const imageLoader = ({ src, width, quality }) => {
   //   const origin = process.env.HOSTNAME || window.location.origin;
   //   return `${origin}${src}?w=${width}&q=${quality || 75}`;
@@ -61,11 +57,10 @@ const Navbar = () => {
         </div>
         <Headroom>
           <div
-            className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${
-              !toggle
+            className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${!toggle
                 ? `hidden`
                 : `flex border-b-[1px] border-[#53c28b] md:border-none`
-            } ease-in-out duration-200`}
+              } ease-in-out duration-200`}
           />
           <div className="sticky z-40 w-full h-[66px] ease-in-out backdrop-filter backdrop-blur-md animate-fade-in-down">
             <div className="containerNav w-full flex justify-between items-center gap-5 px-2 md:px-4 translate-y-3 ease-in-out">
@@ -94,17 +89,16 @@ const Navbar = () => {
                   height={100}
                   sizes="200vw"
                   priority={true}
-                  className="w-[18vh] md:w-full h-auto max-w-[470]"
+                  className="w-[18vh] md:w-full h-auto max-w-[470 active:scale-95 ease-in-out duration-200"
                 />
               </Link>
               <div className="flex items-center justify-center">
                 <div
                   className={`menu z-50 w-full left-0 right-0 flex-col gap-1 flex md:flex-row rounded-[10px] ease-in-out duration-300 fixed
-                  ${
-                    !toggle
+                  ${!toggle
                       ? `hidden md:flex opacity-0 md:opacity-100`
                       : `animate-slideDown md:animate-none opacity-100 top-[3rem] md:top-0 p-2 md:p-0 h-auto rounded-b-[20px]`
-                  } md:static`}
+                    } md:static`}
                 >
                   <div className="flex justify-end md:flex-none mr-1">
                     <DarkModeToggle />
@@ -127,9 +121,8 @@ const Navbar = () => {
                         />
                       )}
                       <span
-                        className={`relative z-10 mix-blend-exclusio ${
-                          activeTab === tab.id ? "" : `hoverText px-2 md:p-0`
-                        }`}
+                        className={`relative z-10 mix-blend-exclusio ${activeTab === tab.id ? "" : `hoverText px-2 md:p-0`
+                          }`}
                       >
                         {tab.label}
                       </span>
@@ -205,11 +198,10 @@ export const Dropdown = (props) => {
       {/* Dropdown */}
       {
         <div
-          className={` ${
-            !isOpen
+          className={` ${!isOpen
               ? "hidden animate-fade-in-up duration-300"
               : "opacity-100 animate-fade-in-down duration-300"
-          } backdrop-filter backdrop-blur-md z-50 bg-[#000000a1] origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
+            } backdrop-filter backdrop-blur-md z-50 bg-[#000000a1] origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
         >
           <div
             className="p-1 flex flex-col items-center justify-center gap-2"
@@ -224,6 +216,16 @@ export const Dropdown = (props) => {
             <div className="block text-sm" role="menuitem">
               {authUser?.user?.role ?? "role"}
             </div>
+            {(authUser?.user?.role === "admin" ||
+              authUser?.user?.role === "superAdmin") && (
+                <Link
+                  href={`/admin/${authUser?.user?.email ?? ""}`}
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+                >
+                  Admin
+                </Link>
+              )}
             <Link
               href={`/profile/${authUser?.user?.email ?? ""}`}
               onClick={() => setIsOpen(!isOpen)}
@@ -231,16 +233,7 @@ export const Dropdown = (props) => {
             >
               View Profile
             </Link>
-            {(authUser?.user?.role === "admin" ||
-              authUser?.user?.role === "superAdmin") && (
-              <Link
-                href={`/admin/${authUser?.user?.email ?? ""}`}
-                onClick={() => setIsOpen(!isOpen)}
-                className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
-              >
-                Admin
-              </Link>
-            )}
+
             <button
               onClick={btnOnClick}
               role="userLogout"

@@ -100,9 +100,8 @@ const Profile = (props) => {
     <>
       <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
         <div
-          className={`w-full h-auto px-4 py-2 md:py-0 flex justify-between ${
-            !editToggle ? "absolute" : "fixed"
-          } z-50`}
+          className={`w-full h-auto px-4 py-2 md:py-0 flex justify-between ${!editToggle ? "absolute" : "fixed"
+            } z-50`}
         >
           <div
             className="flex text-lg items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300"
@@ -111,7 +110,7 @@ const Profile = (props) => {
             <IoMdArrowRoundBack size={25} />
             Back
           </div>
-          {prof?.email === session?.user?.email && (
+          {prof?.email === session?.user?.email || session?.user?.role == "superAdmin" || session?.user?.role == "admin" && (
             <div
               className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
               onClick={() => setEditToggle(!editToggle)}
@@ -120,14 +119,13 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        {prof?.email === session?.user?.email && (
+        {prof?.email === session?.user?.email || session?.user?.role == "superAdmin" || session?.user?.role == "admin" && (
           <>
             <div
-              className={` ${
-                !editToggle
-                  ? "hidden opacity-0 animate-fade-in-up absolute"
-                  : "opacity-100 animate-fade-in-down fixed"
-              } w-full h-full bg-[00000055] backdrop-blur-sm flex items-cente justify-center z-40`}
+              className={` ${!editToggle
+                ? "hidden opacity-0 animate-fade-in-up absolute"
+                : "opacity-100 animate-fade-in-down fixed"
+                } w-full h-full bg-[00000055] backdrop-blur-sm flex items-cente justify-center z-40`}
             >
               {/*  h-[150vh] -translate-y-32 mt-40*/}
               <div className="w-[90%] sm:w-[85%] md:w-[70%] lg:w-[50%] h-[73vh] ease-in-out duration-300 fixed mt-14 bbg border border-[#53c28b] shadow-lg rounded-3xl p-4 overflow-hidden flex items-center justify-center">
@@ -145,11 +143,10 @@ const Profile = (props) => {
         {user?.role == "professional" && (
           <>
             <div
-              className={`${
-                socialToggle
-                  ? "opacity-100 animate-fade-in-down"
-                  : "opacity-0 animate-fade-in-up -top-[100%]"
-              } w-full md:w-[34.5%] h-[51vh] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              className={`${socialToggle
+                ? "opacity-100 animate-fade-in-down"
+                : "opacity-0 animate-fade-in-up -top-[100%]"
+                } w-full md:w-[34.5%] h-[51vh] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <Link
@@ -171,11 +168,10 @@ const Profile = (props) => {
               </div>
             </div>
             <div
-              className={` ${
-                contactToggle
-                  ? "opacity-100 animate-fade-in-down"
-                  : "opacity-0 animate-fade-in-up -top-[100%]"
-              } w-full md:w-[32.5%] h-[51vh] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+              className={` ${contactToggle
+                ? "opacity-100 animate-fade-in-down"
+                : "opacity-0 animate-fade-in-up -top-[100%]"
+                } w-full md:w-[32.5%] h-[51vh] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <div className="w-[80%] h-[2.3rem] text-md flex gap-1 items-center justify-center">
@@ -205,7 +201,7 @@ const Profile = (props) => {
                 src={
                   user?.signInWith == "google" || user?.signInWith == "gitHub"
                     ? session?.authUser?.image ??
-                      "/assets/loading3d360Rotate.gif"
+                    "/assets/loading3d360Rotate.gif"
                     : prof?.profileImgPath ?? "/assets/loading3d360Rotate.gif"
                 }
                 alt={"userProfile"}
@@ -236,9 +232,8 @@ const Profile = (props) => {
             )}
           </div>
           <div
-            className={`${
-              user?.role != "user" ? "hidden" : "flex"
-            } w-full h-10 mt-3 flex gap-1 items-center justify-center text-md md:text-lg text-[#000] px-3`}
+            className={`${user?.role != "user" ? "hidden" : "flex"
+              } w-full h-10 mt-3 flex gap-1 items-center justify-center text-md md:text-lg text-[#000] px-3`}
           >
             <span className="text-lg">
               Want to be a Professional / Freelancer..?
@@ -491,9 +486,8 @@ export const EditProfile = (props) => {
             className="w-[2.5rem] h-[52px] fontFam text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
           />
           <div
-            className={`w-full h-auto ${
-              condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
-            }`}
+            className={`w-full h-auto ${condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
+              }`}
           >
             <input
               type="text"
@@ -506,18 +500,16 @@ export const EditProfile = (props) => {
             />
             <div className="w-full h-auto overflow-hidden">
               <span
-                className={`${
-                  condition.phoneC == true ? "flex animate-slideDown" : "hidden"
-                }`}
+                className={`${condition.phoneC == true ? "flex animate-slideDown" : "hidden"
+                  }`}
               >
                 number must be 10 digits
               </span>
               <span
-                className={`${
-                  errors.phoneE.trim() !== ""
-                    ? "flex text-red-500 animate-slideDown"
-                    : "hidden"
-                }`}
+                className={`${errors.phoneE.trim() !== ""
+                  ? "flex text-red-500 animate-slideDown"
+                  : "hidden"
+                  }`}
               >
                 {errors.phoneE}
               </span>
@@ -592,27 +584,24 @@ export const EditProfile = (props) => {
           className="allFormInput h-[52px]"
         />
         <span
-          className={`${
-            error ? "flex text-red-500 animate-slideDown" : "hidden"
-          }`}
+          className={`${error ? "flex text-red-500 animate-slideDown" : "hidden"
+            }`}
         >
           {error}
         </span>
         <span
-          className={`${
-            success ? "flex text-[#53c28b] animate-slideDown" : "hidden"
-          }`}
+          className={`${success ? "flex text-[#53c28b] animate-slideDown" : "hidden"
+            }`}
         >
           Updated successfully!
         </span>
         <button
           disabled={disableBtn}
           type="submit"
-          className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
-            disableBtn
-              ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-              : ""
-          }`}
+          className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${disableBtn
+            ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+            : ""
+            }`}
         >
           {disableBtn ? (
             <span className="animate-pulse">Updating...</span>

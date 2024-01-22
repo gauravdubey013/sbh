@@ -20,7 +20,7 @@ export const POST = async (request) => {
 
     const newDeletedUser = new DeletedUser({
       name: existingUser?.name ?? "name",
-      signInWith: "Email&Password",
+      signInWith: existingUser?.signInWith ?? "Email&Password",
       email,
       password: existingUser?.password ?? "pswd",
       role: existingUser?.role ?? "user",

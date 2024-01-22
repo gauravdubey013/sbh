@@ -12,7 +12,8 @@ const AdminPage = ({ params }) => {
   useEffect(() => {
     if (
       sessionStatus !== "authenticated" &&
-      session?.user?.email !== decodeURIComponent(params.email)
+      session?.user?.email !== decodeURIComponent(params.email) &&
+      (session?.user?.role !== "admin" || session?.user?.role !== "superAdmin")
     ) {
       router.replace("/");
     }
@@ -23,7 +24,7 @@ const AdminPage = ({ params }) => {
   }
   return (
     <>
-      <Admin />
+      <Admin adminEmail={decodeURIComponent(params.email)} />
     </>
   );
 };

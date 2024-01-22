@@ -2,6 +2,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Link from "next/link";
 import Image from "next/image";
 // import Link from "next/link";
 
@@ -58,11 +59,10 @@ const AdBannerCarousel = (props) => {
     <div>
       <Slider {...settings} className="rounded-lg bg-whi">
         {abdData.map((adb) => (
-          <div
+          <Link href={"https://github.com/gauravdubey013"} target="_blank"
             key={adb.id}
             className={`w-auto ${defH} ${mdH} ${lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
           >
-            {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
             <div
               className={`w-full h-full ${bg} relative scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg overflow-hidden`}
             >
@@ -80,7 +80,7 @@ const AdBannerCarousel = (props) => {
                 className=" w-full h-full shadow-md z-10"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </Slider>
     </div>
@@ -104,7 +104,7 @@ AdBannerCarousel.defaultProps = {
   onClickBtn: "/",
 };
 
-function Arrow(props) {
+export function Arrow(props) {
   const { className, style, onClick } = props;
   return (
     <div

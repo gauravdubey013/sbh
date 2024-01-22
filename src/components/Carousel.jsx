@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Carousel = (props) => {
-  let { bg, btext } = props;
+  let { bg, btext, defH, mdH, lgH, profile, onClickBtn } = props;
 
   const settings = {
     dots: false,
@@ -48,7 +48,7 @@ const Carousel = (props) => {
       <Slider {...settings} className="rounded-lg bg-whi">
         {slides.map((slide) => (
           <div
-            className={`w-auto ${props.defH} ${props.mdH} ${props.lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
+            className={`w-auto ${defH} ${mdH} ${lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
             key={slide.id}
           >
             {/* translate-y-8 lg:translate-y-12   border-[1px] border-solid border-[#53c28b] border-opacity-90 */}
@@ -58,7 +58,7 @@ const Carousel = (props) => {
               {" "}
               {btext}
               <div
-                className={`${props.profile} w-full h-full bg-white rounded-lg translate-y-[40px]`}
+                className={`${profile} w-full h-full bg-white rounded-lg translate-y-[40px]`}
               >
                 <div className="w-full h-auto -translate-y-[56px] lg:-translate-y-[46.5px] flex justify-center">
                   <Image
@@ -84,7 +84,7 @@ const Carousel = (props) => {
                       review
                     </div>
                     <Link
-                      href={`${props.onClickBtn}`}
+                      href={`${onClickBtn}`}
                       className="allBtn w-full h-[3.25rem] text-sm rounded-3xl flex items-center justify-center"
                     >
                       View more
@@ -117,7 +117,7 @@ Carousel.defaultProps = {
   onClickBtn: "/",
 };
 
-function Arrow(props) {
+export const Arrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -135,4 +135,4 @@ function Arrow(props) {
       onClick={onClick}
     />
   );
-}
+};
