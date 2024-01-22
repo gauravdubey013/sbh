@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "@/app/loading";
+import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
+import { PiUserListFill } from "react-icons/pi";
 
 const Admin = () => {
   const [dBCollection, setDBCollection] = useState(null);
@@ -43,6 +45,8 @@ const Admin = () => {
 
   if (refDb == true) {
     fetchDBCollectionInfo();
+    fetchDBCollectionInfo();
+    fetchDBCollectionInfo();
     console.log("DB Refreshed: " + refDb);
     setRefDb(false)
   }
@@ -64,7 +68,8 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            User
+            <span className="md:hidden"><FaUsers size={30} /></span>
+            <span className="hidden md:flex">User</span>
           </div>
           <div
             onClick={() => {
@@ -76,7 +81,8 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            Professional
+            <span className="md:hidden"><FaUserTie size={30} /></span>
+            <span className="hidden md:flex">Professional</span>
           </div>
           <div
             onClick={() => {
@@ -88,7 +94,8 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            Contact Us
+            <span className="md:hidden"><PiUserListFill size={30} /></span>
+            <span className="hidden md:flex">Contact Us</span>
           </div>
           <div
             onClick={() => {
@@ -100,12 +107,14 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            Deleted User
+            <span className="md:hidden"><FaUsersSlash size={30} /></span>
+            <span className="hidden md:flex">Deleted User</span>
+
           </div>
         </div>
 
         {!dBCollection ? <Loading /> :
-          <div className="adminNav w-[80%] h-auto animate-fade-in-down scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+          <div className="adminNav w-[80%] h-[78vh] animate-fade-in-down overflow-hidden">
             {isUserOpen && (
               <div className="animate-fade-in-down">
                 <UserData usersCollection={usersCollection} setRefDb={setRefDb} />
@@ -128,7 +137,8 @@ const Admin = () => {
                 />
               </div>
             )}
-          </div>}
+          </div>
+        }
       </section>
     </>
   );
@@ -250,52 +260,54 @@ export const UserData = (props) => {
   }
   return (
     <>
-      <section className="w-full h-auto relative flex items-cente justify-center">
-        <div className="w-full h-full p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-          {data.map((i) => {
-            //   console.log(i?.email ?? "email");
-            return (
-              <div
-                key={i._id}
-                onClick={() => {
-                  if (i != editData) {
-                    setError("")
-                    setUpdSuccess(false)
-                    setDeleteSuccess(false);
-                    setUpdDisableBtn(false)
-                    setDelDisableBtn(false)
-                  }
-                  setEditData(i);
-                  setIsEditOpen(true)
-                  if (i == editData) setIsEditOpen(!isEditOpen);
-                }}
-                className={` ${i == editData && isEditOpen ? activeCss : ""
-                  } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 ease-in-out duration-300`}
-              >
-                <div className="w-[20%] borde rounded-full text-center overflow-hidden">
-                  {/* pfp */}
-                  <Image
-                    src={i?.profileImgPath ?? "/assets/bg6.png"}
-                    alt={"userProfile"}
-                    priority={true}
-                    width={800}
-                    height={800}
-                    className="w-full h-full shadow-md z-10 scale-75"
-                  />
+      <section className="w-full h-[78vh] relative flex flex-col md:flex-row">
+        <div className={`w-full ${!isEditOpen ? "h-full" : "h-[50%]"} md:h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden ease-in-out duration-200`}>
+          <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+            {data.map((i) => {
+              //   console.log(i?.email ?? "email");
+              return (
+                <div
+                  key={i._id}
+                  onClick={() => {
+                    if (i != editData) {
+                      setError("")
+                      setUpdSuccess(false)
+                      setDeleteSuccess(false);
+                      setUpdDisableBtn(false)
+                      setDelDisableBtn(false)
+                    }
+                    setEditData(i);
+                    setIsEditOpen(true)
+                    if (i == editData) setIsEditOpen(!isEditOpen);
+                  }}
+                  className={` ${i == editData && isEditOpen ? activeCss : ""
+                    } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
+                >
+                  <div className="w-[20%] borde rounded-full text-center overflow-hidden">
+                    {/* pfp */}
+                    <Image
+                      src={i?.profileImgPath ?? "/assets/bg6.png"}
+                      alt={"userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10 scale-75"
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-[1px] text-base">
+                    <div className="font-bold">{i?.name ?? "name"}</div>
+                    <div className="text-sm">{i?.email ?? "email"}</div>
+                  </div>
                 </div>
-                <div className="w-full flex flex-col gap-[1px] text-base">
-                  <div className="font-bold">{i?.name ?? "name"}</div>
-                  <div className="text-sm">{i?.email ?? "email"}</div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
         <div
-          className={`${!isEditOpen ? "-mr-[40%]" : "mr-0 static"
-            } w-[40%] h-[76vh] p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden flex flex-col gap-2 items-center justify-center border rounded-xl bbg ease-in-out duration-100`}
+          className={`${!isEditOpen ? "h-0 md:-mr-[100%]" : "md:mr-0 h-[50%]"
+            } w-full md:w-[40%] md:h-[78vh] p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden flex flex-col gap-2 items-center justify-center border rounded-xl bbg ease-in-out duration-200`}
         >
-          Edit User
+          <span className="font-extrabold text-xl text-[#53c28b]">Edit User</span>
           <>
             <form
               onSubmit={handleSubmit}

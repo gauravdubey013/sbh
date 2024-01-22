@@ -95,7 +95,10 @@ const Profile = (props) => {
   if (user === undefined || prof === undefined) {
     return <Loading />;
   }
-  // console.log(session?.user?.email);
+
+  // if (session?.user?.role === "superAdmin") {
+  //   console.log(session?.user?.role);
+  // }
   return (
     <>
       <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
@@ -110,7 +113,7 @@ const Profile = (props) => {
             <IoMdArrowRoundBack size={25} />
             Back
           </div>
-          {prof?.email === session?.user?.email || session?.user?.role == "superAdmin" || session?.user?.role == "admin" && (
+          {prof?.email === session?.user?.email || (session?.user?.role === "superAdmin" || session?.user?.role == "admin") && (
             <div
               className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
               onClick={() => setEditToggle(!editToggle)}
@@ -119,7 +122,7 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        {prof?.email === session?.user?.email || session?.user?.role == "superAdmin" || session?.user?.role == "admin" && (
+        {prof?.email === session?.user?.email || (session?.user?.role == "superAdmin" || session?.user?.role == "admin") && (
           <>
             <div
               className={` ${!editToggle
