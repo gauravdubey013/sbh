@@ -44,8 +44,7 @@ const Admin = () => {
   }, [dBCollection]);
 
   if (refDb == true) {
-    fetchDBCollectionInfo();
-    fetchDBCollectionInfo();
+    setDBCollection(null)
     fetchDBCollectionInfo();
     console.log("DB Refreshed: " + refDb);
     setRefDb(false)
