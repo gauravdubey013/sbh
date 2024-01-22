@@ -60,6 +60,7 @@ export default function HeroTest() {
         <section
           className="animate-fade-in-down bbg relative z-20 border-[px] -mb-[3.8rem]"
           ref={ref.current}
+        // layoutEffect={false}
         >
           <div className="bg-transparent -translate-y-16">
             <AdBannerCarousel

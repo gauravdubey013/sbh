@@ -112,5 +112,5 @@ body {
 }
 
 .allBtn {
-  @apply active:text-lg active:scale-90 font-extrabold cursor-pointer backdrop-filter backdrop-blur-sm bg-[#53c28b] hover:bg-[#53c28b]/[0.6] scale-95 hover:scale-100 shadow-sm flex justify-center items-center hover:shadow-md focus:shadow-md ease-[ease] duration-200;
+  @apply active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[#53c28b] md:hover:bg-[#48ffa363] scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200;
 }

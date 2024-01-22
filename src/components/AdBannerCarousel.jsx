@@ -75,6 +75,7 @@ const AdBannerCarousel = (props) => {
                 src={adb.img}
                 alt={adb.alt}
                 // fill="true"
+                priority={true}
                 width={800}
                 height={800}
                 className=" w-full h-full shadow-md z-10"

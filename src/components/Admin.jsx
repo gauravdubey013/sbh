@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "@/app/loading";
+import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
 
@@ -44,7 +45,7 @@ const Admin = () => {
   }, [dBCollection]);
 
   if (refDb == true) {
-    setDBCollection(null)
+    // setDBCollection(null)
     fetchDBCollectionInfo();
     console.log("DB Refreshed: " + refDb);
     setRefDb(false)
@@ -56,7 +57,14 @@ const Admin = () => {
   return (
     <>
       <section className="w-full h-[78vh] flex flex-row animate-slideDown">
-        <div className="adminNav w-[20%] h-full p-2 border-r-[0.5px] border-[#53c28b] flex flex-col gap-4">
+        <div className="adminNav w-[20%] h-full p-2 border-r-[0.5px] border-[#53c28b] flex flex-col gap-4 items-center">
+          <button className="allBtn w-full h-[2.5rem] rounded-md" onClick={() => {
+            setDBCollection(null)
+            fetchDBCollectionInfo()
+          }}>
+            <span className="md:hidden"><WiCloudRefresh size={40} /></span>
+            <span className="hidden md:flex">Refresh DB</span>
+          </button>
           <div
             onClick={() => {
               !isUserOpen ? setIsUserOpen(!isUserOpen) : "";
@@ -64,7 +72,7 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsers size={30} /></span>
@@ -77,7 +85,7 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUserTie size={30} /></span>
@@ -90,7 +98,7 @@ const Admin = () => {
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><PiUserListFill size={30} /></span>
@@ -103,7 +111,7 @@ const Admin = () => {
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsersSlash size={30} /></span>
@@ -113,7 +121,7 @@ const Admin = () => {
         </div>
 
         {!dBCollection ? <Loading /> :
-          <div className="adminNav w-[80%] h-[78vh] animate-fade-in-down overflow-hidden">
+          <div className="adminNav w-full h-[78vh] animate-fade-in-down overflow-hidden">
             {isUserOpen && (
               <div className="animate-fade-in-down">
                 <UserData usersCollection={usersCollection} setRefDb={setRefDb} />
@@ -203,9 +211,11 @@ export const UserData = (props) => {
         setError("Invalid user! try again later");
         setUpdDisableBtn(false);
         setUpdSuccess(false);
+        setRefDb(true);
       } else if (res.status === 500) {
         setError("Img & resume file aren't supported!");
         setUpdDisableBtn(false);
+        setRefDb(true);
       } else if (res.status === 200) {
         setError("");
         setUpdSuccess(true);
@@ -240,6 +250,7 @@ export const UserData = (props) => {
       if (res.status === 400) {
         setError("User doesn't exists!");
         setDelDisableBtn(false);
+        setRefDb(true);
       }
       if (res.status === 200) {
         setDelDisableBtn(true);
@@ -531,6 +542,7 @@ export const DeletedUserData = (props) => {
       if (res.status === 400) {
         setError("User doesn't exists!");
         setRestoreDisableBtn(false);
+        setRefDb(true);
       }
       if (res.status === 200) {
         setError("");
