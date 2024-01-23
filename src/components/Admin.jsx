@@ -163,7 +163,7 @@ export const UserData = (props) => {
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editData, setEditData] = useState();
-  const activeCss = "bg-[#48ffa363]";
+  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
 
   const { data: session, status: sessionStatus } = useSession();
 
@@ -193,13 +193,23 @@ export const UserData = (props) => {
     data.set("oldEmail", editData?.email);
     data.set("email", userEdit.email);
     data.set("name", userEdit.name);
-
     data.set("role", userEdit.role);
 
-    // console.log(session?.user?.role);
+    setUpdDisableBtn(true);
     if (userEdit.role.trim() != "") {
       if (session?.user?.role !== "superAdmin") {
-        return setError("Only SuperAdmin is allowed to change roles!");
+        setUpdDisableBtn(false);
+        setUpdSuccess(false);
+        return setError("Only SuperAdmin are allowed to change roles!");
+      }
+    }
+    if (userEdit.name.trim() != "" || userEdit.email.trim() != "") {
+      if (editData?.role == "superAdmin" || editData?.role == "admin") {
+        if (session?.user?.role !== "superAdmin") {
+          setUpdDisableBtn(false);
+          setUpdSuccess(false);
+          return setError("Only SuperAdmin are allowed to change Admins data!");
+        }
       }
     }
     try {
@@ -238,6 +248,13 @@ export const UserData = (props) => {
     const email = editData?.email ?? "email99";
 
     setDelDisableBtn(true);
+    if (editData?.role == "superAdmin" || editData?.role == "admin") {
+      if (session?.user?.role !== "superAdmin") {
+        setDeleteSuccess(false);
+        setDelDisableBtn(false);
+        return setError("Only SuperAdmin are allowed to Delete Admins!");
+      }
+    }
     try {
       const res = await fetch("/api/admin-user-delete", {
         method: "POST",
@@ -263,6 +280,7 @@ export const UserData = (props) => {
       setError("Check console for error");
     }
   };
+
   if (!usersCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
       No Users collection Record

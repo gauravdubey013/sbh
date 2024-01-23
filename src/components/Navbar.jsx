@@ -178,7 +178,7 @@ export const Dropdown = (props) => {
     setIsOpen(!isOpen);
   };
 
-  console.log("user: ", authUser?.user);
+  // console.log("user: ", authUser?.user);
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}

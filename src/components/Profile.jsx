@@ -102,10 +102,6 @@ const Profile = (props) => {
   if (user === undefined || prof === undefined) {
     return <Loading />;
   }
-
-  // if (session?.user?.role === "superAdmin") {
-  //   console.log(session?.user?.role);
-  // }
   return (
     <>
       <div className="w-full h-full min-h-[78vh] flex flex-col shadow-xl overflow-y-scroll animate-fade-in-down relative z-10">
