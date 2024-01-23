@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export const POST = async (request) => {
   try {
     const { setOfColletion } = await request.json();
-    console.log(setOfColletion);
+    // console.log(setOfColletion);
     await connect();
 
     if (setOfColletion == "prof") {
