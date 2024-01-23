@@ -30,7 +30,7 @@ export const POST = async (request) => {
     if (!userExists) {
       return new NextResponse("Register first!", { status: 400 });
     }
-
+    const name = userExists?.name ?? "name";
     const existingProf = await Professional.findOne({ email });
     if (existingProf) {
       return new NextResponse("User already exists!", { status: 401 });
@@ -88,6 +88,7 @@ export const POST = async (request) => {
     const newProfessional = new Professional({
       userID,
       email,
+      name,
       gender,
       dob,
       profileImgPath,
@@ -110,12 +111,6 @@ export const POST = async (request) => {
     });
   } catch (error) {
     console.error(error);
-
-    // Check if the error is a duplicate key violation
-    // if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
-    //   return new NextResponse("Email is already registered!", { status: 400 });
-    // }
-
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };

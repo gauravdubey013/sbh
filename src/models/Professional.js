@@ -14,6 +14,10 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       required: true,

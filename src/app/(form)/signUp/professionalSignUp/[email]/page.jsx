@@ -6,7 +6,6 @@ import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
 import { ImCancelCircle } from "react-icons/im";
 import { tcPolicyProf } from "@/context/terms-conditions";
-// import ProfessionalRegistrationForm from "@/components/ProfessionalRegistrationForm";
 
 const professionalSignUp = ({ params }) => {
   const [tcClick, setTcClick] = useState(false);
@@ -18,7 +17,6 @@ const professionalSignUp = ({ params }) => {
   const [profileImg, setProfileImg] = useState();
   const [resume, setResume] = useState();
 
-  // const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDOB] = useState("");
 
@@ -98,7 +96,7 @@ const professionalSignUp = ({ params }) => {
 
     if (age <= 17) {
       setErrors({
-        dobE: "Must be at least 16 years older to be registered",
+        dobE: "Must be at least 18 years older to be registered",
       });
     } else if (phone.length < 10 || phone.length > 10) {
       setDisableBtn(false);
@@ -126,7 +124,6 @@ const professionalSignUp = ({ params }) => {
           setError("");
           router.push("/signIn");
         }
-        // setDisableBtn(false);
       } catch (error) {
         setDisableBtn(false);
         setError(error);
@@ -153,9 +150,8 @@ const professionalSignUp = ({ params }) => {
                     className="w-full h-full flex flex-col gap-4"
                   >
                     <div className="w-full h-[20vh] overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl text-[#959ba7] hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
-                      {/* <label className="text-xl text-[#959ba7]"> */}
-                      Add Profile
                       {/* </label> */}
+                      Add Profile
                       <div className=" w-[80%] md:w-full h-[70%] flex items-center justify-center text-center py-3 md:py-0 md:px-10">
                         <input
                           type="file"
@@ -168,9 +164,8 @@ const professionalSignUp = ({ params }) => {
                       </div>
                     </div>
                     <div
-                      className={`w-full h-auto ${
-                        errors.dobE ? "-mb-2" : "mb-0"
-                      }`}
+                      className={`w-full h-auto ${errors.dobE ? "-mb-2" : "mb-0"
+                        }`}
                     >
                       <div className="flex gap-2">
                         <select
@@ -204,11 +199,10 @@ const professionalSignUp = ({ params }) => {
                       </div>
                       <div className="w-full h-auto overflow-hidden">
                         <span
-                          className={`${
-                            errors.dobE
-                              ? "flex text-red-500 animate-slideDown"
-                              : "hidden"
-                          }`}
+                          className={`${errors.dobE
+                            ? "flex text-red-500 animate-slideDown"
+                            : "hidden"
+                            }`}
                         >
                           {errors.dobE}
                         </span>
@@ -227,6 +221,23 @@ const professionalSignUp = ({ params }) => {
                       <option value="web_development">Web Development</option>
                       <option value="graphic_design">Graphic Design</option>
                       <option value="writing">Writing</option>
+                      <option value="personal_trainer">Personal Trainer</option>
+                      <option value="nutritionist">Nutritionist</option>
+                      <option value="yoga_instructor">Yoga Instructor</option>
+                      <option value="health_coach">Health Coach</option>
+                      <option value="mental_health_counselor">Mental Health Counselor</option>
+                      <option value="event_planner">Event Planner</option>
+                      <option value="dj_musician">DJ / Musician</option>
+                      <option value="photographer_videographer">Photographer / Videographer</option>
+                      <option value="party_entertainer">Party Entertainer</option>
+                      <option value="wedding_planner">Wedding Planner</option>
+                      <option value="gardener">Gardener</option>
+                      <option value="interior_decorator">Interior Decorator</option>
+                      <option value="painters">Painters</option>
+                      <option value="electrician">Electrician</option>
+                      <option value="house_cleaner">House Cleaner</option>
+                      <option value="plumber">Plumber</option>
+                      <option value="house_helper">House Helper</option>
                     </select>
                     <div className="flex gap-2">
                       <input
@@ -237,9 +248,8 @@ const professionalSignUp = ({ params }) => {
                         className="w-[3rem] h-[52px] fontFam text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
                       />
                       <div
-                        className={`w-full h-auto ${
-                          condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
-                        }`}
+                        className={`w-full h-auto ${condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
+                          }`}
                       >
                         <input
                           type="text"
@@ -252,20 +262,18 @@ const professionalSignUp = ({ params }) => {
                         />
                         <div className="w-full h-auto overflow-hidden">
                           <span
-                            className={`${
-                              condition.phoneC == true
-                                ? "flex animate-slideDown"
-                                : "hidden"
-                            }`}
+                            className={`${condition.phoneC == true
+                              ? "flex animate-slideDown"
+                              : "hidden"
+                              }`}
                           >
-                            number must be 10 digits
+                            Number must be 10 digits
                           </span>
                           <span
-                            className={`${
-                              errors.phoneE
-                                ? "flex text-red-500 animate-slideDown"
-                                : "hidden"
-                            }`}
+                            className={`${errors.phoneE
+                              ? "flex text-red-500 animate-slideDown"
+                              : "hidden"
+                              }`}
                           >
                             {errors.phoneE}
                           </span>
@@ -369,11 +377,10 @@ const professionalSignUp = ({ params }) => {
                     <button
                       disabled={disableBtn}
                       type="submit"
-                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
-                        disableBtn
-                          ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                          : ""
-                      }`}
+                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${disableBtn
+                        ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                        : ""
+                        }`}
                     >
                       {disableBtn ? (
                         <span className="animate-pulse">Registing...</span>
@@ -388,9 +395,8 @@ const professionalSignUp = ({ params }) => {
           />
         </div>
         <div
-          className={` ${
-            !tcClick ? "hidden" : "flex animate-slideDown"
-          } w-full h-full z-20 top-0 absolute flex-col gap-2 items-center justify-center ease-in-out duration-300`}
+          className={` ${!tcClick ? "hidden" : "flex animate-slideDown"
+            } w-full h-full z-20 top-0 absolute flex-col gap-2 items-center justify-center ease-in-out duration-300`}
         >
           <TermsConditions
             setHead="Privacy Policy for SkillBeHired Professionals/Freelancers"

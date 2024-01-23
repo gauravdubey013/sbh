@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -9,20 +10,23 @@ import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
 
 const Admin = () => {
-  const [dBCollection, setDBCollection] = useState(null);
-  const [refDb, setRefDb] = useState(false);
-
   const [isUserOpen, setIsUserOpen] = useState(true);
   const [isProfOpen, setIsProfOpen] = useState(false);
   const [isContactUsOpen, setIsContactUsOpen] = useState(false);
   const [isDelUserOpen, setIsDelUserOpen] = useState(false);
   const activeCss = "bg-[#53c28b]";
 
+  const [refDb, setRefDb] = useState(false);
+  const [dBCollection, setDBCollection] = useState(null);
   const fetchDBCollectionInfo = async () => {
+    const setOfColletion = "all";
     try {
       const res = await fetch("/api/get-db-collection", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          setOfColletion,
+        }),
       });
 
       if (res.status === 400) {
@@ -40,20 +44,20 @@ const Admin = () => {
   useEffect(() => {
     if (!dBCollection) {
       fetchDBCollectionInfo();
-      console.log(dBCollection);
+      // console.log(dBCollection);
     }
   }, [dBCollection]);
 
   if (refDb == true) {
-    // setDBCollection(null)
     fetchDBCollectionInfo();
     console.log("DB Refreshed: " + refDb);
-    setRefDb(false)
+    setRefDb(false);
   }
   const usersCollection = dBCollection?.usersCollection;
   const deletedUsersCollection = dBCollection?.deletedUsersCollection;
   const profsCollection = dBCollection?.profsCollection;
   const contactUsCollection = dBCollection?.contactUsCollection;
+
   return (
     <>
       <section className="w-full h-[78vh] flex flex-row animate-slideDown">
@@ -460,6 +464,7 @@ export const ProfData = (props) => {
                   />
                 </div>
                 <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
+                  <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
                   <div className="text-sm">{i?.email ?? "email"}</div>
                 </div>
               </div>
@@ -535,7 +540,6 @@ export const DeletedUserData = (props) => {
       setData(deletedUsersCollection);
     }
   }, [deletedUsersCollection]);
-  // console.log(deletedUsersCollection);
 
   const [editData, setEditData] = useState();
   const [error, setError] = useState("");

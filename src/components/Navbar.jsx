@@ -47,17 +47,11 @@ const Navbar = () => {
             <Link href={"/"} className="hover:text-[#53c28b] duration-200">
               English
             </Link>
-            {/* <Link
-              href={"/#contact"}
-              className="hover:text-[#53c28b] duration-200"
-            >
-              Contact Us
-            </Link> */}
           </div>
         </div>
         <Headroom>
           <div
-            className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${!toggle
+            className={`absolute z-40 md:hidden w-full h-[9rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${!toggle
               ? `hidden`
               : `flex border-b-[1px] border-[#53c28b] md:border-none`
               } ease-in-out duration-200`}

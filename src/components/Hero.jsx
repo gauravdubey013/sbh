@@ -66,7 +66,6 @@ export default function HeroTest() {
             <AdBannerCarousel
               bg="bg-[#53c28b]"
               abdData={adBanner}
-              // profile={"hidden"}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
               lgH="lg:h-[20rem]"
@@ -90,7 +89,9 @@ export default function HeroTest() {
             >
               {/* slider */}
               <h3 className="text-[#53c28b] font-extrabold text-xl">Service</h3>
-              <ServiceCompo />
+              <div className="-mx-[20px]">
+                <ServiceCompo />
+              </div>
             </div>
           </section>
           {/* about-section */}

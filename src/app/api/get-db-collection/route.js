@@ -5,31 +5,50 @@ import ContactUsMessage from "@/models/ContactUsMessage";
 import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
 
-export const POST = async () => {
+export const POST = async (request) => {
   try {
+    const { setOfColletion } = await request.json();
+    console.log(setOfColletion);
     await connect();
 
-    const usersCollection = await User.find({});
-    const deletedUsersCollection = await DeletedUser.find({});
-    const profsCollection = await Professional.find({});
-    const contactUsCollection = await ContactUsMessage.find({});
+    if (setOfColletion == "prof") {
+      const profsCollection = await Professional.find({});
 
-    if (!usersCollection && !profsCollection && !contactUsCollection) {
-      console.log("collection doesn't exists");
-      return new NextResponse("collection doesn't exists", {
-        status: 400,
+      if (!profsCollection) {
+        console.log("DB collection doesn't exists");
+        return new NextResponse("DB collection doesn't exists", {
+          status: 400,
+        });
+      }
+      return new NextResponse(JSON.stringify(profsCollection), {
+        status: 200,
+        data: profsCollection,
       });
     }
-    const dbCollections = {
-      usersCollection,
-      profsCollection,
-      contactUsCollection,
-      deletedUsersCollection: deletedUsersCollection ?? "NaN",
-    };
-    return new NextResponse(JSON.stringify(dbCollections), {
-      status: 200,
-      data: dbCollections,
-    });
+
+    if (setOfColletion == "all") {
+      const usersCollection = await User.find({});
+      const deletedUsersCollection = await DeletedUser.find({});
+      const profsCollection = await Professional.find({});
+      const contactUsCollection = await ContactUsMessage.find({});
+
+      if (!usersCollection && !profsCollection && !contactUsCollection) {
+        console.log("DB collection doesn't exists");
+        return new NextResponse("DB collection doesn't exists", {
+          status: 400,
+        });
+      }
+      const dbCollections = {
+        usersCollection,
+        profsCollection,
+        contactUsCollection,
+        deletedUsersCollection: deletedUsersCollection ?? "NaN",
+      };
+      return new NextResponse(JSON.stringify(dbCollections), {
+        status: 200,
+        data: dbCollections,
+      });
+    }
   } catch (error) {
     console.error("Error in API route:", error);
     return new NextResponse("Internal Server Error : ", error, {

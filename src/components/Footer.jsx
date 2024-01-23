@@ -5,7 +5,7 @@ const Footer = (props) => {
   return (
     <>
       <footer>
-        <div className="footer border-t-[.5px] rounded-md border-[#53c28b]/30 flex flex-col sm:flex-row justify-between items-center gap-1 p-2 ease-in-out duration-300 md:duration-500">
+        <div className="footer text-sm border-t-[.5px] rounded-md border-[#53c28b]/30 flex flex-col sm:flex-row justify-between items-center gap-1 p-2 ease-in-out duration-300 md:duration-500">
           <div className="row text-[gray] flex flex-row gap-3 sm:scale-90 sm:hidden duration-300 ease-in-out">
             {footer.map((icon) => (
               <Link
@@ -19,13 +19,13 @@ const Footer = (props) => {
             ))}
           </div>
           <div className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75">
-            <Link href={"/"} className=" text-3xl logoTitle">
+            <Link href={"/"} className=" text-2xl logoTitle">
               {props.title}
             </Link>
           </div>
-          <span className="row text-[gray] flex flex-row gap-3 duration-300 sm:scale-75 text-sm sm:ml-3">
-            <span className="scale-125 -mr-2.5">©</span>2023 {props.title}
-            <span className="scale-150 -mr-1 -ml-1">||</span>All rights are
+          <span className="row text-[gray] flex flex-row gap-[1px] md:gap-1 duration-300 sm:scale-75 text-sm sm:ml-3">
+            <span className="-mr-1">©</span>2023 {props.title}
+            <span className="">||</span>All rights are
             reserved by {props.rights}.
           </span>
           <div className="row text-[gray] sm:scale-90 hidden sm:flex flex-row gap-3 duration-300 ease-in-out">

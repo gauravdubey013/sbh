@@ -152,7 +152,7 @@ const Profile = (props) => {
               className={`${socialToggle
                 ? "opacity-100 animate-fade-in-down"
                 : "opacity-0 animate-fade-in-up -top-[100%]"
-                } w-full md:w-[34.5%] h-[51vh] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+                } w-full md:w-[34.5%] h-[76%] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <Link
@@ -177,7 +177,7 @@ const Profile = (props) => {
               className={` ${contactToggle
                 ? "opacity-100 animate-fade-in-down"
                 : "opacity-0 animate-fade-in-up -top-[100%]"
-                } w-full md:w-[32.5%] h-[51vh] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+                } w-full md:w-[32.5%] h-[76%] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <div className="w-[80%] h-[2.3rem] text-md flex gap-1 items-center justify-center">
@@ -257,7 +257,7 @@ const Profile = (props) => {
               className={`grid px-7 py-2 -mb-3 text-[#000] items-center justify-around grid-cols-3 gap-4 divide-x divide-solid divide-zinc-950`}
             >
               <div
-                className="col-span-1 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
+                className="col-span-1 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
                 onClick={() => {
                   setSocialToggle(!socialToggle);
                   contactToggle ? setContactToggle(!contactToggle) : "";
@@ -267,7 +267,7 @@ const Profile = (props) => {
                 <span>Social Links</span>
               </div>
               <div
-                className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
+                className="col-span-1 px-3 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
                 onClick={() => {
                   setContactToggle(!contactToggle);
                   socialToggle ? setSocialToggle(!socialToggle) : "";
@@ -282,7 +282,7 @@ const Profile = (props) => {
                   socialToggle ? setSocialToggle(!socialToggle) : "";
                   contactToggle ? setContactToggle(!contactToggle) : "";
                 }}
-                className="col-span-1 px-3 flex flex-col items-center text-lg font-medium cursor-pointer hover:text-xl active:translate-y-1 duration-200"
+                className="col-span-1 px-3 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
               >
                 <BsChatLeftTextFill size={25} />
                 <span>Chat</span>
@@ -313,7 +313,7 @@ const Profile = (props) => {
               </div>
               <div className="flex gap-1 items-start justify-start md:justify-between">
                 <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
-                  Date-of-birth
+                  Date of birth
                 </span>
                 :
                 <span className="w-auto md:w-[80%] h-auto">

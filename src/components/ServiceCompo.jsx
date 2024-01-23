@@ -1,39 +1,64 @@
-// const getData = (dataIndex) => {
-//   const datap = slide[dataIndex];
-//   if (datap) {
-//     return datap;
-//   }
-//   return notFound();
-// };
+"use client"
 
-import React from "react";
-// import Link from "next/link";
-// import { slides } from "./data";
+import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 
 const ServiceCompo = () => {
+  const [profDBCollection, setProfDBCollection] = useState(null);
+  const fetchProfDBCollectionInfo = async () => {
+    const setOfColletion = "prof";
+    try {
+      const res = await fetch("/api/get-db-collection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          setOfColletion,
+        }),
+      });
+
+      if (res.status === 400) {
+        console.log("Collections doesn't exists in database!");
+      }
+      if (res.status === 200) {
+        const dBData = await res.json();
+        setProfDBCollection(dBData);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!profDBCollection) {
+      fetchProfDBCollectionInfo();
+    }
+    if (profDBCollection == undefined) {
+      // console.log(profDBCollection);
+      fetchProfDBCollectionInfo();
+    }
+  }, [profDBCollection]);
+
   return (
     <>
       <div className="w-full h-auto flex flex-col gap-1">
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
-          <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel onClickBtn="/profile/dubeygaurav520@gmail.com" />
+          <div className="w-full h-full">
+            <Carousel profDBCollectionData={profDBCollection} autoplay={"true"} speed={3000} />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Health & Wellness</h2>
-          <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel onClickBtn="/profile/rakxalva@gmail.com" />
+          <div className="w-full h-full">
+            <Carousel profDBCollectionData={profDBCollection} />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Events & Entertainers</h2>
-          <div className="w-full h-full scale-90 md:scale-100">
-            <Carousel onClickBtn="/profile/tf@xyz.in" />
+          <div className="w-full h-full">
+            <Carousel profDBCollectionData={profDBCollection} />
           </div>
         </div>
-        {/* <Link href={"/services/chomu"} >Click me</Link> */}
       </div>
     </>
   );
@@ -41,40 +66,30 @@ const ServiceCompo = () => {
 
 export default ServiceCompo;
 
-// import React from "react";
-// import Link from "next/link";
-// import { getServerSession } from "next-auth";
-// import { redirect } from "next/navigation";
-// import Carousel from "./Carousel";
 
-// const ServiceCompo = async () => {
-//   const session = await getServerSession();
-//   const url = !session ? "/signIn" : "/services/chomu";
-//   return (
-//     <>
-//       <div className="w-full h-full flex flex-col gap-1">
-//         <div className="w-full h-full">
-//           <h2 className="text-xl font-bold">House & Home</h2>
-//           <div className="w-full h-full scale-90 md:scale-100">
-//             <Carousel onClickBtn={url} />
-//           </div>
-//         </div>
-//         <div className="w-full h-full">
-//           <h2 className="text-xl font-bold">Health & Wellness</h2>
-//           <div className="w-full h-full scale-90 md:scale-100">
-//             <Carousel />
-//           </div>
-//         </div>
-//         <div className="w-full h-full">
-//           <h2 className="text-xl font-bold">Events & Entertainers</h2>
-//           <div className="w-full h-full scale-90 md:scale-100">
-//             <Carousel />
-//           </div>
-//         </div>
-//         {/* <Link href={"/services/chomu"} >Click me</Link> */}
-//       </div>
-//     </>
-//   );
-// };
+//  web_development
+//  graphic_design
+//  writing
 
-// export default ServiceCompo;
+// 1. Health & Wellness :
+// personal_trainer
+// nutritionist
+// yoga_instructor
+// health_coach
+// mental_health_counselor
+
+// 2. Events & Entertainment :
+// event_planner
+// dj_musician
+// photographer_videographer
+// party_entertainer
+// wedding_planne
+
+// 3. house and home :
+// gardener
+// interior_decorator
+// painters
+// electrician
+// house_cleaner
+// plumber
+// house_helper
