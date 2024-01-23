@@ -58,8 +58,8 @@ const Navbar = () => {
         <Headroom>
           <div
             className={`absolute z-40 md:hidden w-full h-[11rem] inset-0 top-[4rem] backdrop-filter backdrop-blur-md rounded-b-[20px] animate-slideDown md:animate-none ${!toggle
-                ? `hidden`
-                : `flex border-b-[1px] border-[#53c28b] md:border-none`
+              ? `hidden`
+              : `flex border-b-[1px] border-[#53c28b] md:border-none`
               } ease-in-out duration-200`}
           />
           <div className="sticky z-40 w-full h-[66px] ease-in-out backdrop-filter backdrop-blur-md animate-fade-in-down">
@@ -178,7 +178,7 @@ export const Dropdown = (props) => {
     setIsOpen(!isOpen);
   };
 
-  // console.log("user: ", authUser?.user?.lastname);
+  console.log("user: ", authUser?.user);
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}
@@ -196,54 +196,51 @@ export const Dropdown = (props) => {
       />
 
       {/* Dropdown */}
-      {
+      <div
+        className={` ${!isOpen
+          ? "hidden animate-fade-in-up duration-300"
+          : "opacity-100 animate-fade-in-down duration-300"
+          } backdrop-filter backdrop-blur-md z-50 bg-[#000000a1] origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
+      >
         <div
-          className={` ${!isOpen
-              ? "hidden animate-fade-in-up duration-300"
-              : "opacity-100 animate-fade-in-down duration-300"
-            } backdrop-filter backdrop-blur-md z-50 bg-[#000000a1] origin-top-right absolute right-0 mt-6 -mr-2 md:-mr-4 w-auto rounded-md shadow-lg border-b-[0.5px] border-l-[0.5px] border-[#53c28b] ring-1 ring-black ring-opacity-5 focus:outline-none ease-in-out`}
+          className="p-1 flex flex-col items-center justify-center gap-2"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="options-menu"
         >
-          <div
-            className="p-1 flex flex-col items-center justify-center gap-2"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            {/* Dropdown Items */}
-            <div className="block text-sm" role="menuitem">
-              {authUser?.user?.name ?? "name"}
-            </div>
-            <div className="block text-sm" role="menuitem">
-              {authUser?.user?.role ?? "role"}
-            </div>
-            {(authUser?.user?.role === "admin" ||
-              authUser?.user?.role === "superAdmin") && (
-                <Link
-                  href={`/admin/${authUser?.user?.email ?? ""}`}
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
-                >
-                  Admin
-                </Link>
-              )}
-            <Link
-              href={`/profile/${authUser?.user?.email ?? ""}`}
-              onClick={() => setIsOpen(!isOpen)}
-              className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
-            >
-              View Profile
-            </Link>
-
-            <button
-              onClick={btnOnClick}
-              role="userLogout"
-              className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
-            >
-              {btnName}
-            </button>
+          {/* Dropdown Items */}
+          <div className="block text-sm" role="menuitem">
+            {authUser?.user?.name ?? "name"}
           </div>
+          <div className="block text-sm" role="menuitem">
+            {authUser?.user?.role ?? "role"}
+          </div>
+          {(authUser?.user?.role === "admin" ||
+            authUser?.user?.role === "superAdmin") && (
+              <Link
+                href={`/admin/${authUser?.user?.email ?? ""}`}
+                onClick={() => setIsOpen(!isOpen)}
+                className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+              >
+                Admin
+              </Link>
+            )}
+          <Link
+            href={`/profile/${authUser?.user?.email ?? ""}`}
+            onClick={() => setIsOpen(!isOpen)}
+            className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
+          >
+            View Profile
+          </Link>
+          <button
+            onClick={btnOnClick}
+            role="userLogout"
+            className="signout allBtn w-[6rem] h-[2rem] text-md rounded-md"
+          >
+            {btnName}
+          </button>
         </div>
-      }
+      </div>
     </div>
   );
 };

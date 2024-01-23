@@ -37,6 +37,7 @@ const Profile = (props) => {
   const email = props.setEmail;
   const router = useRouter();
   const { data: session, status: sessionStuser } = useSession();
+  const [refDBState, setRefDBState] = useState(false);
 
   const [userData, setUserData] = useState(null);
   const [editToggle, setEditToggle] = useState(false);
@@ -44,36 +45,42 @@ const Profile = (props) => {
   const [contactToggle, setContactToggle] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const userInfo = async () => {
-      try {
-        const res = await fetch("/api/auth/user-data", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-          }),
-        });
+  const userInfo = async () => {
+    try {
+      const res = await fetch("/api/user-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+        }),
+      });
 
-        if (res.status === 400) {
-          setError("User data isn't in the database!");
-          console.log("Error: ", error);
-        }
-        if (res.status === 200) {
-          setError("");
-          const data = await res.json();
-          setUserData(data);
-        }
-      } catch (error) {
-        setError("Something went wrong!");
-        console.log("Error", error);
+      if (res.status === 400) {
+        setError("User data isn't in the database!");
+        console.log("Error: ", error);
       }
-    };
+      if (res.status === 200) {
+        setError("");
+        const data = await res.json();
+        setUserData(data);
+      }
+    } catch (error) {
+      setError("Something went wrong!");
+      console.log("Error", error);
+    }
+  };
 
-    // if (!userData) {
+  useEffect(() => {
+    if (!userData) {
+      userInfo();
+    }
+  }, [userData]);
+
+  if (refDBState == true) {
     userInfo();
-    // }
-  }, [email, userData, error]);
+    console.log(refDBState);
+    setRefDBState(false)
+  }
 
   // Optional chaining to avoid undefined errors
   const user = userData?.user;
@@ -113,7 +120,7 @@ const Profile = (props) => {
             <IoMdArrowRoundBack size={25} />
             Back
           </div>
-          {prof?.email === session?.user?.email || (session?.user?.role === "superAdmin" || session?.user?.role == "admin") && (
+          {(prof?.email === session?.user?.email || session?.user?.role === "superAdmin" || session?.user?.role == "admin") && (
             <div
               className="flex gap-1 items-center justify-center cursor-pointer hover:text-[#53c28b] active:scale-75 ease-in-out duration-300 active:translate-y-2"
               onClick={() => setEditToggle(!editToggle)}
@@ -122,7 +129,7 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        {prof?.email === session?.user?.email || (session?.user?.role == "superAdmin" || session?.user?.role == "admin") && (
+        {(prof?.email === session?.user?.email || session?.user?.role == "superAdmin" || session?.user?.role == "admin") && (
           <>
             <div
               className={` ${!editToggle
@@ -135,7 +142,7 @@ const Profile = (props) => {
                 <div className="w-full h-full flex flex-col items-center justify-center gap-2 md:p-2 borde rounded-3xl">
                   <span className="text-3xl text-[#53c28b]">Edit</span>
                   <div className="w-full h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
-                    <EditProfile prof={prof ?? "NaN"} />
+                    <EditProfile prof={prof ?? "NaN"} setRefDBState={setRefDBState} />
                   </div>
                 </div>
               </div>
@@ -366,7 +373,7 @@ const Profile = (props) => {
 export default Profile;
 
 export const EditProfile = (props) => {
-  const { prof } = props;
+  const { prof, setRefDBState } = props;
   const [profEdit, setProfEdit] = useState({
     phone: "",
     skillLevel: "",
@@ -453,6 +460,7 @@ export const EditProfile = (props) => {
         } else if (res.status === 200) {
           setError("");
           setSuccess(true);
+          setRefDBState(true)
           setProfEdit({
             phone: "",
             skillLevel: "",

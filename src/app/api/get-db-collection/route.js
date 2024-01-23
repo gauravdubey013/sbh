@@ -5,15 +5,9 @@ import ContactUsMessage from "@/models/ContactUsMessage";
 import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
 
-export const GET = async () => {
+export const POST = async () => {
   try {
     await connect();
-    // if (!db) {
-    //   console.log("Database connection failed");
-    //   return new NextResponse("Database connection failed", {
-    //     status: 500,
-    //   });
-    // }
 
     const usersCollection = await User.find({});
     const deletedUsersCollection = await DeletedUser.find({});

@@ -21,7 +21,7 @@ const Admin = () => {
   const fetchDBCollectionInfo = async () => {
     try {
       const res = await fetch("/api/get-db-collection", {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
       });
 
@@ -40,7 +40,7 @@ const Admin = () => {
   useEffect(() => {
     if (!dBCollection) {
       fetchDBCollectionInfo();
-      // console.log(dBCollection);
+      console.log(dBCollection);
     }
   }, [dBCollection]);
 
