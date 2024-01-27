@@ -442,41 +442,44 @@ export const ProfData = (props) => {
 
   return (
     <>
-      <section className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-        {data.map((i) => {
-          //   console.log(i?.email ?? "email");
-          return (
-            <div
-              key={i._id}
-              className="w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
-            >
-              <div className="w-full h-auto flex flex-row gap-1">
-
-                <div className="w-[6rem] h-[5rem] borde rounded-full text-center overflow-hidden">
-                  {/* pfp */}
-                  <Image
-                    src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
-                    alt={"userProfile"}
-                    priority={true}
-                    width={800}
-                    height={800}
-                    className="w-full h-full shadow-md z-10"
-                  />
-                </div>
-                <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
-                  <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
-                  <div className="text-sm">{i?.email ?? "email"}</div>
-                </div>
-              </div>
-              <Link
-                href={`/profile/${i?.email ?? ""}`}
-                className="viewProfile allBtn w-full h-[2rem] text-md rounded-lg"
+      <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+          {data.map((i) => {
+            //   console.log(i?.email ?? "email");
+            return (
+              <div
+                key={i._id}
+                className="w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
               >
-                View Profile
-              </Link>
-            </div>
-          );
-        })}
+                <div className="w-full h-auto flex flex-row gap-1">
+
+                  <div className="w-[6rem] h-[5rem] borde rounded-full text-center overflow-hidden">
+                    {/* pfp */}
+                    <Image
+                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                      alt={"userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10"
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
+                    <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
+                    <div className="text-sm">{i?.email ?? "email"}</div>
+                  </div>
+                </div>
+                <Link
+                  href={`/profile/${i?.email ?? ""}`}
+                  className="viewProfile allBtn w-full h-[2rem] text-md rounded-lg"
+                >
+                  View Profile
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+
       </section>
     </>
   );
@@ -498,35 +501,37 @@ export const ContactUsData = (props) => {
   }
   return (
     <>
-      <section className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-        {data.map((i) => {
-          //   console.log(i?.email ?? "email");
-          return (
-            <div
-              key={i._id}
-              className="w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
-            >
-              <div className="w-auto borde rounded-full text-center overflow-hidden">
-                {/* pfp */}
-                <Image
-                  src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
-                  alt={"userProfile"}
-                  priority={true}
-                  width={800}
-                  height={800}
-                  className="w-full h-full shadow-md z-10"
-                />
-              </div>
-              <div className="w-full flex flex-col gap-[1px] text-cente p-1">
-                <div className="font-bold">
-                  {`${i?.firstname} ${i?.lastname}` ?? "name"}
+      <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+          {data.map((i) => {
+            //   console.log(i?.email ?? "email");
+            return (
+              <div
+                key={i._id}
+                className="w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
+              >
+                <div className="w-auto borde rounded-full text-center overflow-hidden">
+                  {/* pfp */}
+                  <Image
+                    src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                    alt={"userProfile"}
+                    priority={true}
+                    width={800}
+                    height={800}
+                    className="w-full h-full shadow-md z-10"
+                  />
                 </div>
-                <div className="text-sm">{i?.email ?? "email"}</div>
-                <div className="text-sm">{i?.message ?? "message"}</div>
+                <div className="w-full flex flex-col gap-[1px] text-cente p-1">
+                  <div className="font-bold">
+                    {`${i?.firstname} ${i?.lastname}` ?? "name"}
+                  </div>
+                  <div className="text-sm">{i?.email ?? "email"}</div>
+                  <div className="text-sm">{i?.message ?? "message"}</div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </section>
     </>
   );
@@ -583,87 +588,88 @@ export const DeletedUserData = (props) => {
   }
   return (
     <>
-      <section className="w-full max-w-[100vh h-auto p-2 grid grid-flow-row grid-cols-1 md:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-        {data.map((i) => {
-          //   console.log(i?.email ?? "email");
-          return (
-            <div
-              key={i._id}
-              className="w-auto h-auto border rounded-lg flex flex-col items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 ease-in-out duration-300"
-            >
-              <div className="w-auto h-auto flex flex-row items-center justify-center">
-                <div className="w-[30%] borde rounded-full text-center overflow-hidden">
-                  {/* pfp */}
-                  <Image
-                    src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
-                    alt={"userProfile"}
-                    priority={true}
-                    width={800}
-                    height={800}
-                    className="w-full h-full shadow-md z-10"
-                  />
-                </div>
-                <div className="w-full flex flex-col gap-[1px] text-cente p-1">
-                  <span className="font-bold">
-                    <span className="text-[#53c28b]">Name : </span>
-                    {i?.name ?? "name"}
-                  </span>
-                  <span className="text-sm">
-                    <span className="text-[#53c28b]">Email : </span>
-                    {i?.email ?? "email"}
-                  </span>
-                  <span className="text-sm">
-                    <span className="text-[#53c28b]">Role : </span>
-                    {i?.role ?? "role"}
-                  </span>
-                  <span className="text-sm">
-                    <span className="text-[#53c28b]">SignInWith : </span>
-                    {i?.signInWith ?? "signInWith"}
-                  </span>
-                  <span className="text-sm">
-                    <span className="text-[#53c28b]">Deleted Date&Time : </span>
-                    {i?.createdAt ?? "createdAt"}
-                  </span>
-                </div>
-              </div>
-
-              <form className="w-full h-auto"
-                onSubmit={handleRestoreUser}
+      <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+          {data.map((i) => {
+            //   console.log(i?.email ?? "email");
+            return (
+              <div
+                key={i._id}
+                className="w-auto h-auto border rounded-lg flex flex-col items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 ease-in-out duration-300"
               >
-                <button
-                  type="submit"
-                  disabled={restoreDisableBtn}
-                  onClick={() => setEditData(i)}
-                  className={`allBtn w-full h-[2rem] text-xl rounded-3xl mb-1 overflow-hidden ${restoreDisableBtn
-                    ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                    : ""
-                    }`}
-                >
-                  {i == editData ? (
-                    error && i == editData ?
-                      <span className="flex text-red-500 animate-slideDown">
-                        {error}
-                      </span>
-                      : (
-                        restoreSuccess && i == editData ?
-                          <span className="text-gre">
-                            Use Restored Successfully
-                          </span>
-                          : (
-                            restoreDisableBtn && i == editData ?
-                              <span className="flex animate-pulse">
-                                Restoring...
-                              </span>
-                              : "Restore"
-                          )
-                      )
-                  ) : "Restore"}
-                </button>
-              </form>
+                <div className="w-auto h-auto flex flex-row items-center justify-center">
+                  <div className="w-[30%] borde rounded-full text-center overflow-hidden">
+                    {/* pfp */}
+                    <Image
+                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                      alt={"userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10"
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-[1px] text-cente p-1">
+                    <span className="font-bold">
+                      <span className="text-[#53c28b]">Name : </span>
+                      {i?.name ?? "name"}
+                    </span>
+                    <span className="text-sm">
+                      <span className="text-[#53c28b]">Email : </span>
+                      {i?.email ?? "email"}
+                    </span>
+                    <span className="text-sm">
+                      <span className="text-[#53c28b]">Role : </span>
+                      {i?.role ?? "role"}
+                    </span>
+                    <span className="text-sm">
+                      <span className="text-[#53c28b]">SignInWith : </span>
+                      {i?.signInWith ?? "signInWith"}
+                    </span>
+                    <span className="text-sm">
+                      <span className="text-[#53c28b]">Deleted Date&Time : </span>
+                      {i?.createdAt ?? "createdAt"}
+                    </span>
+                  </div>
+                </div>
 
-            </div>
-          );
-        })}
+                <form className="w-full h-auto"
+                  onSubmit={handleRestoreUser}
+                >
+                  <button
+                    type="submit"
+                    disabled={restoreDisableBtn}
+                    onClick={() => setEditData(i)}
+                    className={`allBtn w-full h-[2rem] text-xl rounded-3xl mb-1 overflow-hidden ${restoreDisableBtn
+                      ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                      : ""
+                      }`}
+                  >
+                    {i == editData ? (
+                      error && i == editData ?
+                        <span className="flex text-red-500 animate-slideDown">
+                          {error}
+                        </span>
+                        : (
+                          restoreSuccess && i == editData ?
+                            <span className="text-gre">
+                              Use Restored Successfully
+                            </span>
+                            : (
+                              restoreDisableBtn && i == editData ?
+                                <span className="flex animate-pulse">
+                                  Restoring...
+                                </span>
+                                : "Restore"
+                            )
+                        )
+                    ) : "Restore"}
+                  </button>
+                </form>
+              </div>
+            );
+          })}
+        </div>
       </section>
     </>
   )

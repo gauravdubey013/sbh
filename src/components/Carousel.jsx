@@ -15,7 +15,7 @@ const Carousel = (props) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     if (profDBCollectionData) {
-      console.log(data ?? "email");
+      // console.log(data ?? "email");
       setData(profDBCollectionData);
     }
   }, [profDBCollectionData]);
@@ -54,7 +54,7 @@ const Carousel = (props) => {
   };
   return (
     <>
-      <Slider {...settings} className="w-full h-auto md:h-[50vh] overflow-y-clip rounded-lg">
+      <Slider {...settings} className="w-full h-auto rounded-lg">
         {!data[0] &&
           slides.map((slide) => (
             <div

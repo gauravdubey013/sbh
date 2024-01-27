@@ -44,7 +44,7 @@ const ServiceCompo = () => {
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
           <div className="w-full h-full">
-            <Carousel profDBCollectionData={profDBCollection} autoplay={"true"} speed={3000} />
+            <Carousel profDBCollectionData={profDBCollection} />
           </div>
         </div>
         <div className="w-full h-full">
