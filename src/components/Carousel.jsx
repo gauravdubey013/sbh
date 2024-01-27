@@ -10,7 +10,7 @@ import { slides } from "@/context/data";
 // import { slides } from "@/context/data";
 
 const Carousel = (props) => {
-  let { profDBCollectionData, bg, defH, mdH, lgH, profile } = props;
+  const { profDBCollectionData, bg, defH, mdH, lgH, profile } = props;
 
   const [data, setData] = useState([]);
   useEffect(() => {

@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
 import { FaMapLocationDot } from "react-icons/fa6";
@@ -141,16 +142,17 @@ export const HeroContext = () => {
                 className="w-[90%] h-full bg-transparent outline-none p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] hover:placeholder:text-[#53c28b]"
               />
             </div>
-            <button
-              type="submit"
-              // onClick={"/"}
+            <Link
+              href={"/search-professional"}
+              // type="submit"
+              // onClick={"/search-professional"}
               className="allBtn w-[3.2rem] md:w-[6rem] h-[3.25rem] text-xl rounded-md"
             >
               <span>
                 <CiSearch size={25} className="md:hidden font-bold" />
               </span>
               <span className="hidden md:flex">Search</span>
-            </button>
+            </Link>
           </div>
         </form>
       </div>

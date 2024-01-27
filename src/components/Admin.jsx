@@ -65,8 +65,7 @@ const Admin = () => {
           <button className="allBtn w-full h-[2.5rem] rounded-md" onClick={() => {
             setDBCollection(null)
             fetchDBCollectionInfo()
-          }}>
-            <span className="md:hidden"><WiCloudRefresh size={40} /></span>
+          }}><WiCloudRefresh size={40} />
             <span className="hidden md:flex">Refresh DB</span>
           </button>
           <div
