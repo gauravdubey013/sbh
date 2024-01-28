@@ -152,7 +152,7 @@ const Profile = (props) => {
               className={`${socialToggle
                 ? "opacity-100 animate-fade-in-down"
                 : "opacity-0 animate-fade-in-up -top-[100%]"
-                } w-full md:w-[34.5%] h-[76%] md:h-[70.5%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+                } w-full md:w-[34.5%] h-[50vh] md:h-[60vh] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <Link
@@ -177,7 +177,7 @@ const Profile = (props) => {
               className={` ${contactToggle
                 ? "opacity-100 animate-fade-in-down"
                 : "opacity-0 animate-fade-in-up -top-[100%]"
-                } w-full md:w-[32.5%] h-[76%] md:h-[70.5%] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
+                } w-full md:w-[32.5%] h-[50vh] md:h-[60vh] md:left-[34.4%] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
                 <div className="w-[80%] h-[2.3rem] text-md flex gap-1 items-center justify-center">
@@ -199,9 +199,9 @@ const Profile = (props) => {
           </>
         )}
 
-        <div className="w-full h-full bg-[#53c28b] shadow-lg pb-3 rounded-b-3xl overflow-hidden z-10">
+        <div className="w-full h-[38vh] md:h-[46vh] bg-[#53c28b] shadow-lg pb-3 rounded-b-3xl overflow-hidden z-10">
           {/*  */}
-          <div className="flex rounded-b-3xl bbg space-y-5 flex-col items-center py-7">
+          <div className="w-full h-[30vh] md:h-[36vh] flex rounded-b-3xl bbg flex-col items-center py-4">
             <div className="w-32 h-32 bbg border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
                 src={

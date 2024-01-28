@@ -157,6 +157,7 @@ function LoginForm() {
                   handleSubmit(e);
                 }
               }}
+              required
               className={`allFormInput h-[52px]`}
             />
             <div className="w-full h-auto overflow-hidden">
@@ -181,6 +182,7 @@ function LoginForm() {
                     handleSubmit(e);
                   }
                 }}
+                required
               />
               <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
                 {showPass === "text" ? (
@@ -216,11 +218,10 @@ function LoginForm() {
           <button
             disabled={disableBtn}
             type="submit"
-            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
-              disableBtn
-                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                : ""
-            }`}
+            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${disableBtn
+              ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+              : ""
+              }`}
           >
             Login
           </button>

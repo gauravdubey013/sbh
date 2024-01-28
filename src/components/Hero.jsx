@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
@@ -8,6 +8,7 @@ import { aboutUs, adBanner } from "@/context/data";
 import AdBannerCarousel from "./AdBannerCarousel";
 import ServiceCompo from "@/components/ServiceCompo";
 import Contact from "./Contact";
+import { useRouter } from "next/navigation";
 
 export default function HeroTest() {
   let ref = useRef(null);
@@ -115,6 +116,21 @@ export default function HeroTest() {
 // export default home;
 
 export const HeroContext = () => {
+  const router = useRouter();
+  const [service, setService] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [error, setError] = useState("");
+  // console.log(service, zipCode);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+
+    if ((service && zipCode) == "") {
+      return setError("Please provide the search both input!");
+    }
+    setError("");
+    return router.push(`/search-professional/${service}/${zipCode}`);
+  }
   return (
     <>
       <div className="w-full h-[70vh] md:h-[101vh] bg-transparent relative z-20 flex flex-col justify-center p-[20px] sm:px-[65px] md:px-[65px] lg:px-[200px] ease-in-out duration-300">
@@ -126,35 +142,62 @@ export const HeroContext = () => {
         <span className="animate-fade-in-down text-[20px] text-[#e6e7ec]/90">
           Get free quotes within minutes
         </span>
-        <form className="animate-fade-in-down flex flex-col sm:flex-row gap-1 sm:gap-0 ease-in-out duration-300">
-          <input
-            type="text"
-            placeholder="What service are you looking for?"
-            className="w-[22.75rem] md:w-[18.8rem] lg:w-[22.75rem] h-[3.25rem] p-4 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md sm:rounded-r-none border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-b-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
-          />
+        <form onSubmit={handleSearchSubmit} className="animate-fade-in-down flex flex-col sm:flex-row gap-1 sm:gap-0 ease-in-out duration-300">
+          <select
+            name="service"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            placeholder="Freelancer Category"
+            // required
+            className="w-full md:w-[18.8rem] lg:w-[22.75rem] h-[3.25rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md sm:rounded-r-none border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+          >
+            <option value="" disabled selected hidden>
+              What service are you looking for?
+            </option>
+            <option className="ddl" value="writing">Writer</option>
+            <option className="ddl" value="plumber">Plumber</option>
+            <option className="ddl" value="painters">Painters</option>
+            <option className="ddl" value="gardener">Gardener</option>
+            <option className="ddl" value="electrician">Electrician</option>
+            <option className="ddl" value="health_coach">Health Coach</option>
+            <option className="ddl" value="dj_musician">DJ / Musician</option>
+            <option className="ddl" value="house_helper">House Helper</option>
+            <option className="ddl" value="nutritionist">Nutritionist</option>
+            <option className="ddl" value="event_planner">Event Planner</option>
+            <option className="ddl" value="house_cleaner">House Cleaner</option>
+            <option className="ddl" value="graphic_design">Graphic Design</option>
+            <option className="ddl" value="yoga_instructor">Yoga Instructor</option>
+            <option className="ddl" value="wedding_planner">Wedding Planner</option>
+            <option className="ddl" value="web_development">Web Development</option>
+            <option className="ddl" value="personal_trainer">Personal Trainer</option>
+            <option className="ddl" value="party_entertainer">Party Entertainer</option>
+            <option className="ddl" value="interior_decorator">Interior Decorator</option>
+            <option className="ddl" value="mental_health_counselor">Mental Health Counselor</option>
+            <option className="ddl" value="photographer_videographer">Photographer / Videographer</option>
+          </select>
 
           <div className="flex gap-1 items-center">
-            <div className="locIcon w-[12.5rem] h-[3.25rem] cursor-text hover:border-b-[2px] hover:border-b-[#53c28b] flex items-center px-2 rounded-md sm:rounded-l-none border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm ease-in-out duration-500">
+            <div className="locIcon w-[12rem] h-[3.25rem] cursor-text hover:border-b-[2px] hover:border-b-[#53c28b] flex items-center px-2 rounded-md sm:rounded-l-none border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm ease-in-out duration-500">
               <FaMapLocationDot size={20} className="" />
               <input
                 type="text"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value.replace(/[^\d]/g, ""))}
+                // required
                 placeholder="Pin Code"
                 className="w-[90%] h-full bg-transparent outline-none p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] hover:placeholder:text-[#53c28b]"
               />
             </div>
-            <Link
-              href={"/search-professional"}
-              // type="submit"
-              // onClick={"/search-professional"}
-              className="allBtn w-[3.2rem] md:w-[6rem] h-[3.25rem] text-xl rounded-md"
-            >
-              <span>
-                <CiSearch size={25} className="md:hidden font-bold" />
-              </span>
+            {/* href={`/search-professional/${service}/${zipCode}`} */}
+            <button type="submit" className="allBtn w-[3rem] md:w-[6rem] h-[3.25rem] text-xl rounded-md">
+              <CiSearch size={25} className="md:hidden font-bold" />
               <span className="hidden md:flex">Search</span>
-            </Link>
+            </button>
           </div>
         </form>
+        <span className="w-auto h-[1.5rem] flex items-end overflow-hidden">
+          {error && <span className="text-red-500 animate-slideDown">{error}</span>}
+        </span>
       </div>
     </>
   );

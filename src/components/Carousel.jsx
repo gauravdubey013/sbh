@@ -7,10 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { slides } from "@/context/data";
-// import { slides } from "@/context/data";
 
 const Carousel = (props) => {
-  const { profDBCollectionData, bg, defH, mdH, lgH, profile } = props;
+  const { profDBCollectionData, defH, mdH, lgH } = props;
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -62,7 +61,7 @@ const Carousel = (props) => {
               key={slide._id}
             >
               <div
-                className={`w-full h-full ${bg} scale-95 border border-[#53c28b] hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
+                className={`w-full h-full bbg animate-pulse scale-95 border border-[#53c28b] hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
               >Loading...</div>
             </div>
           ))}
@@ -74,36 +73,35 @@ const Carousel = (props) => {
               key={slide._id}
             >
               <div
-                className={`w-full h-full ${bg} scale-95 hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
+                className={`w-full h-full relative bbg scale-95 borde border-[#53c28b] hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-end overflow-hidden`}
               >
-                <div
-                  className={`${profile} w-full h-full bbg border border-[#53c28b] rounded-lg -mb-[80px]`}
-                >
-                  <div className="w-full h-auto -translate-y-[56px] lg:-translate-y-[46.5px] flex justify-center">
-                    <Image
-                      src={slide?.profileImgPath ?? "/assets/bg6.png"}
-                      alt="url"
-                      // fill="true"
-                      width={100}
-                      height={100}
-                      className=" w-[8rem] h-[8rem] bbg scale-75 lg:scale-90 rounded-full shadow-md ease-in-out duration-500"
-                    />
-                  </div>
-                  <div className="fontFam w-full h-auto z-10 -translate-y-20 lg:-translate-y-16 bg-transparent bottom-0 rounded-lg p-2 overflow-hidden flex flex-col gap-1">
-                    <h2 className="text-md md:text-lg font-semibold">
-                      {slide?.name ?? "Name Rakhsita"}
+                <div className="absolute top-0 z-20 w-[5rem] h-[5rem] md:w-[8rem] md:h-[8rem] bbg rounded-full overflow-hidden">
+                  <Image
+                    src={slide?.profileImgPath ?? "/assets/bg6.png"}
+                    alt="prof-profile"
+                    // fill="true"
+                    width={100}
+                    height={100}
+                    className=" w-full h-full bbg shadow-md"
+                  />
+                </div>
+                <div className="w-full h-[85%] md:h-[80%] z-10 border border-[#53c28b] rounded-lg flex items-end overflow-hidden">
+                  <div className="w-full h-[80%] md:h-[77%] relative rounded-lg px-2 overflow-hidden">
+                    <h2 className="text-sm md:text-lg font-semibold">
+                      {slide?.name ?? "name"}
                     </h2>
-                    <span className="h-[4rem] text-sm line-clamp-3 -mt-2">
+                    <div className="h-[2.3rem] md:h-[2rem] text-sm mb-[4px]"><span className="text-[#53c28b]">Service : </span>{slide?.service ?? "service"}</div>
+                    <span className="h-[4rem] text-[12px] md:text-sm line-clamp-1 md:line-clamp-3">
                       {slide?.bio !== "null" ? slide?.bio ?? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quisquam saepe quae dolorem distinctio optio perspiciatis consequuntur tempora labore eos." : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quisquam saepe quae dolorem distinctio optio perspiciatis consequuntur tempora labore eos."}
                     </span>
-                    <div className="w-full h-auto flex flex-row lg:flex-col gap-[1px] md:gap-1 bottom-0">
-                      <div className="review w-[4rem] lg:w-full h-[3rem] bg-[#53c28b] rounded-3xl flex gap-1 items-center justify-center">
-                        {slide?.skillLevel}
+                    <div className="absolute w-full h-[2.3rem] md:h-auto scale-95 bbg flex flex-row lg:flex-col gap-[1px] md:gap-1 items-center justify-center bottom-0 -ml-2 md:mb-1">
+                      <div className="review w-[3rem] lg:w-full h-[2rem] bg-[#53c28b] rounded-3xl flex gap-1 items-center justify-center">
+                        {slide?.skillLevel ?? "experience"}
                         <span className="hidden lg:flex"> Years of Exp.</span>
                       </div>
                       <Link
                         href={`/profile/${slide?.email ?? "dubeygaurav520@gmail.com"}`}
-                        className="allBtn w-full h-[3rem] text-sm rounded-3xl text-center"
+                        className="allBtn w-full h-[2rem] text-sm rounded-3xl text-center"
                       >
                         View more
                       </Link>
