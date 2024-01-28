@@ -44,11 +44,9 @@ const ProfessioalSearchPage = ({ params }) => {
         if (serviceData) {
             return serviceData.filter(profZipCode => profZipCode.zipCode === zipCodeFetch);
         } else {
-            return []; // Return an empty array if profDBCollection is null
+            return [];
         }
     };
-
-    console.log(service, zipCode);
     return (
         <>
             <form className=" w-full h-auto p-2 animate-fade-in-down flex flex-col sm:flex-row gap-1 md:items-center md:justify-center sm:gap-0 ease-in-out duration-300">

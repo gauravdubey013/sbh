@@ -78,7 +78,7 @@ const Profile = (props) => {
 
   if (refDBState == true) {
     userInfo();
-    console.log(refDBState);
+    // console.log(refDBState);
     setRefDBState(false)
   }
 
@@ -200,7 +200,6 @@ const Profile = (props) => {
         )}
 
         <div className="w-full h-[38vh] md:h-[46vh] bg-[#53c28b] shadow-lg pb-3 rounded-b-3xl overflow-hidden z-10">
-          {/*  */}
           <div className="w-full h-[30vh] md:h-[36vh] flex rounded-b-3xl bbg flex-col items-center py-4">
             <div className="w-32 h-32 bbg border-[0.5px] border-[#53c28b] shadow-lg rounded-full animate-fade-in-down overflow-hidden">
               <Image
@@ -276,7 +275,8 @@ const Profile = (props) => {
                 <RiContactsBookFill size={25} />
                 <span>Contact</span>
               </div>
-              <div
+              <Link
+                href={"/chat"}
                 onClick={() => {
                   // setContactToggle(!contactToggle);
                   socialToggle ? setSocialToggle(!socialToggle) : "";
@@ -286,7 +286,7 @@ const Profile = (props) => {
               >
                 <BsChatLeftTextFill size={25} />
                 <span>Chat</span>
-              </div>
+              </Link>
             </div>
           )}
         </div>
