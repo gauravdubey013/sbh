@@ -30,7 +30,6 @@ export const tabs = [
     url: "/#contact",
   },
 ];
-
 export const aboutUs = [
   {
     id: 1,
@@ -53,7 +52,6 @@ export const aboutUs = [
     desc: "Whether you're a skilled professional looking to showcase your talents or a company seeking top-notch freelancers, SkillBeHired is the platform for you. Join us today and be part of a community where skills are celebrated, connections are made, and opportunities abound.",
   },
 ];
-
 export const adBanner = [
   {
     id: 1,
@@ -76,3 +74,31 @@ export const adBanner = [
     img: "/adBanner/banner4.jpg",
   },
 ];
+
+export const healthWellness = [
+  "personal_trainer",
+  "nutritionist",
+  "yoga_instructor",
+  "health_coach",
+  "mental_health_counselor",
+];
+export const eventsEntertainment = [
+  "event_planner",
+  "dj_musician",
+  "photographer_videographer",
+  "party_entertainer",
+  "wedding_planne",
+];
+export const houseHome = [
+  "gardener",
+  "interior_decorator",
+  "painters",
+  "electrician",
+  "house_cleaner",
+  "plumber",
+  "house_helper",
+];
+
+//  web_development
+//  graphic_design
+//  writing

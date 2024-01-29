@@ -11,6 +11,7 @@ import { BsChatLeftTextFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { TbHandClick } from "react-icons/tb";
 
 import Loading from "@/app/loading";
 
@@ -276,7 +277,7 @@ const Profile = (props) => {
                 <span>Contact</span>
               </div>
               <Link
-                href={"/chat"}
+                href={"/chat/okay"}
                 onClick={() => {
                   // setContactToggle(!contactToggle);
                   socialToggle ? setSocialToggle(!socialToggle) : "";
@@ -290,7 +291,7 @@ const Profile = (props) => {
             </div>
           )}
         </div>
-        <div className="w-full h-auto mt-2 p-4">
+        <div className="w-full h-auto p-4">
           {user?.role == "professional" ? (
             <div className="w-full h-full rounded-3xl border border-[#53c28b] text-md flex flex-col gap-1 p-2 sm:p-4 md:px-6">
               <div className="w-full h-auto flex gap-1 items-start justify-start md:justify-between">
@@ -346,6 +347,13 @@ const Profile = (props) => {
                 <span className="w-auto md:w-[80%] h-auto">
                   {prof?.bio ?? "NaN"}
                 </span>
+              </div>
+              <div className="flex gap-1 items-start justify-start md:justify-between">
+                <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
+                  Resume
+                </span>
+                :
+                <Link href={prof?.resumePath ?? "https://sbh.vercel.app/"} target="_blank" className="w-auto md:w-[80%] h-auto flex items-center gap-1 hover:text-[#53c28b] active:text-sm ease-in-out duration-200" ><TbHandClick />Click to view</Link>
               </div>
             </div>
           ) : (

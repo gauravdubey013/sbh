@@ -1,6 +1,6 @@
 "use client"
-
 import React, { useEffect, useState } from "react";
+import { eventsEntertainment, healthWellness, houseHome } from "@/context/data";
 import Carousel from "./Carousel";
 
 const ServiceCompo = () => {
@@ -46,27 +46,25 @@ const ServiceCompo = () => {
       return []; // Return an empty array if profDBCollection is null
     }
   };
-
-
   return (
     <>
       <div className="w-full h-auto flex flex-col gap-1">
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">House & Home</h2>
           <div className="w-full h-full">
-            <Carousel profDBCollectionData={getFilteredProfessionals(healthWellness)} />
+            <Carousel profDBCollectionData={getFilteredProfessionals(houseHome)} />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Health & Wellness</h2>
           <div className="w-full h-full">
-            <Carousel profDBCollectionData={getFilteredProfessionals(eventsEntertainment)} />
+            <Carousel profDBCollectionData={getFilteredProfessionals(healthWellness)} />
           </div>
         </div>
         <div className="w-full h-full">
           <h2 className="text-xl font-bold">Events & Entertainers</h2>
           <div className="w-full h-full">
-            <Carousel profDBCollectionData={getFilteredProfessionals(houseHome)} />
+            <Carousel profDBCollectionData={getFilteredProfessionals(eventsEntertainment)} />
           </div>
         </div>
       </div>
@@ -75,40 +73,3 @@ const ServiceCompo = () => {
 };
 
 export default ServiceCompo;
-
-export const healthWellness = [
-  "personal_trainer",
-  "nutritionist",
-  "yoga_instructor",
-  "health_coach",
-  "mental_health_counselor",
-]
-export const eventsEntertainment = [
-  "event_planner",
-  "dj_musician",
-  "photographer_videographer",
-  "party_entertainer",
-  "wedding_planne",
-]
-export const houseHome = [
-  "gardener",
-  "interior_decorator",
-  "painters",
-  "electrician",
-  "house_cleaner",
-  "plumber",
-  "house_helper",
-]
-
-//  web_development
-//  graphic_design
-//  writing
-
-// 3. house and home :
-// gardener
-// interior_decorator
-// painters
-// electrician
-// house_cleaner
-// plumber
-// house_helper
