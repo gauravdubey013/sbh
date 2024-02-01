@@ -8,6 +8,8 @@ import Loading from "@/app/loading";
 import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
+import { FaMapLocationDot } from 'react-icons/fa6';
+import { CiSearch } from 'react-icons/ci';
 
 const Admin = () => {
   const [isUserOpen, setIsUserOpen] = useState(true);
@@ -425,13 +427,28 @@ export const UserData = (props) => {
 };
 export const ProfData = (props) => {
   const { profsCollection } = props;
+  const [service, setService] = useState("all")
+  const [hired, setHired] = useState("all")
   const [data, setData] = useState([]);
 
   useEffect(() => {
     if (profsCollection) {
-      setData(profsCollection);
+      let filteredData = profsCollection;
+
+      if (service !== "all") {
+        filteredData = filteredData.filter(profService => profService.service === service);
+      }
+
+      if (hired === "notHired") {
+        filteredData = filteredData.filter(profService => profService.hired !== "hired");
+      } else if (hired === "hired") {
+        filteredData = filteredData.filter(profService => profService.hired === "hired");
+      }
+
+      setData(filteredData);
     }
-  }, [profsCollection]);
+  }, [profsCollection, service, hired]);
+
 
   if (!profsCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
@@ -441,6 +458,50 @@ export const ProfData = (props) => {
 
   return (
     <>
+      <form className=" w-full h-auto p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
+        <select
+          name="service"
+          value={service}
+          onChange={(e) => setService(e.target.value)}
+          placeholder="Freelancer Category"
+          required
+          className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+        >
+          <option className="ddl" value="all">All</option>
+          <option className="ddl" value="writing">Writer</option>
+          <option className="ddl" value="plumber">Plumber</option>
+          <option className="ddl" value="painters">Painters</option>
+          <option className="ddl" value="gardener">Gardener</option>
+          <option className="ddl" value="electrician">Electrician</option>
+          <option className="ddl" value="health_coach">Health Coach</option>
+          <option className="ddl" value="dj_musician">DJ / Musician</option>
+          <option className="ddl" value="house_helper">House Helper</option>
+          <option className="ddl" value="nutritionist">Nutritionist</option>
+          <option className="ddl" value="event_planner">Event Planner</option>
+          <option className="ddl" value="house_cleaner">House Cleaner</option>
+          <option className="ddl" value="graphic_design">Graphic Design</option>
+          <option className="ddl" value="yoga_instructor">Yoga Instructor</option>
+          <option className="ddl" value="wedding_planner">Wedding Planner</option>
+          <option className="ddl" value="web_development">Web Development</option>
+          <option className="ddl" value="personal_trainer">Personal Trainer</option>
+          <option className="ddl" value="party_entertainer">Party Entertainer</option>
+          <option className="ddl" value="interior_decorator">Interior Decorator</option>
+          <option className="ddl" value="mental_health_counselor">Mental Health Counselor</option>
+          <option className="ddl" value="photographer_videographer">Photographer / Videographer</option>
+        </select>
+        <select
+          name="service"
+          value={hired}
+          onChange={(e) => setHired(e.target.value)}
+          placeholder="Freelancer Category"
+          required
+          className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+        >
+          <option className="ddl" value="all">All</option>
+          <option className="ddl" value="hired">Hired</option>
+          <option className="ddl" value="notHired">Not Hired</option>
+        </select>
+      </form>
       <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
         <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
           {data.map((i) => {
@@ -466,6 +527,7 @@ export const ProfData = (props) => {
                   <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
                     <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
                     <div className="text-sm">{i?.email ?? "email"}</div>
+                    <div className="text-sm">{i?.service ?? "service"}</div>
                   </div>
                 </div>
                 <Link

@@ -16,7 +16,7 @@ module.exports = {
     // },
     extend: {
       keyframes: {
-        slideDown: {
+        "slideDown": {
           "0%": {
             opacity: 0,
             transform: "translateY(-100px)",
@@ -52,9 +52,9 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 0.3s ease-out",
-        "fade-in-down": "fade-in-down 0.5s ease-out",
-        slideDown: "fade-in-down 0.5s ease-in-out",
+        "fade-in-up": "fade-in-up 0.3s ease-in-out",
+        "fade-in-down": "fade-in-down 0.5s ease-in-out",
+        "slideDown": "slideDown 0.5s ease-in-out",
       },
     },
   },

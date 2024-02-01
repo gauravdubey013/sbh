@@ -61,7 +61,6 @@ const SignUp = () => {
         setErrors({ emailE: "" });
       }
     }
-    // setEmail((prevUser) => ({ ...prevUser, inputValue }));
   };
 
   const passwordPattern =
@@ -130,22 +129,6 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // console.log(
-    //   "firstname: ",
-    //   firstname,
-    //   "\nlastname: ",
-    //   lastname,
-    //   "\nemail: ",
-    //   email,
-    //   "\npassword: ",
-    //   password,
-    //   "\nconfirmPassword: ",
-    //   confirmPassword,
-    //   "\nprofCheckValue: ",
-    //   profCheckValue
-    // );
-
     if (!emailPattern.test(email)) {
       setErrors({
         emailE: "Please provide valid email!",
@@ -247,9 +230,8 @@ const SignUp = () => {
                       />
                     </div>
                     <div
-                      className={`w-full h-auto ${
-                        condition.email || errors.emailE ? "-mb-2" : "mb-0"
-                      }`}
+                      className={`w-full h-auto ${condition.email || errors.emailE ? "-mb-2" : "mb-0"
+                        }`}
                     >
                       <input
                         type="email"
@@ -262,11 +244,10 @@ const SignUp = () => {
                       />
                       <div className="w-full h-auto overflow-hidden">
                         <span
-                          className={`${
-                            condition.email == true
+                          className={`${condition.email == true
                               ? "flex animate-slideDown"
                               : "hidden"
-                          }`}
+                            }`}
                         >
                           Must be valid, ex: abc@gmail.com
                         </span>
@@ -278,11 +259,10 @@ const SignUp = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-full h-auto ${
-                        condition.password || errors.passwordE
+                      className={`w-full h-auto ${condition.password || errors.passwordE
                           ? "-mb-2"
                           : "mb-0"
-                      }`}
+                        }`}
                     >
                       <div className="flex">
                         <input
@@ -312,11 +292,10 @@ const SignUp = () => {
                       </div>
                       <div className="w-full h-auto overflow-hidden">
                         <span
-                          className={`${
-                            condition.password == true
+                          className={`${condition.password == true
                               ? "flex animate-slideDown"
                               : "hidden"
-                          }`}
+                            }`}
                         >
                           Keep the strong password!, ex: StrongP@ssw0rd
                         </span>
@@ -328,9 +307,8 @@ const SignUp = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-full h-auto ${
-                        errors.confirmPasswordE ? "-mb-3" : "-mb-2"
-                      }`}
+                      className={`w-full h-auto ${errors.confirmPasswordE ? "-mb-3" : "-mb-2"
+                        }`}
                     >
                       <div className="flex">
                         <input
@@ -404,11 +382,10 @@ const SignUp = () => {
                     <button
                       disabled={disableBtn}
                       type="submit"
-                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${
-                        disableBtn
+                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${disableBtn
                           ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                           : ""
-                      }`}
+                        }`}
                     >
                       {disableBtn ? (
                         <span className="animate-pulse">Registing...</span>
@@ -437,9 +414,8 @@ const SignUp = () => {
           />
         </div>
         <div
-          className={` ${
-            !tcClick ? "hidden" : "flex animate-slideDown"
-          } w-full h-full z-20 top-0 absolute flex-col gap-2 items-center justify-center ease-in-out duration-300`}
+          className={` ${!tcClick ? "hidden" : "flex animate-slideDown"
+            } w-full h-full z-20 top-0 absolute flex-col gap-2 items-center justify-center ease-in-out duration-300`}
         >
           <TermsConditions
             setHead="Privacy Policy for SkillBeHired Users/Clients"

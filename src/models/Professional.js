@@ -54,6 +54,10 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+    hired: {
+      type: String,
+      required: false,
+    },
 
     bio: {
       type: String,
