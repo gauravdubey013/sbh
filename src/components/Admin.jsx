@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -8,12 +7,11 @@ import Loading from "@/app/loading";
 import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
-import { FaMapLocationDot } from 'react-icons/fa6';
-import { CiSearch } from 'react-icons/ci';
 
 const Admin = () => {
   const [isUserOpen, setIsUserOpen] = useState(true);
   const [isProfOpen, setIsProfOpen] = useState(false);
+  const [isProfAcceptOpen, setIsProfAcceptOpen] = useState(false);
   const [isContactUsOpen, setIsContactUsOpen] = useState(false);
   const [isDelUserOpen, setIsDelUserOpen] = useState(false);
   const activeCss = "bg-[#53c28b]";
@@ -64,7 +62,7 @@ const Admin = () => {
     <>
       <section className="w-full h-[78vh] flex flex-row animate-slideDown">
         <div className="adminNav w-[20%] h-full p-2 border-r-[0.5px] border-[#53c28b] flex flex-col gap-4 items-center">
-          <button className="allBtn w-full h-[2.5rem] rounded-md" onClick={() => {
+          <button className="allBt w-full h-[2.5rem] rounded-md flex items-center justify-center text-[#53c28b] border border-[#53c28b] scale-95 hover:scale-100 active:scale-90 active:bg-[#53c28b] active:text-white ease-in-out duration-300" onClick={() => {
             setDBCollection(null)
             fetchDBCollectionInfo()
           }}><WiCloudRefresh size={40} />
@@ -74,6 +72,7 @@ const Admin = () => {
             onClick={() => {
               !isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
@@ -81,11 +80,12 @@ const Admin = () => {
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsers size={30} /></span>
-            <span className="hidden md:flex">User</span>
+            <span className="hidden md:flex">Users</span>
           </div>
           <div
             onClick={() => {
               !isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
@@ -94,13 +94,28 @@ const Admin = () => {
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUserTie size={30} /></span>
-            <span className="hidden md:flex">Professional</span>
+            <span className="hidden md:flex">Professionals</span>
+          </div>
+          <div
+            onClick={() => {
+              !isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
+              isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+            }}
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+          >
+            <span className="md:hidden"><FaUsersSlash size={30} /></span>
+            <span className="hidden md:flex">Accept Professionals</span>
           </div>
           <div
             onClick={() => {
               !isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
-              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
@@ -114,14 +129,14 @@ const Admin = () => {
               !isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsersSlash size={30} /></span>
-            <span className="hidden md:flex">Deleted User</span>
-
+            <span className="hidden md:flex">Deleted Users</span>
           </div>
         </div>
 
@@ -147,6 +162,11 @@ const Admin = () => {
                 <DeletedUserData
                   deletedUsersCollection={deletedUsersCollection} setRefDb={setRefDb}
                 />
+              </div>
+            )}
+            {isProfAcceptOpen && (
+              <div className="animate-fade-in-down">
+                <AcceptProf profsCollection={profsCollection} setRefDb={setRefDb} />
               </div>
             )}
           </div>
@@ -735,3 +755,110 @@ export const DeletedUserData = (props) => {
     </>
   )
 };
+
+export const AcceptProf = (props) => {
+  const { profsCollection, setRefDb } = props;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (profsCollection) {
+      const filteredData = profsCollection.filter(profService => profService.isVerified === "no");
+      setData(filteredData);
+    }
+  }, [profsCollection]);
+
+  const [editData, setEditData] = useState();
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
+
+  // const { data: session, status: sessionStatus } = useSession();
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  if (!profsCollection[0]) {
+    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
+      No Profession acceptance collection record found
+    </section>
+  }
+  return (
+    <>
+      <section className="w-full h-[78vh] relative flex flex-col md:flex-row">
+        <div className={`w-full ${!isViewOpen ? "h-full" : "h-[50%]"} md:h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden ease-in-out duration-200`}>
+          <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+            {data.map((i) => {
+              //   console.log(i?.email ?? "email");
+              return (
+                <div
+                  key={i._id}
+                  onClick={() => {
+                    if (i != editData) {
+                      // console.log(i);
+                      setError("")
+                      setSuccess("")
+                      // setDeleteSuccess(false);
+                    }
+                    setEditData(i);
+                    setIsViewOpen(true)
+                    if (i == editData) setIsViewOpen(!isViewOpen);
+                  }}
+                  className={` ${i == editData && isViewOpen ? activeCss : ""
+                    } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
+                >
+                  <div className="w-[30%] h-[5rem] borde rounded-full text-center overflow-hidden">
+                    {/* pfp */}
+                    <Image
+                      src={i?.profileImgPath ?? "/assets/bg6.png"}
+                      alt={"userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10 scale-75"
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-[1px] text-base">
+                    <div className="font-bold">{i?.name ?? "name"}</div>
+                    <div className="text-sm">{i?.email ?? "email"}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div
+          className={`${!isViewOpen ? "h-0 md:-mr-[100%]" : "md:mr-0 h-[70%]"
+            } w-full md:w-[50%] md:h-[78vh] p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden flex flex-col gap-2 border rounded-xl bbg ease-in-out duration-200`}
+        >
+          <span className="font-extrabold text-xl text-[#53c28b] text-center">Details</span>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Name :</span>{editData?.name ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Email :</span>{editData?.email ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Verified :</span>{editData?.isVerified ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Service :</span>{editData?.service ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">DOB :</span>{editData?.dob ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Gender :</span>{editData?.gender ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Work History :</span> {editData?.workHistory ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Phone :</span>{editData?.phone ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Address :</span>{editData?.address ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Zip code :</span>{editData?.zipCode ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Yr. of Experience :</span>{editData?.skillLevel ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Resume :</span><Link href={editData?.resumePath ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Bio :</span>{editData?.bio ?? "NaN"}</div>
+          <span className="text-[#53c28b]">Soical Links :</span>
+          <div className="text-sm flex gap-1 -mt-3"><span className=" text-[#53c28b]">1.</span><Link href={editData?.sLOne ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">2.</span><Link href={editData?.sLTwo ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Registration time :</span>{editData?.createdAt ?? "NaN"}</div>
+          {error &&
+            <span className="text-[red] animate-fade-in-down">{error}</span>}
+          {success &&
+            <span className="text-[#53c28b] animate-fade-in-down">{success}</span>}
+          <div className="w-full h-[15vh] flex flex-col md:flex-row">
+            <button className="allBtn w-full h-[3rem] rounded-2xl">Accept</button>
+            <button className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Decline</button>
+          </div>
+        </div >
+      </section >
+    </>
+  )
+}

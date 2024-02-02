@@ -88,6 +88,7 @@ export const POST = async (request) => {
     const newProfessional = new Professional({
       userID,
       email,
+      isVerified: "no",
       name,
       gender,
       dob,

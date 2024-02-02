@@ -14,6 +14,10 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: String,
+      required: false,
+    },
     name: {
       type: String,
       required: true,
