@@ -32,7 +32,9 @@ export async function POST(request) {
   existingUser.resetTokenExpiry = passwordResetExpires;
   const resetUrl = `${process.env.HOSTNAME}/reset-password/${resetToken}`;
 
-  const body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${existingUser.firstname}!!</h1>
+  const body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${
+    existingUser.name ?? "name"
+  }!!</h1>
   <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">To Reset the password : </span>
   <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Click me</a>
   <h3 style="color: #ccc;">And if it wasn't you, then <u>ignore it!</u></h3>
@@ -64,10 +66,3 @@ export async function POST(request) {
     });
   }
 }
-// react: (
-//   <SendEmailLink
-//     setText={`Heyaa ${email.firstname}!!! \n To reset your password click the reset button: `}
-//     setBtnText="Reset"
-//     setUrl={resetUrl}
-//   />
-// ),

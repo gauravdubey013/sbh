@@ -453,7 +453,7 @@ export const ProfData = (props) => {
 
   useEffect(() => {
     if (profsCollection) {
-      let filteredData = profsCollection;
+      let filteredData = profsCollection.filter(profService => profService.isVerified !== "no");
 
       if (service !== "all") {
         filteredData = filteredData.filter(profService => profService.service === service);
@@ -759,23 +759,56 @@ export const DeletedUserData = (props) => {
 export const AcceptProf = (props) => {
   const { profsCollection, setRefDb } = props;
   const [data, setData] = useState([]);
+  const [editData, setEditData] = useState();
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [selectedProfEmail, setSelectedProfEmail] = useState();
+  const [profAction, setProfAction] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
+
   useEffect(() => {
     if (profsCollection) {
-      const filteredData = profsCollection.filter(profService => profService.isVerified === "no");
+      const filteredData = profsCollection.filter(profVerify => profVerify.isVerified == "no");
       setData(filteredData);
+      // setData(profsCollection);
     }
   }, [profsCollection]);
 
-  const [editData, setEditData] = useState();
-  const [isViewOpen, setIsViewOpen] = useState(false);
-  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
+  const acceptProf = async () => {
+    try {
+      const res = await fetch("/api/admin-prof-accept", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          profAction,
+          selectedProfEmail,
+        })
+      })
+      console.log(profAction + "");
+      if (res.status === 400) {
+        setError("Prof doesn't exists");
+        setRefDb(true);
+      }
+      if (res.status === 200) {
+        if (profAction == "accept") {
+          setSuccess("Accepted Professional successfully!");
+        }
+        if (profAction == "reject") {
+          setSuccess("Rejected Professional successfully!");
+        }
+        setError("");
+        setRefDb(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  }
 
-  // const { data: session, status: sessionStatus } = useSession();
+  // console.log(data[0]);
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  if (!profsCollection[0]) {
+  if (!data[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
       No Profession acceptance collection record found
     </section>
@@ -854,8 +887,18 @@ export const AcceptProf = (props) => {
           {success &&
             <span className="text-[#53c28b] animate-fade-in-down">{success}</span>}
           <div className="w-full h-[15vh] flex flex-col md:flex-row">
-            <button className="allBtn w-full h-[3rem] rounded-2xl">Accept</button>
-            <button className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Decline</button>
+            <button onClick={() => {
+              setProfAction("accept")
+              setSelectedProfEmail(editData?.email);
+              acceptProf();
+              // setIsViewOpen(!isViewOpen);
+            }} className="allBtn w-full h-[3rem] rounded-2xl">Accept</button>
+            <button onClick={() => {
+              setProfAction("reject")
+              setSelectedProfEmail(editData?.email);
+              acceptProf();
+              // setIsViewOpen(!isViewOpen);
+            }} className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Decline</button>
           </div>
         </div >
       </section >
