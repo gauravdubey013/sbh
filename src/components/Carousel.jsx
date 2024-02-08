@@ -15,7 +15,7 @@ const Carousel = (props) => {
   useEffect(() => {
     if (profDBCollectionData) {
       // console.log(data ?? "email");
-      setData(profDBCollectionData);
+      setData(profDBCollectionData.filter(profService => profService.isVerified !== "no"));
     }
   }, [profDBCollectionData]);
   const settings = {

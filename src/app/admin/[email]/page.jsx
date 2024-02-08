@@ -9,19 +9,19 @@ const AdminPage = ({ params }) => {
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (
-  //     sessionStatus !== "authenticated" &&
-  //     session?.user?.email !== decodeURIComponent(params.email) &&
-  //     (session?.user?.role !== "admin" || session?.user?.role !== "superAdmin")
-  //   ) {
-  //     router.replace("/");
-  //   }
-  // }, [sessionStatus, router]);
+  useEffect(() => {
+    if (
+      sessionStatus !== "authenticated" &&
+      session?.user?.email !== decodeURIComponent(params.email) &&
+      (session?.user?.role !== "admin" || session?.user?.role !== "superAdmin")
+    ) {
+      router.replace("/");
+    }
+  }, [sessionStatus, router]);
 
-  // if (sessionStatus === "loading") {
-  //   return <Loading />;
-  // }
+  if (sessionStatus === "loading") {
+    return <Loading />;
+  }
   return (
     <>
       <Admin adminEmail={decodeURIComponent(params.email)} />

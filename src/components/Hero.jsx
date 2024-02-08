@@ -184,6 +184,12 @@ export const HeroContext = () => {
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value.replace(/[^\d]/g, ""))}
                 // required
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSearchSubmit(e);
+                  }
+                }}
                 placeholder="Pin Code"
                 className="w-[90%] h-full bg-transparent outline-none p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] hover:placeholder:text-[#53c28b]"
               />

@@ -25,7 +25,6 @@ export const POST = async (request) => {
     const sLOneCheck = data.get("sLOne");
     const sLTwoCheck = data.get("sLTwo");
 
-    // console.log("Request received:", request.body);
     const userExists = await User.findOne({ email });
     if (!userExists) {
       return new NextResponse("Register first!", { status: 400 });
@@ -33,7 +32,7 @@ export const POST = async (request) => {
     const name = userExists?.name ?? "name";
     const existingProf = await Professional.findOne({ email });
     if (existingProf) {
-      return new NextResponse("User already exists!", { status: 401 });
+      return new NextResponse("Prof already exists!", { status: 401 });
     }
 
     var userID = `user_${userExists._id}`;
@@ -84,7 +83,6 @@ export const POST = async (request) => {
     }
 
     //working till here
-
     const newProfessional = new Professional({
       userID,
       email,
@@ -104,8 +102,9 @@ export const POST = async (request) => {
       sLOne,
       sLTwo,
     });
-
     await newProfessional.save();
+    userExists.role = "professional";
+    await userExists.save();
 
     return new NextResponse("Professional registered successfully!", {
       status: 200,

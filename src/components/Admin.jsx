@@ -93,8 +93,8 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            <span className="md:hidden"><FaUserTie size={30} /></span>
-            <span className="hidden md:flex">Professionals</span>
+            <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />&#10003;</span>
+            <span className="hidden md:flex gap-1">Professionals<span className="font-extrabold">&#10003;</span></span>
           </div>
           <div
             onClick={() => {
@@ -107,8 +107,8 @@ const Admin = () => {
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
-            <span className="md:hidden"><FaUsersSlash size={30} /></span>
-            <span className="hidden md:flex">Accept Professionals</span>
+            <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />X</span>
+            <span className="hidden md:flex gap-1">Professionals<span className="font-extrabold">X</span></span>
           </div>
           <div
             onClick={() => {
@@ -308,7 +308,7 @@ export const UserData = (props) => {
 
   if (!usersCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      No Users collection Record
+      <span className='text-red-600'>No</span> Users collection records found
     </section>
   }
   return (
@@ -472,7 +472,7 @@ export const ProfData = (props) => {
 
   if (!profsCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      No Prof Record
+      <span className='text-red-600'>No</span> Professional records found
     </section>
   }
 
@@ -577,7 +577,7 @@ export const ContactUsData = (props) => {
   // console.log(contactUsCollection);
   if (!contactUsCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      No ContactUs Message Record
+      <span className='text-red-600'>No</span> Contact-Us message records found
     </section>
   }
   return (
@@ -665,7 +665,7 @@ export const DeletedUserData = (props) => {
   };
 
   if (!deletedUsersCollection[0]) {
-    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">No Deleted Users Record</section>
+    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
   }
   return (
     <>
@@ -755,7 +755,6 @@ export const DeletedUserData = (props) => {
     </>
   )
 };
-
 export const AcceptProf = (props) => {
   const { profsCollection, setRefDb } = props;
   const [data, setData] = useState([]);
@@ -769,9 +768,8 @@ export const AcceptProf = (props) => {
 
   useEffect(() => {
     if (profsCollection) {
-      const filteredData = profsCollection.filter(profVerify => profVerify.isVerified == "no");
+      const filteredData = profsCollection.filter(profVerify => profVerify.isVerified === "no");
       setData(filteredData);
-      // setData(profsCollection);
     }
   }, [profsCollection]);
 
@@ -787,17 +785,18 @@ export const AcceptProf = (props) => {
       })
       console.log(profAction + "");
       if (res.status === 400) {
-        setError("Prof doesn't exists");
+        setError("Professional doesn't exists!");
         setRefDb(true);
       }
       if (res.status === 200) {
         if (profAction == "accept") {
+          setError("");
           setSuccess("Accepted Professional successfully!");
         }
         if (profAction == "reject") {
-          setSuccess("Rejected Professional successfully!");
+          setError("Rejected Professional successfully!");
+          // setSuccess("Rejected Professional successfully!");
         }
-        setError("");
         setRefDb(true);
       }
     } catch (error) {
@@ -807,10 +806,9 @@ export const AcceptProf = (props) => {
   }
 
   // console.log(data[0]);
-
   if (!data[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      No Profession acceptance collection record found
+      <span className='text-red-600'>No</span> Profession acceptance collection records found
     </section>
   }
   return (
@@ -826,9 +824,9 @@ export const AcceptProf = (props) => {
                   onClick={() => {
                     if (i != editData) {
                       // console.log(i);
+                      setSelectedProfEmail(i?.email);
                       setError("")
                       setSuccess("")
-                      // setDeleteSuccess(false);
                     }
                     setEditData(i);
                     setIsViewOpen(true)
@@ -889,13 +887,12 @@ export const AcceptProf = (props) => {
           <div className="w-full h-[15vh] flex flex-col md:flex-row">
             <button onClick={() => {
               setProfAction("accept")
-              setSelectedProfEmail(editData?.email);
               acceptProf();
               // setIsViewOpen(!isViewOpen);
             }} className="allBtn w-full h-[3rem] rounded-2xl">Accept</button>
             <button onClick={() => {
               setProfAction("reject")
-              setSelectedProfEmail(editData?.email);
+              // setSelectedProfEmail(editData?.email);
               acceptProf();
               // setIsViewOpen(!isViewOpen);
             }} className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Decline</button>

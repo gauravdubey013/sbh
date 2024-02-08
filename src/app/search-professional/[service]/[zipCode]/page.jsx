@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ProfessionalSearch from '@/components/ProfessionalSearch';
 import { FaMapLocationDot } from 'react-icons/fa6';
 import { CiSearch } from 'react-icons/ci';
+import Loading from '@/app/loading';
 
 const ProfessioalSearchPage = ({ params }) => {
     const [service, setService] = useState(params.service.toString())
@@ -25,7 +26,7 @@ const ProfessioalSearchPage = ({ params }) => {
             }
             if (res.status === 200) {
                 const dBData = await res.json();
-                setServiceData(dBData.filter(profService => profService.service === service))
+                setServiceData(dBData.filter(profService => profService.isVerified !== "no" && profService.service === service));
             }
         } catch (error) {
             console.log("Error", error);
@@ -89,23 +90,38 @@ const ProfessioalSearchPage = ({ params }) => {
                         <input
                             type="text"
                             value={zipCode}
-                            onChange={(e) => setZipCode(e.target.value).replace(/[^\d]/g, "")}
+                            onChange={(e) => setZipCode(e.target.value)}
+                            // .replace(/[^\d]/g, "")
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    fetchProfDBCollectionInfo();
+                                }
+                            }}
                             required
                             placeholder="Pin Code"
                             className="w-[90%] h-full bg-transparent outline-none p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] hover:placeholder:text-[#53c28b]"
                         />
                     </div>
                     <button type="submit" onClick={(e) => {
-                        e.preventDefault()
-                        fetchProfDBCollectionInfo()
+                        e.preventDefault();
+                        fetchProfDBCollectionInfo();
                     }} className="allBtn w-full md:w-[8rem] h-[3rem] text-xl rounded-md">
                         <CiSearch size={25} className="font-bold" />Search
                     </button>
                 </div>
             </form>
-            <ProfessionalSearch profDBCollectionData={getFilteredProfessionals(zipCode)} />
+            {
+                getFilteredProfessionals(zipCode).length == 0 ? (
+                    <section className="w-full h-[66vh] md:h-[78vh] animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
+                        <span className='text-red-600'>No</span> Profession records found, Searching..
+                        <Loading />
+                    </section>
+
+                ) : <ProfessionalSearch profDBCollectionData={getFilteredProfessionals(zipCode)} />
+            }
         </>
     )
 }
 
-export default ProfessioalSearchPage
+export default ProfessioalSearchPage;
