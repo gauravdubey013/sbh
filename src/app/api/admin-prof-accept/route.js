@@ -23,9 +23,18 @@ export const POST = async (request) => {
         status: 400,
       });
     }
+    const existingUser = await User.findOne({ email: selectedProfEmail });
+    if (!existingUser) {
+      return new NextResponse("User doesn't exists!", {
+        message: "User doesn't exists!",
+        status: 400,
+      });
+    }
     if (profAction == "accept") {
       existingProf.isVerified = "yes";
       await existingProf.save();
+      existingUser.role = "professional";
+      await existingUser.save();
 
       body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${existingProf.name}!!</h1>
         <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">We have <b style="color: #53c28b;"><u>Accepted</u></b> your Professional resitration : Start your professional life</span>
@@ -42,23 +51,7 @@ export const POST = async (request) => {
         status: 200,
       });
     }
-    // if (profAction == "reject") {
-    //   existingProf.isVerified = "no";
-    //   await existingProf.save();
-
-    //   return new NextResponse("Rejected Professional successfully!", {
-    //     message: "Rejected Professional successfully!",
-    //     status: 200,
-    //   });
-    // }
     if (profAction == "reject") {
-      const existingUser = await User.findOne({ email: selectedProfEmail });
-      if (!existingUser) {
-        return new NextResponse("User doesn't exists!", {
-          message: "User doesn't exists!",
-          status: 400,
-        });
-      }
       existingUser.role = "user";
       await existingUser.save();
       await Professional.deleteOne({ email: selectedProfEmail });
@@ -75,6 +68,17 @@ export const POST = async (request) => {
       });
       return new NextResponse("Rejected Professional successfully!", {
         message: "Rejected Professional successfully!",
+        status: 200,
+      });
+    }
+    if (profAction == "unverify") {
+      existingUser.role = "user";
+      existingProf.isVerified = "no";
+      await existingUser.save();
+      await existingProf.save();
+
+      return new NextResponse("Rejected Professional successfully!", {
+        message: "Unverified Professional successfully!",
         status: 200,
       });
     }

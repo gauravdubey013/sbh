@@ -21,7 +21,6 @@ export default function HeroTest() {
   let scale = useTransform(scrollYProgress, [0, 1], ["100%", "150%"]);
 
   let ay = useTransform(scrollYProgress, [0, 1], ["-160%", "120%"]);
-
   return (
     <>
       <main className="-translate-y-[66px] md:-translate-y-[97px] -mb-[66px] md:-mb-[96px] overflow-hidden border-px]">

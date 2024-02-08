@@ -146,7 +146,7 @@ const Navbar = () => {
                         authUser={session ?? ""}
                         btnOnClick={async () => {
                           await signOut();
-                          router.push("/signIn");
+                          // router.push("/signIn");
                         }}
                         btnName={"LogOut"}
                       />

@@ -52,7 +52,7 @@ const professionalSignUp = ({ params }) => {
     if (age <= 17) {
       setCondition({ emailC: false });
       setErrors({
-        dobE: "Must be at least 18 years older to be registered",
+        dobE: `${age} - Must be at least 18 years older to be registered`,
       });
     } else {
       setErrors({ dobE: "" });
@@ -96,7 +96,7 @@ const professionalSignUp = ({ params }) => {
 
     if (age <= 17) {
       setErrors({
-        dobE: "Must be at least 18 years older to be registered",
+        dobE: `${age} - Must be at least 18 years older to be registered`,
       });
     } else if (phone.length < 10 || phone.length > 10) {
       setDisableBtn(false);

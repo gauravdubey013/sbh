@@ -7,6 +7,7 @@ import Loading from "@/app/loading";
 import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
+import { LuShieldClose } from "react-icons/lu";
 
 const Admin = () => {
   const [isUserOpen, setIsUserOpen] = useState(true);
@@ -149,7 +150,7 @@ const Admin = () => {
             )}
             {isProfOpen && (
               <div className="animate-fade-in-down">
-                <ProfData profsCollection={profsCollection} />
+                <ProfData profsCollection={profsCollection} setRefDb={setRefDb} />
               </div>
             )}
             {isContactUsOpen && (
@@ -446,10 +447,12 @@ export const UserData = (props) => {
   );
 };
 export const ProfData = (props) => {
-  const { profsCollection } = props;
+  const { profsCollection, setRefDb } = props;
   const [service, setService] = useState("all")
   const [hired, setHired] = useState("all")
   const [data, setData] = useState([]);
+  const [selectedProfEmail, setSelectedProfEmail] = useState();
+
 
   useEffect(() => {
     if (profsCollection) {
@@ -469,6 +472,32 @@ export const ProfData = (props) => {
     }
   }, [profsCollection, service, hired]);
 
+
+  const handleProfUnverify = async () => {
+    const profAction = "unverify"
+    // console.log(selectedProfEmail, profAction);
+    try {
+      const res = await fetch("/api/admin-prof-accept", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          profAction,
+          selectedProfEmail,
+        })
+      })
+      if (res.status === 400) {
+        // setError("Professional doesn't exists!");
+        setRefDb(true);
+      }
+      if (res.status === 200) {
+        console.log("unverify - success");
+        setRefDb(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  }
 
   if (!profsCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
@@ -525,12 +554,19 @@ export const ProfData = (props) => {
       <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
         <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
           {data.map((i) => {
+            // 
             //   console.log(i?.email ?? "email");
             return (
               <div
                 key={i._id}
-                className="w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
+                className="relative w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
               >
+                <div className="absolute w-auto h-auto right-0">
+                  <LuShieldClose size={30} onClick={() => {
+                    setSelectedProfEmail(i?.email);
+                    handleProfUnverify()
+                  }} />
+                </div>
                 <div className="w-full h-auto flex flex-row gap-1">
 
                   <div className="w-[6rem] h-[5rem] borde rounded-full text-center overflow-hidden">
@@ -783,7 +819,7 @@ export const AcceptProf = (props) => {
           selectedProfEmail,
         })
       })
-      console.log(profAction + "");
+      // console.log(profAction + "");
       if (res.status === 400) {
         setError("Professional doesn't exists!");
         setRefDb(true);
@@ -895,7 +931,7 @@ export const AcceptProf = (props) => {
               // setSelectedProfEmail(editData?.email);
               acceptProf();
               // setIsViewOpen(!isViewOpen);
-            }} className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Decline</button>
+            }} className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Regect</button>
           </div>
         </div >
       </section >
