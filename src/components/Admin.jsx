@@ -451,7 +451,6 @@ export const ProfData = (props) => {
   const [service, setService] = useState("all")
   const [hired, setHired] = useState("all")
   const [data, setData] = useState([]);
-  const [selectedProfEmail, setSelectedProfEmail] = useState();
 
 
   useEffect(() => {
@@ -473,9 +472,7 @@ export const ProfData = (props) => {
   }, [profsCollection, service, hired]);
 
 
-  const handleProfUnverify = async () => {
-    const profAction = "unverify"
-    // console.log(selectedProfEmail, profAction);
+  const handleProfUnverify = async (profAction, selectedProfEmail) => {
     try {
       const res = await fetch("/api/admin-prof-accept", {
         method: "POST",
@@ -507,97 +504,99 @@ export const ProfData = (props) => {
 
   return (
     <>
-      <form className=" w-full h-auto p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
-        <select
-          name="service"
-          value={service}
-          onChange={(e) => setService(e.target.value)}
-          placeholder="Freelancer Category"
-          required
-          className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
-        >
-          <option className="ddl" value="all">All</option>
-          <option className="ddl" value="writing">Writer</option>
-          <option className="ddl" value="plumber">Plumber</option>
-          <option className="ddl" value="painters">Painters</option>
-          <option className="ddl" value="gardener">Gardener</option>
-          <option className="ddl" value="electrician">Electrician</option>
-          <option className="ddl" value="health_coach">Health Coach</option>
-          <option className="ddl" value="dj_musician">DJ / Musician</option>
-          <option className="ddl" value="house_helper">House Helper</option>
-          <option className="ddl" value="nutritionist">Nutritionist</option>
-          <option className="ddl" value="event_planner">Event Planner</option>
-          <option className="ddl" value="house_cleaner">House Cleaner</option>
-          <option className="ddl" value="graphic_design">Graphic Design</option>
-          <option className="ddl" value="yoga_instructor">Yoga Instructor</option>
-          <option className="ddl" value="wedding_planner">Wedding Planner</option>
-          <option className="ddl" value="web_development">Web Development</option>
-          <option className="ddl" value="personal_trainer">Personal Trainer</option>
-          <option className="ddl" value="party_entertainer">Party Entertainer</option>
-          <option className="ddl" value="interior_decorator">Interior Decorator</option>
-          <option className="ddl" value="mental_health_counselor">Mental Health Counselor</option>
-          <option className="ddl" value="photographer_videographer">Photographer / Videographer</option>
-        </select>
-        <select
-          name="service"
-          value={hired}
-          onChange={(e) => setHired(e.target.value)}
-          placeholder="Freelancer Category"
-          required
-          className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
-        >
-          <option className="ddl" value="all">All</option>
-          <option className="ddl" value="hired">Hired</option>
-          <option className="ddl" value="notHired">Not Hired</option>
-        </select>
-      </form>
-      <section className="w-full h-[78vh] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
-        <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-          {data.map((i) => {
-            // 
-            //   console.log(i?.email ?? "email");
-            return (
-              <div
-                key={i._id}
-                className="relative w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 active:scale-95 ease-in-out duration-300"
-              >
-                <div className="absolute w-auto h-auto right-0">
-                  <LuShieldClose size={30} onClick={() => {
-                    setSelectedProfEmail(i?.email);
-                    handleProfUnverify()
-                  }} />
-                </div>
-                <div className="w-full h-auto flex flex-row gap-1">
-
-                  <div className="w-[6rem] h-[5rem] borde rounded-full text-center overflow-hidden">
-                    {/* pfp */}
-                    <Image
-                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
-                      alt={"userProfile"}
-                      priority={true}
-                      width={800}
-                      height={800}
-                      className="w-full h-full shadow-md z-10"
-                    />
-                  </div>
-                  <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
-                    <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
-                    <div className="text-sm">{i?.email ?? "email"}</div>
-                    <div className="text-sm">{i?.service ?? "service"}</div>
-                  </div>
-                </div>
-                <Link
-                  href={`/profile/${i?.email ?? ""}`}
-                  className="viewProfile allBtn w-full h-[2rem] text-md rounded-lg"
+      <div className="w-full h-[78vh] relative">
+        <form className="w-full h-[10%] p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
+          <select
+            name="service"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            placeholder="Freelancer Category"
+            required
+            className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+          >
+            <option className="ddl" value="all">All</option>
+            <option className="ddl" value="writing">Writer</option>
+            <option className="ddl" value="plumber">Plumber</option>
+            <option className="ddl" value="painters">Painters</option>
+            <option className="ddl" value="gardener">Gardener</option>
+            <option className="ddl" value="electrician">Electrician</option>
+            <option className="ddl" value="health_coach">Health Coach</option>
+            <option className="ddl" value="dj_musician">DJ / Musician</option>
+            <option className="ddl" value="house_helper">House Helper</option>
+            <option className="ddl" value="nutritionist">Nutritionist</option>
+            <option className="ddl" value="event_planner">Event Planner</option>
+            <option className="ddl" value="house_cleaner">House Cleaner</option>
+            <option className="ddl" value="graphic_design">Graphic Design</option>
+            <option className="ddl" value="yoga_instructor">Yoga Instructor</option>
+            <option className="ddl" value="wedding_planner">Wedding Planner</option>
+            <option className="ddl" value="web_development">Web Development</option>
+            <option className="ddl" value="personal_trainer">Personal Trainer</option>
+            <option className="ddl" value="party_entertainer">Party Entertainer</option>
+            <option className="ddl" value="interior_decorator">Interior Decorator</option>
+            <option className="ddl" value="mental_health_counselor">Mental Health Counselor</option>
+            <option className="ddl" value="photographer_videographer">Photographer / Videographer</option>
+          </select>
+          <select
+            name="service"
+            value={hired}
+            onChange={(e) => setHired(e.target.value)}
+            placeholder="Freelancer Category"
+            required
+            className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+          >
+            <option className="ddl" value="all">All</option>
+            <option className="ddl" value="hired">Hired</option>
+            <option className="ddl" value="notHired">Not Hired</option>
+          </select>
+        </form>
+        <section className="w-full h-[90%] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+          <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+            {data.map((i) => {
+              // 
+              //   console.log(i?.email ?? "email");
+              return (
+                <div
+                  key={i._id}
+                  className="relative w-auto h-auto border rounded-lg flex flex-col gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 ease-in-out duration-300"
                 >
-                  View Profile
-                </Link>
-              </div>
-            );
-          })}
-        </div>
+                  {/* <div className="absolute w-auto h-auto right-0 active:scale-90 ease-in-out duration-300"> */}
+                  <LuShieldClose size={30} onClick={() => {
+                    handleProfUnverify("unverify", i?.email)
+                  }}
+                    className="absolute w-auto h-auto right-0 active:scale-90 ease-in-out duration-200"
+                  />
+                  {/* </div> */}
+                  <div className="w-full h-auto flex flex-row gap-1">
 
-      </section>
+                    <div className="w-[6rem] h-[5rem] borde rounded-full text-center overflow-hidden">
+                      {/* pfp */}
+                      <Image
+                        src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                        alt={"userProfile"}
+                        priority={true}
+                        width={800}
+                        height={800}
+                        className="w-full h-full shadow-md z-10"
+                      />
+                    </div>
+                    <div className="w-full flex flex-col gap-[1px] items-center justify-center p-1">
+                      <div className="text-lg font-semibold">{i?.name ?? "name"}</div>
+                      <div className="text-sm">{i?.email ?? "email"}</div>
+                      <div className="text-sm">{i?.service ?? "service"}</div>
+                    </div>
+                  </div>
+                  <Link
+                    href={`/profile/${i?.email ?? ""}`}
+                    className="viewProfile allBtn w-full h-[2rem] text-md rounded-lg"
+                  >
+                    View Profile
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </div>
     </>
   );
 };
@@ -796,10 +795,9 @@ export const AcceptProf = (props) => {
   const [data, setData] = useState([]);
   const [editData, setEditData] = useState();
   const [isViewOpen, setIsViewOpen] = useState(false);
-  const [selectedProfEmail, setSelectedProfEmail] = useState();
-  const [profAction, setProfAction] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [sBtnD, setSBtnD] = useState(false);
   const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
 
   useEffect(() => {
@@ -809,7 +807,7 @@ export const AcceptProf = (props) => {
     }
   }, [profsCollection]);
 
-  const acceptProf = async () => {
+  const acceptProf = async (profAction, selectedProfEmail) => {
     try {
       const res = await fetch("/api/admin-prof-accept", {
         method: "POST",
@@ -828,10 +826,11 @@ export const AcceptProf = (props) => {
         if (profAction == "accept") {
           setError("");
           setSuccess("Accepted Professional successfully!");
+          setSBtnD(true);
         }
         if (profAction == "reject") {
           setError("Rejected Professional successfully!");
-          // setSuccess("Rejected Professional successfully!");
+          setSBtnD(true);
         }
         setRefDb(true);
       }
@@ -840,7 +839,6 @@ export const AcceptProf = (props) => {
       setError(error);
     }
   }
-
   // console.log(data[0]);
   if (!data[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
@@ -860,7 +858,6 @@ export const AcceptProf = (props) => {
                   onClick={() => {
                     if (i != editData) {
                       // console.log(i);
-                      setSelectedProfEmail(i?.email);
                       setError("")
                       setSuccess("")
                     }
@@ -919,19 +916,16 @@ export const AcceptProf = (props) => {
           {error &&
             <span className="text-[red] animate-fade-in-down">{error}</span>}
           {success &&
-            <span className="text-[#53c28b] animate-fade-in-down">{success}</span>}
+            <span className="text-[#53c28b] animate-fade-in-down underline underline-offset-4">{success}</span>}
           <div className="w-full h-[15vh] flex flex-col md:flex-row">
-            <button onClick={() => {
-              setProfAction("accept")
-              acceptProf();
+            <button disabled={sBtnD} onClick={() => {
+              // setProfAction("accept")
+              acceptProf("accept", editData?.email);
               // setIsViewOpen(!isViewOpen);
-            }} className="allBtn w-full h-[3rem] rounded-2xl">Accept</button>
-            <button onClick={() => {
-              setProfAction("reject")
-              // setSelectedProfEmail(editData?.email);
-              acceptProf();
-              // setIsViewOpen(!isViewOpen);
-            }} className="w-full h-[3rem] rounded-2xl active:text-lg active:scale-90 font-extrabold cursor-pointer bg-[red] md:hover:bg-[red]/50 scale-95 hover:scale-100 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200">Regect</button>
+            }} className={`${sBtnD ? "bg-[#218452] cursor-not-allowed scale-95" : "allBtn"} w-full h-[3rem] rounded-2xl`}>{!sBtnD ? "Accept" : "Accepted"}</button>
+            <button disabled={sBtnD} onClick={() => {
+              acceptProf("reject", editData?.email)
+            }} className={`${sBtnD ? "bg-[#842121] cursor-not-allowed" : "cursor-pointer bg-[red] hover:scale-100 active:text-lg active:scale-90"} w-full h-[3rem] rounded-2xl font-extrabold md:hover:bg-[red]/50 scale-95 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200`}>Reject</button>
           </div>
         </div >
       </section >
