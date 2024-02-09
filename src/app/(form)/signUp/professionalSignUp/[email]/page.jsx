@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
-import { ImCancelCircle } from "react-icons/im";
 import { tcPolicyProf } from "@/context/terms-conditions";
+import { ImCancelCircle } from "react-icons/im";
 
-const professionalSignUp = ({ params }) => {
+const ProfessionalSignUp = ({ params }) => {
   const [tcClick, setTcClick] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const router = useRouter();
@@ -301,16 +301,13 @@ const professionalSignUp = ({ params }) => {
                     />
 
                     <label className="text-base md:text-xl text-[#959ba7]">
-                      Years of Experience -{" "}
-                      <span className="text-[#53c28b] scale-110">
-                        {skillLevel}
-                      </span>
+                      Years of Experience - <span className="text-[#53c28b] scale-110">{skillLevel}</span>
                     </label>
                     <input
                       type="range"
                       name="skillLevel"
                       value={skillLevel}
-                      onChange={(e) => setSkillLevel(e.target.value ?? "0")}
+                      onChange={(e) => setSkillLevel(e.target.value)}
                       step="1"
                       min="0"
                       max="5"
@@ -383,7 +380,7 @@ const professionalSignUp = ({ params }) => {
                         }`}
                     >
                       {disableBtn ? (
-                        <span className="animate-pulse">Registing...</span>
+                        <span className="animate-pulse">Registering...</span>
                       ) : (
                         "Register"
                       )}
@@ -415,4 +412,4 @@ const professionalSignUp = ({ params }) => {
   );
 };
 
-export default professionalSignUp;
+export default ProfessionalSignUp;

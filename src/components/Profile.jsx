@@ -93,8 +93,8 @@ const Profile = (props) => {
 
   const handleSignOutAndRedirect = async () => {
     try {
-      window.location.href = (`/signUp/professionalSignUp/${email}`);
       await signOut();
+      window.location.href = (`/signUp/professionalSignUp/${email}`);
     } catch (error) {
       console.error("Error during signOut:", error);
     }

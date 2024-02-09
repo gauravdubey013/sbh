@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -871,7 +872,7 @@ export const AcceptProf = (props) => {
                   <div className="w-[30%] h-[5rem] borde rounded-full text-center overflow-hidden">
                     {/* pfp */}
                     <Image
-                      src={i?.profileImgPath ?? "/assets/bg6.png"}
+                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
                       alt={"userProfile"}
                       priority={true}
                       width={800}
