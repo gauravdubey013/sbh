@@ -62,7 +62,6 @@ const professionalSchema = new Schema(
       type: String,
       required: false,
     },
-
     bio: {
       type: String,
       required: false,

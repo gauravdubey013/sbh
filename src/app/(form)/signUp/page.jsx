@@ -245,8 +245,8 @@ const SignUp = () => {
                       <div className="w-full h-auto overflow-hidden">
                         <span
                           className={`${condition.email == true
-                              ? "flex animate-slideDown"
-                              : "hidden"
+                            ? "flex animate-slideDown"
+                            : "hidden"
                             }`}
                         >
                           Must be valid, ex: abc@gmail.com
@@ -260,8 +260,8 @@ const SignUp = () => {
                     </div>
                     <div
                       className={`w-full h-auto ${condition.password || errors.passwordE
-                          ? "-mb-2"
-                          : "mb-0"
+                        ? "-mb-2"
+                        : "mb-0"
                         }`}
                     >
                       <div className="flex">
@@ -293,8 +293,8 @@ const SignUp = () => {
                       <div className="w-full h-auto overflow-hidden">
                         <span
                           className={`${condition.password == true
-                              ? "flex animate-slideDown"
-                              : "hidden"
+                            ? "flex animate-slideDown"
+                            : "hidden"
                             }`}
                         >
                           Keep the strong password!, ex: StrongP@ssw0rd
@@ -383,12 +383,12 @@ const SignUp = () => {
                       disabled={disableBtn}
                       type="submit"
                       className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${disableBtn
-                          ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                          : ""
+                        ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                        : ""
                         }`}
                     >
                       {disableBtn ? (
-                        <span className="animate-pulse">Registing...</span>
+                        <span className="animate-pulse">Registering...</span>
                       ) : (
                         "Register"
                       )}
@@ -428,7 +428,7 @@ const SignUp = () => {
             size={30}
             color="#fff"
             onClick={() => setTcClick(!tcClick)}
-            className="active:scale-75 animate-pulse hover:animate-none hover:fill-[#53c28b] duration-200 cursor-pointer"
+            className="cancelIcon"
           />
         </div>
       </div>

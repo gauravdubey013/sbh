@@ -11,21 +11,6 @@ export const POST = async (request) => {
     const data = await request.formData();
 
     const email = data.get("email");
-
-    const userExists = await User.findOne({ email });
-    if (!userExists) {
-      return new NextResponse("User is not registered, register first!", {
-        status: 400,
-      });
-    }
-    const name = userExists?.name ?? "name";
-    const existingProf = await Professional.findOne({ email });
-    if (existingProf) {
-      return new NextResponse("Professional already exists!", { status: 401 });
-    }
-
-    var userID = `user_${userExists._id}`;
-
     const profileImg = data.get("profileImg");
     const gender = data.get("gender");
     const dob = data.get("dob");
@@ -40,51 +25,44 @@ export const POST = async (request) => {
     const sLOneCheck = data.get("sLOne");
     const sLTwoCheck = data.get("sLTwo");
 
-    let bio = "";
-    let sLOne = "";
-    let sLTwo = "";
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      return new NextResponse("Register first!", { status: 400 });
+    }
+    const existingProf = await Professional.findOne({ email });
+    if (existingProf) {
+      return new NextResponse("Prof already exists!", { status: 401 });
+    }
+
+    var userID = `user_${userExists._id}`;
+    const name = userExists.name || "name";
+    let bio = bioCheck.trim() !== "" ? bioCheck : "NaN";
+    let sLOne = sLOneCheck.trim() !== "" ? sLOneCheck : "NaN";
+    let sLTwo = sLTwoCheck.trim() !== "" ? sLTwoCheck : "NaN";
 
     let profileImgPath = "noProfile";
-    if (profileImg) {
-      // Uploading profileImage to GitHub
-      const profileImgUploadResponse = await uploadFileToGitHub(
-        profileImg,
-        "gauravdubey013",
-        "sbh",
-        "public/users/profiles"
-      );
-      profileImgPath = profileImgUploadResponse.data.content.download_url;
-    }
-
     let resumePath = "noResume";
-    if (resume) {
-      // Uploading resumeFile to GitHub
-      const resumeUploadResponse = await uploadFileToGitHub(
-        resume,
-        "gauravdubey013",
-        "sbh",
-        "public/users/resumes"
-      );
-      resumePath = resumeUploadResponse.data.content.download_url;
+
+    if (profileImg && profileImg.name) {
+      const byteDataProfile = await profileImg.arrayBuffer();
+      const bufferProfile = Buffer.from(byteDataProfile);
+      const profileImgPathPublic = `./public/users/profiles/${
+        email + "_" + profileImg.name
+      }`;
+      await writeFile(profileImgPathPublic, bufferProfile);
+      profileImgPath = `/users/profiles/${email + "_" + profileImg.name}`;
     }
 
-    if (bioCheck.trim() !== "") {
-      bio = bioCheck;
-    } else {
-      bio = "NaN";
-    }
-    if (sLOneCheck.trim() !== "") {
-      sLOne = sLOneCheck;
-    } else {
-      sLOne = "NaN";
-    }
-    if (sLTwoCheck.trim() !== "") {
-      sLTwo = sLTwoCheck;
-    } else {
-      sLTwo = "NaN";
+    if (resume && resume.name) {
+      const byteDataResume = await resume.arrayBuffer();
+      const bufferResume = Buffer.from(byteDataResume);
+      const resumePathPublic = `./public/users/resumes/${
+        email + "_" + resume.name
+      }`;
+      await writeFile(resumePathPublic, bufferResume);
+      resumePath = `/users/resumes/${email + "_" + resume.name}`;
     }
 
-    //working till here
     const newProfessional = new Professional({
       userID,
       email,
@@ -104,7 +82,7 @@ export const POST = async (request) => {
       sLOne,
       sLTwo,
     });
-    // await newProfessional.save();
+    await newProfessional.save();
 
     return new NextResponse("Professional registered successfully!", {
       status: 200,
@@ -115,49 +93,51 @@ export const POST = async (request) => {
   }
 };
 
-async function uploadFileToGitHub(file, owner, repo, path) {
-  const accessToken = process.env.GITHUB_ACCESS_TOKEN;
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+// uploading gitHub logic
+// async function uploadFileToGitHub(file, owner, repo, path) {
+//   // const accessToken = process.env.GITHUB_ACCESS_TOKEN;
+//   const accessToken = "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";
+//   const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
-  const formData = new FormData();
-  formData.append("file", file);
+//   const formData = new FormData();
+//   formData.append("file", file);
 
-  const headers = new Headers();
-  headers.append("Authorization", `token ${accessToken}`);
+//   const headers = new Headers();
+//   headers.append("Authorization", `token ${accessToken}`);
 
-  const options = {
-    method: "PUT",
-    headers,
-    body: formData,
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error("Failed to upload file to GitHub");
-  }
-  return await response.json();
-}
-
-// let profileImgPath = "";
-// if (profileImg) {
-//   const byteDataProfile = await profileImg.arrayBuffer();
-//   const bufferProfile = Buffer.from(byteDataProfile);
-//   const profileImgPathPublic = `./public/users/profiles/${
-//     email + "_" + profileImg.name
-//   }`;
-//   await writeFile(profileImgPathPublic, bufferProfile);
-//   profileImgPath = `/users/profiles/${email + "_" + profileImg.name}`;
-// } else {
-//   profileImgPath = "noProfile";
+//   const options = {
+//     method: "PUT",
+//     headers,
+//     body: formData,
+//   };
+//   const response = await fetch(url, options);
+//   if (!response.ok) {
+//     return new NextResponse("Failed to upload file to GitHub", { status: 500 });
+//     // throw new Error("Failed to upload file to GitHub");
+//   }
+//   return await response.json();
 // }
-// let resumePath = "";
+
+// let profileImgPath = "noProfile";
+// let resumePath = "noResume";
+// if (profileImg) {
+//   // Uploading profileImage to GitHub
+//   const profileImgUploadResponse = await uploadFileToGitHub(
+//     profileImg,
+//     "gauravdubey013",
+//     "sbh",
+//     "public/users/profiles"
+//   );
+//   profileImgPath = profileImgUploadResponse.data.content.download_url;
+// }
+
 // if (resume) {
-//   const byteDataResume = await resume.arrayBuffer();
-//   const bufferResume = Buffer.from(byteDataResume);
-//   const resumePathPublic = `./public/users/resumes/${
-//     email + "_" + resume.name
-//   }`;
-//   await writeFile(resumePathPublic, bufferResume);
-//   resumePath = `/users/resumes/${email + "_" + resume.name}`;
-// } else {
-//   resumePath = "noResume";
+//   // Uploading resumeFile to GitHub
+//   const resumeUploadResponse = await uploadFileToGitHub(
+//     resume,
+//     "gauravdubey013",
+//     "sbh",
+//     "public/users/resumes"
+//   );
+//   resumePath = resumeUploadResponse.data.content.download_url;
 // }

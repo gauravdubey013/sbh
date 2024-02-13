@@ -6,16 +6,17 @@ import FormLayout from "@/components/FormLayout";
 import TermsConditions from "@/components/TermsConditions";
 import { tcPolicyProf } from "@/context/terms-conditions";
 import { ImCancelCircle } from "react-icons/im";
+import Image from "next/image";
 
 const ProfessionalSignUp = ({ params }) => {
   const [tcClick, setTcClick] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(false);
   const router = useRouter();
 
   const email = decodeURIComponent(params.email);
 
-  const [profileImg, setProfileImg] = useState();
-  const [resume, setResume] = useState();
+  const [profileImg, setProfileImg] = useState(null);
+  const [showProfileImg, setShowProfileImg] = useState(null);
+  const [resume, setResume] = useState(null);
 
   const [gender, setGender] = useState("");
   const [dob, setDOB] = useState("");
@@ -30,6 +31,8 @@ const ProfessionalSignUp = ({ params }) => {
   const [sLTwo, setSLTwo] = useState("");
   const [workHistory, setWorkHistory] = useState("");
 
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({
     phoneE: "",
@@ -73,6 +76,17 @@ const ProfessionalSignUp = ({ params }) => {
       }
     }
   };
+  const handleProFileImgChange = (e) => {
+    const file = e.target.files?.[0]
+    setProfileImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setShowProfileImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,8 +115,12 @@ const ProfessionalSignUp = ({ params }) => {
     } else if (phone.length < 10 || phone.length > 10) {
       setDisableBtn(false);
       setErrors({ phoneE: "Number must be 10 digits and valid" });
+    } else if (skillLevel == "") {
+      setDisableBtn(false);
+      setError("Provide your years of experience!");
     } else {
       try {
+        setError("");
         setDisableBtn(true);
         const res = await fetch("/api/auth/professional-register", {
           method: "POST",
@@ -117,10 +135,12 @@ const ProfessionalSignUp = ({ params }) => {
           setError("User already exists!");
           setDisableBtn(false);
         } else if (res.status === 500) {
-          setError("Img & resume file aren't supported!");
+          setError("Something went wrong...");
           setDisableBtn(false);
         } else if (res.status === 200) {
-          setDisableBtn(true);
+          setDisableBtn(false);
+          alert("Your Professional profile will be shown after being reviewed by an admin.");
+          setSuccess(true);
           setError("");
           router.push("/signIn");
         }
@@ -149,19 +169,34 @@ const ProfessionalSignUp = ({ params }) => {
                     onSubmit={handleSubmit}
                     className="w-full h-full flex flex-col gap-4"
                   >
-                    <div className="w-full h-[20vh] overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl text-[#959ba7] hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
+                    <div className="w-full h-auto overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
                       {/* </label> */}
                       Add Profile
-                      <div className=" w-[80%] md:w-full h-[70%] flex items-center justify-center text-center py-3 md:py-0 md:px-10">
+                      <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10">
                         <input
                           type="file"
                           name="profileImg"
-                          required
-                          onChange={(e) => setProfileImg(e.target.files?.[0])}
+                          id="profileImgInput"
+                          // required
+                          onChange={handleProFileImgChange}
                           accept=".jpg, .jpeg, .png"
                           className="allFormInput scale-110 w-full h-full border-none cursor-pointer"
                         />
                       </div>
+                      {(showProfileImg) && (
+                        <>
+                          <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl" />
+                          <ImCancelCircle
+                            size={30}
+                            color="#fff"
+                            onClick={() => {
+                              setShowProfileImg(null);
+                              document.getElementById('profileImgInput').value = null;
+                            }}
+                            className="cancelIcon"
+                          />
+                        </>
+                      )}
                     </div>
                     <div
                       className={`w-full h-auto ${errors.dobE ? "-mb-2" : "mb-0"
@@ -245,7 +280,7 @@ const ProfessionalSignUp = ({ params }) => {
                         name="countryCode"
                         value="+91"
                         readOnly
-                        className="w-[3rem] h-[52px] fontFam text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
+                        className="w-[3rem] h-[52px] text-[#53c28b] text-xl rounded-sm bg-transparent border-b-[1px] border-b-[#53c28b] hover:shadow-md focus:shadow-md outline-none"
                       />
                       <div
                         className={`w-full h-auto ${condition.phoneC || errors.phoneE ? "-mb-2" : "mb-0"
@@ -258,6 +293,7 @@ const ProfessionalSignUp = ({ params }) => {
                           value={phone}
                           onChange={handlePhone}
                           placeholder="Phone Number"
+                          required
                           className="allFormInput h-[52px]"
                         />
                         <div className="w-full h-auto overflow-hidden">
@@ -293,24 +329,25 @@ const ProfessionalSignUp = ({ params }) => {
                       name="zipCode"
                       value={zipCode}
                       onChange={(e) =>
-                        setZipCode(e.target.value.replace(/[^\d]/g, ""))
+                        setZipCode(e.target.value.replace(/[^\d]/g, "").slice(0, 6))
                       }
                       placeholder="ZIP/Postal Code"
                       required
                       className="allFormInput h-[52px]"
                     />
 
-                    <label className="text-base md:text-xl text-[#959ba7]">
+                    <label className="text-base md:text-xl">
                       Years of Experience - <span className="text-[#53c28b] scale-110">{skillLevel}</span>
                     </label>
                     <input
                       type="range"
                       name="skillLevel"
                       value={skillLevel}
-                      onChange={(e) => setSkillLevel(e.target.value)}
+                      onChange={(e) => setSkillLevel(e.target.value || 0)}
                       step="1"
                       min="0"
-                      max="5"
+                      max="10"
+                      required
                       className="accent-[#53c28b]"
                     />
                     <textarea
@@ -328,16 +365,27 @@ const ProfessionalSignUp = ({ params }) => {
                       rows={3}
                       className="allFormInput h-auto"
                     ></textarea>
-                    <label className="text-base md:text-xl text-[#959ba7]">
+                    <label className="text-base md:text-xl">
                       Add your resume
                     </label>
-                    <input
-                      type="file"
-                      name="resume"
-                      onChange={(e) => setResume(e.target.files?.[0])}
-                      accept=".pdf, .doc, .docx, .ppt"
-                      className="allFormInput h-[52px]"
-                    />
+                    <div className="w-full h-auto flex">
+                      <input
+                        type="file"
+                        id="resumeInput"
+                        name="resume"
+                        onChange={(e) => setResume(e.target.files?.[0])}
+                        accept=".pdf, .doc, .docx, .ppt"
+                        className="allFormInput h-[52px]"
+                      />
+                      {(resume) && (
+                        <ImCancelCircle
+                          size={30}
+                          color="#fff"
+                          onClick={() => { document.getElementById('resumeInput').value = null; setResume(null) }}
+                          className="cancelIcon"
+                        />
+                      )}
+                    </div>
                     <input
                       type="url"
                       name="sLOne"
@@ -380,7 +428,8 @@ const ProfessionalSignUp = ({ params }) => {
                         }`}
                     >
                       {disableBtn ? (
-                        <span className="animate-pulse">Registering...</span>
+                        success ? "Registered" :
+                          <span className="animate-pulse">Registering...</span>
                       ) : (
                         "Register"
                       )}
@@ -404,7 +453,7 @@ const ProfessionalSignUp = ({ params }) => {
             size={30}
             color="#fff"
             onClick={() => setTcClick(!tcClick)}
-            className="active:scale-75 animate-pulse hover:animate-none hover:fill-[#53c28b] duration-200 cursor-pointer"
+            className="cancelIcon"
           />
         </div>
       </div>

@@ -14,6 +14,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { TbHandClick } from "react-icons/tb";
 
 import Loading from "@/app/loading";
+import { ImCancelCircle } from "react-icons/im";
 
 export const calculateAge = (birthdate) => {
   const today = new Date();
@@ -206,9 +207,9 @@ const Profile = (props) => {
               <Image
                 src={
                   user?.signInWith == "google" || user?.signInWith == "gitHub"
-                    ? session?.authUser?.image ??
+                    ? session?.authUser?.image ||
                     "/assets/loading3d360Rotate.gif"
-                    : prof?.profileImgPath ?? "/assets/loading3d360Rotate.gif"
+                    : prof?.profileImgPath || "/assets/loading3d360Rotate.gif"
                 }
                 alt={"userProfile"}
                 priority={true}
@@ -353,7 +354,7 @@ const Profile = (props) => {
                   Resume
                 </span>
                 :
-                <Link href={prof?.resumePath ?? "https://sbh.vercel.app/"} target="_blank" className="w-auto md:w-[80%] h-auto flex items-center gap-1 hover:text-[#53c28b] active:text-sm ease-in-out duration-200" ><TbHandClick />Click to view</Link>
+                <Link href={prof?.resumePath || "https://sbh.vercel.app/"} target="_blank" className="w-auto md:w-[80%] h-auto flex items-center gap-1 hover:text-[#53c28b] active:text-sm ease-in-out duration-200" ><TbHandClick />Click to view</Link>
               </div>
             </div>
           ) : (
@@ -378,6 +379,9 @@ export default Profile;
 
 export const EditProfile = (props) => {
   const { prof, setRefDBState } = props;
+  const [profileImg, setProfileImg] = useState(null);
+  const [showProfileImg, setShowProfileImg] = useState(null);
+  const [resume, setResume] = useState(null);
   const [profEdit, setProfEdit] = useState({
     phone: "",
     skillLevel: "",
@@ -424,13 +428,25 @@ export const EditProfile = (props) => {
     });
   };
 
+  const handleProFileImgChange = (e) => {
+    const file = e.target.files?.[0]
+    setProfileImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setShowProfileImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
     data.set("email", prof?.email);
-    // data.set("profileImg", profileImg);
-    // data.set("resume", resume);
+    data.set("profileImg", profileImg);
+    data.set("resume", resume);
     data.set("phone", profEdit.phone);
     data.set("skillLevel", profEdit.skillLevel);
     data.set("workHistory", profEdit.workHistory);
@@ -491,6 +507,56 @@ export const EditProfile = (props) => {
         onSubmit={handleSubmit}
         className="w-full h-auto flex flex-col gap-2"
       >
+        <div className="w-full h-auto overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
+          {/* </label> */}
+          Add Profile
+          <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10">
+            <input
+              type="file"
+              name="profileImg"
+              id="profileImgInput"
+              // required
+              onChange={handleProFileImgChange}
+              accept=".jpg, .jpeg, .png"
+              className="allFormInput scale-110 w-full h-full border-none cursor-pointer"
+            />
+          </div>
+          {(showProfileImg) && (
+            <>
+              <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl" />
+              <ImCancelCircle
+                size={30}
+                color="#fff"
+                onClick={() => {
+                  setShowProfileImg(null);
+                  document.getElementById('profileImgInput').value = null;
+                }}
+                className="cancelIcon"
+              />
+            </>
+          )}
+        </div>
+        <label className="text-base md:text-xl">
+          Add your resume
+        </label>
+        <div className="w-full h-auto flex">
+          <input
+            type="file"
+            id="resumeInput"
+            name="resume"
+            onChange={(e) => setResume(e.target.files?.[0])}
+            accept=".pdf, .doc, .docx, .ppt"
+            className="allFormInput h-[52px]"
+          />
+          {(resume) && (
+            <ImCancelCircle
+              size={30}
+              color="#fff"
+              onClick={() => { document.getElementById('resumeInput').value = null; setResume(null) }}
+              className="cancelIcon"
+            />
+          )}
+        </div>
         <div className="flex flex-row gap-1">
           <input
             type="text"

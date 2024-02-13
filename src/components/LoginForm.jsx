@@ -15,6 +15,7 @@ function LoginForm() {
   const [disableBtn, setDisableBtn] = useState(false);
   const [errors, setErrors] = useState({ emailE: "", passwordE: "" });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handelEmail = (e) => {
@@ -96,12 +97,20 @@ function LoginForm() {
         });
         setDisableBtn(true);
         if (res?.error) {
-          setError("Invalid email & password");
           setDisableBtn(false);
-          if (res?.url) router.replace("/");
-          else {
+          setSuccess("")
+          setError("Invalid e-mail or password!");
+          setDisableBtn(false);
+          if (res?.url) {
             setDisableBtn(true);
             setError("");
+            setSuccess("Logged in successfully!")
+            alert("Logged in successfully!")
+            router.replace("/");
+          }
+          else {
+            setDisableBtn(false);
+            setError("Invalid e-mail or password!");
           }
         }
       } catch (error) {
@@ -215,6 +224,7 @@ function LoginForm() {
             Forgot your password?
           </Link>
           {error && <span className="text-red-500">{error}</span>}
+          {success && <span className="text-[#53c28b]">{error}</span>}
           <button
             disabled={disableBtn}
             type="submit"
