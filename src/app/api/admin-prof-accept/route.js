@@ -74,6 +74,8 @@ export const POST = async (request) => {
     if (profAction == "unverify") {
       existingUser.role = "user";
       existingProf.isVerified = "no";
+      // existingProf.profileImgPath = "/assets/bg6.png";
+      // existingProf.resumePath = "/users/resumes/maani-chowdury-Resume.pdf";
       await existingUser.save();
       await existingProf.save();
 

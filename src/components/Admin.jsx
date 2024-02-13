@@ -96,7 +96,7 @@ const Admin = () => {
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />&#10003;</span>
-            <span className="hidden md:flex gap-1">Professionals<span className="font-extrabold">&#10003;</span></span>
+            <span className="hidden md:flex gap-1">Verified Professionals</span>
           </div>
           <div
             onClick={() => {
@@ -110,7 +110,7 @@ const Admin = () => {
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />X</span>
-            <span className="hidden md:flex gap-1">Professionals<span className="font-extrabold">X</span></span>
+            <span className="hidden md:flex gap-1">Pending Professionals</span>
           </div>
           <div
             onClick={() => {
@@ -405,7 +405,7 @@ export const UserData = (props) => {
                 Updated Successfully!
               </span>
               <button
-                disabled={updDisableBtn ?? true}
+                disabled={(delDisableBtn || updDisableBtn)}
                 type="submit"
                 className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${updDisableBtn
                   ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
@@ -413,7 +413,8 @@ export const UserData = (props) => {
                   }`}
               >
                 {updDisableBtn ? (
-                  <span className="animate-pulse">Updating...</span>
+                  delDisableBtn ? "User Deleted" :
+                    <span className="animate-pulse">Updating...</span>
                 ) : (
                   "Update"
                 )}
@@ -427,7 +428,7 @@ export const UserData = (props) => {
             </form>
             <button
               type="button"
-              disabled={delDisableBtn ?? true}
+              disabled={delDisableBtn}
               onClick={handleDelete}
               className={`allBtn w-full h-[3rem] text-xl rounded-3xl mb-1 ${delDisableBtn
                 ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
@@ -499,7 +500,7 @@ export const ProfData = (props) => {
 
   if (!profsCollection[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      <span className='text-red-600'>No</span> Professional records found
+      <span className='text-red-600'>No</span> Professional records found...
     </section>
   }
 
@@ -843,7 +844,7 @@ export const AcceptProf = (props) => {
   // console.log(data[0]);
   if (!data[0]) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      <span className='text-red-600'>No</span> Profession acceptance collection records found
+      <span className='text-red-600'>No</span> Pending Professionals collection records found...
     </section>
   }
   return (
@@ -859,6 +860,7 @@ export const AcceptProf = (props) => {
                   onClick={() => {
                     if (i != editData) {
                       // console.log(i);
+                      setSBtnD(false);
                       setError("")
                       setSuccess("")
                     }
@@ -905,13 +907,13 @@ export const AcceptProf = (props) => {
           <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Address :</span>{editData?.address ?? "NaN"}</div>
           <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Zip code :</span>{editData?.zipCode ?? "NaN"}</div>
           <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Yr. of Experience :</span>{editData?.skillLevel ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Resume :</span><Link href={editData?.resumePath ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Resume :</span><Link href={editData?.resumePath ?? "NaN"} target="_blank" className="active:scale-110" >view</Link>
           </div>
           <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Bio :</span>{editData?.bio ?? "NaN"}</div>
           <span className="text-[#53c28b]">Soical Links :</span>
-          <div className="text-sm flex gap-1 -mt-3"><span className=" text-[#53c28b]">1.</span><Link href={editData?.sLOne ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          <div className="text-sm flex gap-1 -mt-3"><span className=" text-[#53c28b]">1.</span><Link href={editData?.sLOne ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLOne ?? "NaN"}</u></Link>
           </div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">2.</span><Link href={editData?.sLTwo ?? "NaN"} target="_blank" className="active:scale-110" > view</Link>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">2.</span><Link href={editData?.sLTwo ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLTwo ?? "NaN"}</u></Link>
           </div>
           <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Registration time :</span>{editData?.createdAt ?? "NaN"}</div>
           {error &&
