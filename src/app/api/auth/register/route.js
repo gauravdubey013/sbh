@@ -21,7 +21,7 @@ export const POST = async (request) => {
     signInWith: "Email&Password",
     email,
     password: hashPassword,
-    role: profCheckValue,
+    role: "user", //profCheckValue
   });
 
   try {

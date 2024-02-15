@@ -26,7 +26,11 @@ const ProfessioalSearchPage = ({ params }) => {
             }
             if (res.status === 200) {
                 const dBData = await res.json();
-                setServiceData(dBData.filter(profService => profService.isVerified !== "no" && profService.service === service));
+                if (service == "all") {
+                    setServiceData(dBData);
+                } else {
+                    setServiceData(dBData.filter(profService => profService.isVerified !== "no" && profService.service === service));
+                }
             }
         } catch (error) {
             console.log("Error", error);
@@ -62,6 +66,7 @@ const ProfessioalSearchPage = ({ params }) => {
                     <option value="" disabled selected hidden>
                         What service are you looking for?
                     </option>
+                    <option className="ddl" value="all">All</option>
                     <option className="ddl" value="writing">Writer</option>
                     <option className="ddl" value="plumber">Plumber</option>
                     <option className="ddl" value="painters">Painters</option>

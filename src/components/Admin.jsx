@@ -462,7 +462,6 @@ export const ProfData = (props) => {
       if (service !== "all") {
         filteredData = filteredData.filter(profService => profService.service === service);
       }
-
       if (hired === "notHired") {
         filteredData = filteredData.filter(profService => profService.hired !== "hired");
       } else if (hired === "hired") {
