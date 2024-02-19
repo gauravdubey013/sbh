@@ -277,18 +277,19 @@ const Profile = (props) => {
                 <RiContactsBookFill size={25} />
                 <span>Contact</span>
               </div>
-              <Link
-                href={"/chat/okay"}
-                onClick={() => {
-                  // setContactToggle(!contactToggle);
-                  socialToggle ? setSocialToggle(!socialToggle) : "";
-                  contactToggle ? setContactToggle(!contactToggle) : "";
-                }}
-                className="col-span-1 px-3 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
-              >
-                <BsChatLeftTextFill size={25} />
-                <span>Chat</span>
-              </Link>
+              {session?.user?.email !== prof?.email &&
+                <Link
+                  href={`/chat/${session?.user?.email}/${prof?.email}`}
+                  onClick={() => {
+                    // setContactToggle(!contactToggle);
+                    socialToggle ? setSocialToggle(!socialToggle) : "";
+                    contactToggle ? setContactToggle(!contactToggle) : "";
+                  }}
+                  className="col-span-1 px-3 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
+                >
+                  <BsChatLeftTextFill size={25} />
+                  <span>Chat</span>
+                </Link>}
             </div>
           )}
         </div>

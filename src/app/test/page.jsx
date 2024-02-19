@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
 import Loading from "../loading";
+import Chat from "@/components/Chat";
 // import TermsConditionsUser from "@/components/TermsConditions";
 // import { tcPolicyUser } from "@/context/terms-conditions";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
@@ -161,6 +162,9 @@ export default function Home() {
         {/* <div className=""> */}
         {/* <TermsConditionsUser setData={tcPolicyUser} /> */}
         {/* </div> */}
+      </section>
+      <section className="w-full h-screen">
+        {/* <Chat /> */}
       </section>
     </>
   );
