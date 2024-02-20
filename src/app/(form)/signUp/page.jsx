@@ -185,6 +185,7 @@ const SignUp = () => {
         }
       } catch (error) {
         setDisableOtpBtn(false);
+        setDisableRegisterBtn(true);
         setError(error);
         console.log("Error", error);
       }
