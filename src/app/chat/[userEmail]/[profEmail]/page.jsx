@@ -171,7 +171,7 @@ export const ChatMessagePanel = (props) => {
         // if (!chats)
         fetchMessages();
         if (chats) {
-            // scrollToBottom();
+            scrollToBottom();
         }
     }, [chats]);
 
@@ -212,34 +212,35 @@ export const ChatMessagePanel = (props) => {
                         ))}
                     </div>
                 </div>
-                <form onSubmit={sendMessage} className="flex w-full h-auto p-2 border-t border-[#53c28b] rounded-lg">
-                    <textarea
-                        // type="text"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                sendMessage(e);
-                            }
-                        }}
-                        className="allFormInput h-auto"
-                        placeholder="Type your message..."
-                        rows={1}
-                        required
-                    />
-                    <button
-                        type='submit'
-                        className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
-                    >
-                        Send
-                    </button>
-                    <button type='button'
-                        className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
-                    >
-                        Pay
-                    </button>
-                </form>
+                {(userEmail !== "none" && profEmail !== "none") && (
+                    <form onSubmit={sendMessage} className="flex w-full h-auto p-2 border-t border-[#53c28b] rounded-lg">
+                        <textarea
+                            // type="text"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    sendMessage(e);
+                                }
+                            }}
+                            className="allFormInput h-auto"
+                            placeholder="Type your message..."
+                            rows={1}
+                            required
+                        />
+                        <button
+                            type='submit'
+                            className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
+                        >
+                            Send
+                        </button>
+                        <button type='button'
+                            className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
+                        >
+                            Pay
+                        </button>
+                    </form>)}
             </section>
         </>
     );
