@@ -22,17 +22,22 @@ const SignUp = () => {
   const [showPass, setShowPass] = useState("password");
   const [showConfirmPass, setShowConfirmPass] = useState("password");
 
+  const [otp, setOtp] = useState("");
+  const [checkOtpCode, setCheckOtpCode] = useState("");
+
   const [profChecked, setProfChecked] = useState(false);
   const [profCheckValue, setProfCheckValue] = useState("user");
 
   const [error, setError] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [errors, setErrors] = useState({
     emailE: "",
     passwordE: "",
     confirmPasswordE: "",
   });
   const [condition, setCondition] = useState({ email: true, password: true });
-  const [disableBtn, setDisableBtn] = useState(false);
+  const [disableOtpBtn, setDisableOtpBtn] = useState(false);
+  const [disableRegisterBtn, setDisableRegisterBtn] = useState(true);
 
   const handleFirstname = (e) => {
     let inputValue = e.target.value.replace(/[^a-z]/gi, "");
@@ -129,6 +134,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!emailPattern.test(email)) {
       setErrors({
         emailE: "Please provide valid email!",
@@ -139,7 +145,7 @@ const SignUp = () => {
       setErrors({ confirmPasswordE: "Mismatch password!" });
     } else {
       try {
-        setDisableBtn(true);
+        setDisableOtpBtn(true);
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -149,28 +155,42 @@ const SignUp = () => {
             email,
             password,
             profCheckValue,
+            otp,
+            checkOtpCode
           }),
         });
 
         if (res.status === 400) {
-          setError("User already exists!");
-          setDisableBtn(false);
+          setError(`${email} is already registered!`);
+          setDisableOtpBtn(false);
+        }
+        if (res.status == 201) {
+          const otpCheck = await res.json();
+          setCheckOtpCode(otpCheck)
+          setError("");
+          setDisableOtpBtn(true);
+          setDisableRegisterBtn(false);
+          return alert(`Otp has sended to ${email}, verify email first`)
+        }
+        if (res.status == 401) {
+          setOtpError("Otp doesn't match.");
         }
         if (res.status === 200) {
-          setDisableBtn(true);
-          setError("");
+          setDisableRegisterBtn(true);
+          setOtpError("");
           profChecked
             ? router.push(`/signUp/professionalSignUp/${email}`)
             : router.push("/signIn");
+          // return alert(`Verified Email - ${email}`)
         }
       } catch (error) {
-        setDisableBtn(false);
+        setDisableOtpBtn(false);
         setError(error);
         console.log("Error", error);
       }
     }
   };
-
+  // console.log(checkOtpCode);
   return (
     <>
       <div className="w-full h-full relative">
@@ -213,6 +233,7 @@ const SignUp = () => {
                       <input
                         type="text"
                         name="firstname"
+                        disabled={disableOtpBtn}
                         value={firstname}
                         onChange={handleFirstname}
                         required
@@ -222,6 +243,7 @@ const SignUp = () => {
                       <input
                         type="text"
                         name="lastname"
+                        disabled={disableOtpBtn}
                         value={lastname}
                         onChange={handleLastname}
                         required
@@ -236,6 +258,7 @@ const SignUp = () => {
                       <input
                         type="email"
                         name="email"
+                        disabled={disableOtpBtn}
                         value={email}
                         onChange={handleEmail}
                         required
@@ -268,13 +291,14 @@ const SignUp = () => {
                         <input
                           type={showPass}
                           name="password"
+                          disabled={disableOtpBtn}
                           value={password}
                           onChange={handlePassword}
                           required
                           placeholder="Enter Password"
                           className="allFormInput h-[52px]"
                         />
-                        <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                        <div className="w-auto h-auto cursor-pointer border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
                           {showPass === "text" ? (
                             <FaRegEyeSlash
                               size={20}
@@ -314,6 +338,7 @@ const SignUp = () => {
                         <input
                           type={showConfirmPass}
                           name="confirmPassword"
+                          disabled={disableOtpBtn}
                           onKeyDown={(e) => {
                             if (e.key === "Enter" && !e.shiftKey) {
                               e.preventDefault();
@@ -325,7 +350,7 @@ const SignUp = () => {
                           placeholder="Confirm Password"
                           className={`allFormInput h-[52px]`}
                         />
-                        <div className="w-auto h-auto border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
+                        <div className="w-auto h-auto cursor-pointer border-[px] flex items-center justify-center gap-1 border-b-[1px] hover:border-[#53c28b] hover:text-[#53c28b] ease-in-out duration-200">
                           {showConfirmPass === "text" ? (
                             <FaRegEyeSlash
                               size={20}
@@ -352,6 +377,7 @@ const SignUp = () => {
 
                     <div className="mt-4 flex items-center gap-2">
                       <input
+                        disabled={disableOtpBtn}
                         type="checkbox"
                         name="professionalCheckbox"
                         // checked={profChecked}
@@ -363,6 +389,7 @@ const SignUp = () => {
 
                     <div className="flex items-center gap-2">
                       <input
+                        disabled={disableOtpBtn}
                         type="checkbox"
                         name="termsAgree"
                         required
@@ -380,19 +407,50 @@ const SignUp = () => {
                     </div>
                     {error && <span className="text-red-500">{error}</span>}
                     <button
-                      disabled={disableBtn}
+                      disabled={disableOtpBtn}
                       type="submit"
-                      className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl ${disableBtn
+                      // onClick={handleSubmit}
+                      className={`allBtn w-full h-[3rem] text-xl rounded-3xl ${disableOtpBtn
                         ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                         : ""
                         }`}
                     >
-                      {disableBtn ? (
-                        <span className="animate-pulse">Registering...</span>
+                      {disableOtpBtn ? (!disableRegisterBtn ? "OTP sended" :
+                        <span className="animate-pulse">Sending OTP...</span>
                       ) : (
-                        "Register"
+                        "Send OTP"
                       )}
                     </button>
+
+                    {/* opt form onSubmit={handleSubmit}*/}
+                    <form action="" className="w-full h-auto flex flex-col gap-2">
+                      <input
+                        type="text"
+                        name="otp"
+                        value={otp}
+                        disabled={disableRegisterBtn}
+                        onChange={(e) => setOtp(e.target.value.replace(/[^\d]/g, "").slice(0, 4))}
+                        required
+                        placeholder="Enter OTP"
+                        className="allFormInput h-[52px]"
+                      />
+                      {otpError && <span className="text-red-500 animate-slideDown">{otpError}</span>}
+                      <button
+                        disabled={disableRegisterBtn}
+                        onClick={handleSubmit}
+                        type="submit"
+                        className={`allBtn w-full h-[3rem] text-xl rounded-3xl ${disableRegisterBtn
+                          ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                          : ""
+                          }`}
+                      >
+                        {disableRegisterBtn && disableOtpBtn && otp.trim() !== "" ? (
+                          <span className="animate-pulse">Registering...</span>
+                        ) : (
+                          "Register"
+                        )}
+                      </button>
+                    </form>
                     <div className="flex gap-1 justify-center mb-2">
                       Already have account?{" "}
                       <Link

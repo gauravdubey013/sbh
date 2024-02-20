@@ -78,7 +78,7 @@ export const POST = async (request) => {
           await newChatMessage.save();
           await resend.emails.send({
             from: process.env.EMAIL_FROM,
-            to: "gauravd8976@gmail.com", //profEmail ??
+            to: profEmail ?? "gauravd8976@gmail.com",
             subject: "SkillBeHired - New Chat",
             html: body,
           });
