@@ -40,8 +40,8 @@ export const POST = async (request) => {
     let sLOne = sLOneCheck.trim() !== "" ? sLOneCheck : "NaN";
     let sLTwo = sLTwoCheck.trim() !== "" ? sLTwoCheck : "NaN";
 
-    let profileImgPath = "noProfile";
-    let resumePath = "noResume";
+    let profileImgPath = "/assets/bg6.png";
+    let resumePath = `/profile/${email}`;
 
     if (profileImg && profileImg.name) {
       const byteDataProfile = await profileImg.arrayBuffer();

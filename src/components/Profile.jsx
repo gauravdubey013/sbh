@@ -350,13 +350,15 @@ const Profile = (props) => {
                   {prof?.bio ?? "NaN"}
                 </span>
               </div>
-              <div className="flex gap-1 items-start justify-start md:justify-between">
-                <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
-                  Resume
-                </span>
-                :
-                <Link href={prof?.resumePath || "https://sbh.vercel.app/"} target="_blank" className="w-auto md:w-[80%] h-auto flex items-center gap-1 hover:text-[#53c28b] active:text-sm ease-in-out duration-200" ><TbHandClick />Click to view</Link>
-              </div>
+              {prof?.resumePath !== "noResume" && (
+                <div className="flex gap-1 items-start justify-start md:justify-between">
+                  <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
+                    Resume
+                  </span>
+                  :
+                  <Link href={prof?.resumePath || "https://sbh.vercel.app/"} target="_blank" className="w-auto md:w-[80%] h-auto flex items-center gap-1 hover:text-[#53c28b] active:text-sm ease-in-out duration-200" ><TbHandClick />Click to view</Link>
+                </div>
+              )}
             </div>
           ) : (
             <div className="w-auto h-auto rounded-3xl border border-[#53c28b] p-4 overflow-hidden">

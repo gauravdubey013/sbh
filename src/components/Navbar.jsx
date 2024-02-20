@@ -226,6 +226,13 @@ export const Dropdown = (props) => {
           >
             View Profile
           </Link>
+          <Link
+            href={authUser?.user?.role !== "professional" ? `/chat/${authUser?.user?.email}/none` : `/chat/none/${authUser?.user?.email}` || "/"}
+            onClick={() => setIsOpen(!isOpen)}
+            className="viewChats allBtn w-[6rem] h-[2rem] text-md rounded-md"
+          >
+            Chats
+          </Link>
           <button
             onClick={btnOnClick}
             role="userLogout"

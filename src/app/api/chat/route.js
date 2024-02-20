@@ -3,9 +3,15 @@ import ChatMessage from "@/models/ChatMessage";
 import User from "@/models/User";
 import Professional from "@/models/Professional";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (request) => {
-  const { chatAction, userEmail, profEmail, message } = await request.json();
+  const { chatAction, userRole, userEmail, profEmail, message } =
+    await request.json();
+
+  // console.log(chatAction + " -> ", userRole, userEmail, profEmail, message);
 
   try {
     await connect();
@@ -23,10 +29,12 @@ export const POST = async (request) => {
     const prof = await Professional.findOne({ email: profEmail });
 
     if (chatAction === "writeMsg") {
+      const sender = userRole !== "professional" ? "user" : "prof";
+      // console.log(sender, userRole);
       if (existingChat) {
         // If chat exists, add new messages in existing chat
         existingChat.messages.push({
-          sender: "user", // Assuming the message is from the user
+          sender, // message is from the user
           message,
           time: timeAsString,
           date: dateAsString,
@@ -56,16 +64,25 @@ export const POST = async (request) => {
           },
           messages: [
             {
-              sender: "user", // Assuming the message is from the user
+              sender, // message is from the user
               message,
               time: timeAsString,
               date: dateAsString,
             },
           ],
         });
-
+        const body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${prof.name}!!</h1>
+          <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">You received new chat message by <b style="color: #53c28b;">${user.name}</b><br />Check on website</span>
+          <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
         try {
           await newChatMessage.save();
+          await resend.emails.send({
+            from: process.env.EMAIL_FROM,
+            to: "gauravd8976@gmail.com", //profEmail ??
+            subject: "SkillBeHired - New Chat",
+            html: body,
+          });
+
           return new NextResponse("Message is saved!", {
             status: 200,
           });
@@ -77,17 +94,17 @@ export const POST = async (request) => {
       }
     }
     if (chatAction === "fetchChat") {
-      let chatsCollection;
-      // if (userEmail !== undefined) {
+      let chatsCollection = null;
+      if (userRole !== "professional") {
         chatsCollection = await ChatMessage.find({
           "user.email": userEmail,
           // "prof.email": profEmail,
         });
-      // } else {
-      //   chatsCollection = await ChatMessage.find({
-      //     "prof.email": profEmail,
-      //   });
-      // }
+      } else {
+        chatsCollection = await ChatMessage.find({
+          "prof.email": profEmail,
+        });
+      }
 
       if (!chatsCollection) {
         return new NextResponse("DB collection doesn't exist", {
