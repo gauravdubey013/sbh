@@ -138,7 +138,7 @@ const ChatMessagePanel = (props) => {
                         <button
                             disabled={disableMessageBtn}
                             type='submit'
-                            className={`allBtn w-[4rem] h-[3rem] text-xl rounded-3xl ${disableMessageBtn
+                            className={`allBtn w-[4rem] h-[3rem] text-xl rounded-lg ${disableMessageBtn
                                 ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                                 : ""
                                 }`}
