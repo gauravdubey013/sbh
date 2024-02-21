@@ -111,8 +111,8 @@ export default function ForgetPasswordForm() {
             disabled={disableBtn}
             type="submit"
             className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${disableBtn
-                ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                : ""
+              ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+              : ""
               }`}
           >
             {disableBtn ? (
