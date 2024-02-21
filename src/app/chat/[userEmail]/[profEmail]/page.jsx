@@ -89,7 +89,7 @@ const ChatMessagePanel = (props) => {
                     <h2 className="w-full h-auto text-center border border-[#53c28b] p-2 text-xl md:text-lg font-semibold">
                         {presonName}
                     </h2>
-                    <div ref={messagesContainerRef} className="overflow-y-auto h-full flex flex-col gap-3 p-2">
+                    <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory h-full flex flex-col gap-3 p-2">
                         {chats == null && (
                             <Loading />
                         )}
@@ -139,7 +139,7 @@ const ChatMessagePanel = (props) => {
                         <button
                             disabled={disableMessageBtn}
                             type='submit'
-                            className={`allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg ${disableMessageBtn
+                            className={`allBtn w-auto h-[2.5rem] p-2 rounded-lg ${disableMessageBtn
                                 ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                                 : ""
                                 }`}
