@@ -89,7 +89,7 @@ const ChatMessagePanel = (props) => {
                     <h2 className="w-full h-auto text-center border border-[#53c28b] p-2 text-xl md:text-lg font-semibold">
                         {presonName}
                     </h2>
-                    <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory h-full flex flex-col gap-3 p-2">
+                    <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory w-screen h-full flex flex-col gap-3 p-2">
                         {chats == null && (
                             <Loading />
                         )}
