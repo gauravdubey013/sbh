@@ -92,9 +92,8 @@ export default function ForgetPasswordForm() {
             />
             <div className="w-full h-auto overflow-hidden">
               <span
-                className={`${
-                  condition == true ? "flex animate-slideDown" : "hidden"
-                }`}
+                className={`${condition == true ? "flex animate-slideDown" : "hidden"
+                  }`}
               >
                 Please provide registered email, ex: abc@gmail.com
               </span>
@@ -111,11 +110,10 @@ export default function ForgetPasswordForm() {
           <button
             disabled={disableBtn}
             type="submit"
-            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${
-              disableBtn
+            className={`allBtn w-[rem] h-[3rem] text-xl rounded-3xl mb-4 ${disableBtn
                 ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                 : ""
-            }`}
+              }`}
           >
             {disableBtn ? (
               <span className="animate-pulse">Sending E-mail...</span>
@@ -125,7 +123,7 @@ export default function ForgetPasswordForm() {
           </button>
         </div>
         <div className="flex gap-1 justify-center mb-1">
-          Remember Password?
+          Remembered Password?
           <Link
             className="cursor-pointer font-semibold hover:shadow-md focus:shadow-md hover:scale-105 active:scale-90 duration-300 ease-in-out"
             // text-[#fff]/80 hover:text-[#fff]
