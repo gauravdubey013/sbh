@@ -19,7 +19,8 @@ const MakePaymentComponent = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    taxAmt: amount
+                    taxAmt: amount,
+                    // payment_method: ["upi"], // Include UPI as a payment method
                 })
             });
 

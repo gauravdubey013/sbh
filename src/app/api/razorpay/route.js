@@ -19,6 +19,7 @@ export const POST = async (request) => {
       currency,
       receipt: shortid.generate(),
       payment_capture,
+      // payment_method: "upi",
     };
 
     try {
