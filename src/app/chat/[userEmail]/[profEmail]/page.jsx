@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Loading from '@/app/loading';
+import Link from 'next/link';
 
 
 const ChatMessagePanel = (props) => {
@@ -146,10 +147,11 @@ const ChatMessagePanel = (props) => {
                         >
                             {disableMessageBtn ? <span className="animate-pulse">Sending...</span> : "Send"}
                         </button>
-                        <button type='button' className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg">
+                        <Link href={"/payment"} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
                             Pay
-                        </button>
-                    </form>)}
+                        </Link>
+                    </form>
+                )}
             </section>
         </>
     );
