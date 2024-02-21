@@ -9,6 +9,7 @@ const ChatMessagePanel = (props) => {
     const { userEmail, profEmail, presonName, profPfp, fetchChatPersons, userRole } = props;
     const [message, setMessage] = useState('');
     const [chats, setChats] = useState(null);
+    const [disableMessageBtn, setDisableMessageBtn] = useState(false);
     // const [profName, setProfName] = useState(null);
     const messagesContainerRef = useRef(null);
     // console.log(profName);
@@ -41,8 +42,8 @@ const ChatMessagePanel = (props) => {
     const sendMessage = async (e) => {
         e.preventDefault();
         chatAction = "writeMsg";
-
         try {
+            setDisableMessageBtn(true);
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -52,6 +53,7 @@ const ChatMessagePanel = (props) => {
             });
 
             if (res.status === 200) {
+                setDisableMessageBtn(false);
                 // After sending a message, fetch and update messages
                 fetchMessages();
                 fetchChatPersons();
@@ -59,6 +61,8 @@ const ChatMessagePanel = (props) => {
                 scrollToBottom();
             }
         } catch (error) {
+            setDisableMessageBtn(false);
+            alert("server error, please wait...")
             console.error('Error sending message:', error);
         }
     };
@@ -132,14 +136,16 @@ const ChatMessagePanel = (props) => {
                             required
                         />
                         <button
+                            disabled={disableMessageBtn}
                             type='submit'
-                            className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
+                            className={`allBtn w-full h-[3rem] text-xl rounded-3xl ${disableMessageBtn
+                                ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                : ""
+                                }`}
                         >
-                            Send
+                            {disableMessageBtn ? <span className="animate-pulse">Registering...</span> : "Send"}
                         </button>
-                        <button type='button'
-                            className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg"
-                        >
+                        <button type='button' className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg">
                             Pay
                         </button>
                     </form>)}
