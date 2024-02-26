@@ -371,6 +371,7 @@ export const UserData = (props) => {
               <input
                 type="text"
                 name="name"
+                disabled
                 value={userEdit.name}
                 onChange={handleChange}
                 placeholder={`Name - ${editData?.name ?? "NaN"}`}
@@ -379,6 +380,7 @@ export const UserData = (props) => {
               <input
                 type="email"
                 name="email"
+                disabled
                 value={userEdit.email}
                 onChange={handleChange}
                 placeholder={`Email - ${editData?.email ?? "NaN"}`}
@@ -387,6 +389,7 @@ export const UserData = (props) => {
               <input
                 type="text"
                 name="role"
+                disabled
                 value={userEdit.role}
                 onChange={handleChange}
                 placeholder={`Role - ${editData?.role ?? "NaN"}`}

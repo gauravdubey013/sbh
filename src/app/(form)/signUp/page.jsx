@@ -196,7 +196,7 @@ const SignUp = () => {
     <>
       <div className="w-full h-full relative">
         <div className="w-full h-full z-10">
-          <FormLayout
+          <FormLayout page="form"
             setForm={
               <>
                 <div className="fontFam w-full h-auto flex flex-col justify-between gap-1 px-5 rounded-xl ease-in-out duration-300">

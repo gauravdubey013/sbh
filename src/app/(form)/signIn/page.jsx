@@ -6,7 +6,7 @@ const SignIn = () => {
   return (
     <div>
       {/* <LoginForm /> */}
-      <FormLayout setForm={<LoginForm />} />
+      <FormLayout page="form" setForm={<LoginForm />} />
     </div>
   );
 };

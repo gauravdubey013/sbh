@@ -25,6 +25,26 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    payment: [
+      {
+        paymentId: {
+          type: Number,
+          required: false,
+        },
+        to: {
+          type: String,
+          required: false,
+        },
+        amount: {
+          type: String,
+          required: false,
+        },
+        method: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
 
     resetToken: {
       type: String,

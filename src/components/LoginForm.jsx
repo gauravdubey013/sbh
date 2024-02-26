@@ -223,8 +223,8 @@ function LoginForm() {
           >
             Forgot your password?
           </Link>
-          {error && <span className="text-red-500">{error}</span>}
-          {success && <span className="text-[#53c28b]">{error}</span>}
+          {error && <span className="text-red-500 animate-slideDown">{error}</span>}
+          {success && <span className="text-[#53c28b] animate-slideDown">{success}</span>}
           <button
             disabled={disableBtn}
             type="submit"

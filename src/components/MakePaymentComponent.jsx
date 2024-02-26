@@ -1,11 +1,20 @@
 "use client";
 
 import React, { useState } from 'react';
+import { MdOutlineCurrencyRupee } from "react-icons/md";
 
-const MakePaymentComponent = () => {
-    const [amount, setAmount] = useState(100);
+const MakePaymentComponent = (props) => {
 
-    const makePayment = async () => {
+    const [amount, setAmount] = useState();
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+
+    // console.log(amount);
+
+    const makePayment = async (e) => {
+        e.preventDefault();
+
         const res = await initializeRazorpay();
         if (!res) {
             alert("Razorpay SDK Failed to load");
@@ -36,7 +45,7 @@ const MakePaymentComponent = () => {
                 currency: data.currency,
                 amount: data.amount,
                 order_id: data.id,
-                description: "Thank you for your test",
+                description: "Payment test",
                 image: "https://sbh.vercel.app/_next/image?url=%2Fassets%2Floading3d360Rotate.gif&w=828&q=75",
                 handler: function (response) {
                     alert("Razorpay Response: " + response.razorpay_payment_id);
@@ -74,9 +83,21 @@ const MakePaymentComponent = () => {
     }
 
     return (
-        <div className='h-[78vh] flex items-center justify-center'>
-            <button onClick={() => makePayment()} className='allBtn w-auto h-[3rem] p-3 rounded-2xl'>Pay 100 now</button>
-        </div>
+        <>
+            <div className='w-full h-[30vh] px-5 flex items-center justify-center'>
+                <form action="" onSubmit={makePayment} className='w-full h-full flex flex-col gap-1 justify-between'>
+                    <h2 className="w-full h-auto text-[40px] md:text-[45px] lg:text-[40px] text-[#53c28b] text-center ease-in-out duration-300">
+                        Payment
+                    </h2>
+                    <div className="flex flex-col gap-1">
+                        <input type="text" value={amount} onChange={(e) => setAmount(e.target.value.replace(/[^\d]/g, ""))} required placeholder='Enter Amount' className='allFormInput h-[52px]' />
+                        <button type='submit' className='allBtn w-full h-[3rem] p-3 rounded-2xl'>Pay <MdOutlineCurrencyRupee />{amount} now</button>
+                    </div>
+                    {error && <span className="text-red-500 animate-fade-in-up">{error}</span>}
+                    {success && <span className="text-[#53c28b] animate-fade-in-up">{success}</span>}
+                </form>
+            </div>
+        </>
     )
 }
 

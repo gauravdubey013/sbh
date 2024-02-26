@@ -156,13 +156,13 @@ const ProfessionalSignUp = ({ params }) => {
     <>
       <div className="w-full h-full relative">
         <div className="w-full h-full z-10">
-          <FormLayout
+          <FormLayout page="form"
             setForm={
               <>
-                <div className="fontFam w-full h-auto flex flex-col justify-between gap-2 px-5 rounded-xl ease-in-out duration-300">
-                  <div className="fontFam w-full h-auto text-[40px] md:text-[45px] lg:text-[40px] text-[#53c28b] text-center ease-in-out duration-300">
+                <div className="w-full h-auto flex flex-col justify-between gap-2 px-5 rounded-xl ease-in-out duration-300">
+                  <h2 className="w-full h-auto text-[40px] md:text-[45px] lg:text-[40px] text-[#53c28b] text-center ease-in-out duration-300">
                     Professional Register
-                  </div>
+                  </h2>
                   <form
                     action=""
                     method=""

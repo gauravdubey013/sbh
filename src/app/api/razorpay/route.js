@@ -11,14 +11,12 @@ export const POST = async (request) => {
       key_secret: process.env.RAZORPAY_SECRET,
     });
 
-    const payment_capture = 1;
     const amount = taxAmt;
-    const currency = "INR";
     const options = {
       amount: (amount * 100).toString(),
-      currency,
       receipt: shortid.generate(),
-      payment_capture,
+      currency: "INR",
+      payment_capture: 1,
       // payment_method: "upi",
     };
 

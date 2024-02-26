@@ -100,21 +100,23 @@ const ChatMessagePanel = (props) => {
                             </div>
                         )}
                         {chats && chats.map((chat, i) => (
-                            <div key={i} className="mb-4 flex gap-1 justify-start">
-                                <div className="w-8 h-8 borde rounded-full flex items-center justify-center font-bold overflow-hidden">
-                                    {/* {chat.sender == "user" ? "U" : "P"} */}
-                                    <Image
-                                        src={chat.sender == "user" ? "/assets/loading3d360Rotate.gif" : profPfp}
-                                        alt={chat.sender == "user" ? "U" : "P"}
-                                        width={400}
-                                        // fill={true}
-                                        height={400}
-                                        className="w-auto h-auto"
-                                    />
-                                </div>
-                                <div className="w-full">
-                                    <p className="text-white text-justify">{chat.message}</p>
-                                    <small className="text-gray-500">{`${chat.date} ${chat.time}`}</small>
+                            <div key={i} className={`w-[80%] mb-2 flex gap-1 borde ${chat.sender !== "user" ? "justify-end" : "justify-start"}`}>
+                                <div className="flex gap-1">
+                                    <div className="w-8 h-8 borde rounded-full flex items-center justify-center font-bold overflow-hidden">
+                                        {/* {chat.sender == "user" ? "U" : "P"} */}
+                                        <Image
+                                            src={chat.sender == "user" ? "/assets/loading3d360Rotate.gif" : profPfp}
+                                            alt={chat.sender == "user" ? "U" : "P"}
+                                            width={400}
+                                            // fill={true}
+                                            height={400}
+                                            className="w-auto h-auto"
+                                        />
+                                    </div>
+                                    <div className="w-full">
+                                        <p className="text-white text-justify">{chat.message}</p>
+                                        <small className="text-gray-500">{`${chat.date} ${chat.time}`}</small>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -147,7 +149,7 @@ const ChatMessagePanel = (props) => {
                         >
                             {disableMessageBtn ? <span className="animate-pulse">Sending...</span> : "Send"}
                         </button>
-                        <Link href={"/payment"} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
+                        <Link href={`/payment/${userEmail}/${profEmail}`} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
                             Pay
                         </Link>
                     </form>
