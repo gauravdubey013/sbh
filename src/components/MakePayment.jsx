@@ -3,13 +3,11 @@
 import React, { useState } from 'react';
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 
-const MakePaymentComponent = (props) => {
+const MakePayment = (props) => {
 
     const [amount, setAmount] = useState();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
-
     // console.log(amount);
 
     const makePayment = async (e) => {
@@ -51,6 +49,8 @@ const MakePaymentComponent = (props) => {
                     alert("Razorpay Response: " + response.razorpay_payment_id);
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature);
+                    setSuccess("Payment Successful!")
+                    setError("")
                 },
                 prefill: {
                     name: "Gaurav Dubey test",
@@ -63,6 +63,7 @@ const MakePaymentComponent = (props) => {
             paymentObject.open();
         } catch (error) {
             console.error('Error making payment:', error);
+            setError("Error making payment:", error);
         }
     };
 
@@ -101,4 +102,4 @@ const MakePaymentComponent = (props) => {
     )
 }
 
-export default MakePaymentComponent;
+export default MakePayment;
