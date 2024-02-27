@@ -100,7 +100,8 @@ const ChatMessagePanel = (props) => {
                             </div>
                         )}
                         {chats && chats.map((chat, i) => (
-                            <div key={i} className={`w-[80%] mb-2 flex gap-1 borde ${chat.sender !== "user" ? "justify-end" : "justify-start"}`}>
+                            // ${chat.sender !== "user" ? "justify-end" : "justify-start"}
+                            <div key={i} className={`w-[80%] mb-2 flex gap-1 justify-start`}>
                                 <div className="flex gap-1">
                                     <div className="w-8 h-8 borde rounded-full flex items-center justify-center font-bold overflow-hidden">
                                         {/* {chat.sender == "user" ? "U" : "P"} */}

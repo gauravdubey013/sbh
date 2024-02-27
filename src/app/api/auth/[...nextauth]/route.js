@@ -80,8 +80,8 @@ export const authOptions = {
       }
 
       if (account.provider === "github") {
-        await connect();
         try {
+          await connect();
           const userExists = await User.findOne({ email: user.email });
           if (!userExists) {
             const newUser = new User({
@@ -95,6 +95,7 @@ export const authOptions = {
             return user;
           }
           return userExists;
+          // mongoose.connection.close();
         } catch (error) {
           console.log("Error storing onto the db : ", error);
           return false;
