@@ -1,15 +1,12 @@
 "use client";
+
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 // import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import Carousel from "../../components/Carousel";
-import Loading from "../loading";
-// import TermsConditionsUser from "@/components/TermsConditions";
-// import { tcPolicyUser } from "@/context/terms-conditions";
-// import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.cjs.jsx";
-// import Carousel from "./components/Carousel";
+// import Loading from "../loading";
 
 export default function Home() {
   let ref = useRef(null);
