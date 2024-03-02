@@ -91,7 +91,7 @@ export const POST = async (request) => {
   //   const pdfContent = fs.readFileSync(pdfPath);
 
   const body1 = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${userExist?.name}!!</h1>
-          <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">We received your ₹${amount} payment and paid the advance 15% (₹${advanceAmount}) to ${profExist?.name}.<br/>Save the receipt</span>
+          <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">We received your ₹${amount} payment and paid the advance 15% (₹${advanceAmount}) to hired professional ${profExist?.name}.<br/>Save the receipt, please make sure to save the receipt</span>
           <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
 
   await resend.emails.send({
