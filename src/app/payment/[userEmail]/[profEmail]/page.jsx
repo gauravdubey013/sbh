@@ -10,7 +10,6 @@ const payment = ({ params }) => {
         <div className='h-full text-2xl text-center'>
             {/* <h4>Payment page</h4> */}
             <FormLayout page={"payment"} image="/assets/paymentImg.png" setForm={<MakePayment userEmail={userEmail} profEmail={profEmail} />} />
-
         </div>
     )
 }

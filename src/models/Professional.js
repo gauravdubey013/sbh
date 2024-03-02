@@ -22,6 +22,10 @@ const professionalSchema = new Schema(
       type: String,
       required: true,
     },
+    upiId: {
+      type: String,
+      required: false,
+    },
     gender: {
       type: String,
       required: true,

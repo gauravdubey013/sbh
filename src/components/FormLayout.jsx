@@ -13,7 +13,7 @@ export default function FormLayout(props) {
   let verified = props.setVerified;
 
   useEffect(() => {
-    if (page == "paymment") {
+    if (page == "payment1") {
       if (sessionStatus !== "authenticated") return router.replace("/");
 
     }

@@ -7,22 +7,14 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (request) => {
-  const {
-    firstname,
-    lastname,
-    email,
-    password,
-    profCheckValue,
-    otp,
-    checkOtpCode,
-  } = await request.json();
+  const { firstname, lastname, email, password, otp, checkOtpCode } =
+    await request.json();
 
   // console.log(
   //   firstname,
   //   lastname,
   //   email,
   //   password,
-  //   profCheckValue,
   //   "OTP -> " + otp,
   //   checkOtpCode
   // );
@@ -62,10 +54,8 @@ export const POST = async (request) => {
 
     const newUser = new User({
       name: firstname + " " + lastname,
-      signInWith: "Email&Password",
       email,
       password: hashPassword,
-      role: "user", //profCheckValue
     });
     try {
       await newUser.save();

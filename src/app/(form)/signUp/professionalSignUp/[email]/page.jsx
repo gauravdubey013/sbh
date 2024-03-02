@@ -22,6 +22,7 @@ const ProfessionalSignUp = ({ params }) => {
   const [dob, setDOB] = useState("");
 
   const [service, setService] = useState("");
+  const [upiId, setUpiId] = useState("");
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [phone, setPhone] = useState("");
@@ -35,11 +36,14 @@ const ProfessionalSignUp = ({ params }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({
+    upiE: "",
     phoneE: "",
     dobE: "",
     sLOneE: "",
     sLTwoE: "",
   });
+  const [upiError, setUpiError] = useState("");
+
   const [condition, setCondition] = useState({
     phoneC: true,
   });
@@ -59,6 +63,18 @@ const ProfessionalSignUp = ({ params }) => {
       });
     } else {
       setErrors({ dobE: "" });
+    }
+  };
+  const upiPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/;
+  const handleUpi = (e) => {
+    const input = e.target.value;
+    setUpiId(input)
+    if (input == "") {
+      setErrors({ upiE: "" });
+    } else if (!upiPattern.test(input)) {
+      setErrors({ upiE: "Invaild UPI id, refrence: sbh@icici" });
+    } else {
+      setErrors({ upiE: "" });
     }
   };
   const handlePhone = (e) => {
@@ -97,6 +113,7 @@ const ProfessionalSignUp = ({ params }) => {
     data.set("profileImg", profileImg);
     data.set("resume", resume);
     data.set("gender", gender);
+    data.set("upiId", upiId);
     data.set("dob", dob);
     data.set("service", service);
     data.set("address", address);
@@ -274,6 +291,8 @@ const ProfessionalSignUp = ({ params }) => {
                       <option value="plumber">Plumber</option>
                       <option value="house_helper">House Helper</option>
                     </select>
+                    <input type="text" value={upiId} onChange={handleUpi} required placeholder='Enter UPI id' className='allFormInput h-[52px]' />
+                    {errors.upiE && <span className="text-red-500 animate-slideDown">{errors.upiE}</span>}
                     <div className="flex gap-2">
                       <input
                         type="text"

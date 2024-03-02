@@ -8,10 +8,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    signInWith: {
-      type: String,
-      required: true,
-    },
     email: {
       unique: true,
       type: String,
@@ -20,12 +16,19 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      default: "$2a$05$mDaH1eQzeGHd0dvj5gLBuuieKb41INVbnzi/nciRWIXM6pDW4A5nS",
     },
     role: {
       type: String,
       required: true,
+      default: "user",
     },
-    
+    signInWith: {
+      type: String,
+      required: true,
+      default: "Email&Password",
+    },
+
     payment: [
       {
         paymentId: {

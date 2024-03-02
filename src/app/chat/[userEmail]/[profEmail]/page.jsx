@@ -32,8 +32,12 @@ const ChatMessagePanel = (props) => {
             if (res.status === 200) {
                 const chatMsg = await res.json();
                 setChats(chatMsg);
-                await delay(1000);
+                await delay(1500);
                 scrollToBottom();
+                // if (chatMsg.length > 0) {
+                //     setChats(prevChats => [...prevChats, ...chatMsg]);
+                //     scrollToBottom();
+                // }
             }
         } catch (error) {
             console.error('Error fetching messages:', error);
@@ -55,10 +59,10 @@ const ChatMessagePanel = (props) => {
 
             if (res.status === 200) {
                 setDisableMessageBtn(false);
-                // After sending a message, fetch and update messages
                 fetchMessages();
                 fetchChatPersons();
                 setMessage('');
+                await delay(1500);
                 scrollToBottom();
             }
         } catch (error) {
@@ -75,12 +79,8 @@ const ChatMessagePanel = (props) => {
     };
 
     useEffect(() => {
-        // if (!chats)
         fetchChatPersons();
         fetchMessages();
-        // if (chats) {
-        //     scrollToBottom();
-        // }
     }, [chats]);
 
     return (
@@ -90,7 +90,7 @@ const ChatMessagePanel = (props) => {
                     <h2 className="w-full h-auto text-center border border-[#53c28b] p-2 text-xl md:text-lg font-semibold">
                         {presonName}
                     </h2>
-                    <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory w-screen h-full flex flex-col gap-3 p-2">
+                    <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll overflow-x-scroll scroll-snap-type-x-mandatory w-screen h-full flex flex-col gap-3 p-2">
                         {chats == null && (
                             <Loading />
                         )}

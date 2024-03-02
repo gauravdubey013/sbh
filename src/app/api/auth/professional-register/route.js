@@ -14,6 +14,7 @@ export const POST = async (request) => {
     const profileImg = data.get("profileImg");
     const gender = data.get("gender");
     const dob = data.get("dob");
+    const upiId = data.get("upiId");
     const service = data.get("service");
     const address = data.get("address");
     const zipCode = data.get("zipCode");
@@ -68,6 +69,7 @@ export const POST = async (request) => {
       email,
       isVerified: "no",
       name,
+      upiId,
       gender,
       dob,
       profileImgPath,

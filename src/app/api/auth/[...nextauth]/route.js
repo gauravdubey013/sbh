@@ -7,14 +7,8 @@ import bcrypt from "bcryptjs";
 import connect from "@/utils/db";
 import Professional from "@/models/Professional";
 
-const signInWithGoogle = "google";
-const signInWithGithub = "gitHub";
-const role = "user";
-const password = "setPassword@123";
-const hashPassword = await bcrypt.hash(password, 5);
-
 export const authOptions = {
-  // Configure one or more authentication providers
+  // Configuring google & gitHub authentication providers
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -42,8 +36,8 @@ export const authOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
@@ -51,7 +45,8 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-
+  secret: process.env.NEXTAUTH_SECRET,
+  // page: { signIn: "/signIn" },
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "credentials") return true;
@@ -64,13 +59,11 @@ export const authOptions = {
           if (!userExists) {
             const newUser = new User({
               name: user.name,
-              signInWith: signInWithGoogle,
               email: user.email,
-              password: hashPassword,
-              role,
+              signInWith: "google",
             });
-            const user = await newUser.save();
-            return user;
+            const savedUser = await newUser.save();
+            return savedUser;
           }
           return userExists;
         } catch (error) {
@@ -86,13 +79,11 @@ export const authOptions = {
           if (!userExists) {
             const newUser = new User({
               name: user.name,
-              signInWith: signInWithGithub,
               email: user.email,
-              password: hashPassword,
-              role,
+              signInWith: "github",
             });
-            const user = await newUser.save();
-            return user;
+            const savedUser = await newUser.save();
+            return savedUser;
           }
           return userExists;
           // mongoose.connection.close();
@@ -134,32 +125,6 @@ export const authOptions = {
       }
       return session.user;
     },
-    // async session({ session, token }) {
-    //   await connect();
-    //   if (typeof token?.user !== "undefined") {
-    //     const userExists = await User.findOne({ email: token?.user?.email });
-    //     const profExists = await Professional.findOne({
-    //       email: token?.user?.email,
-    //     });
-    //     if (userExists?.role === "professional") {
-    //       session.user = {
-    //         user: token.user,
-    //         prof: profExists,
-    //       };
-    //     } else if (
-    //       userExists.lastname !== "google" ||
-    //       userExists.lastname !== "gitHub"
-    //     ) {
-    //       session.user = {
-    //         user: userExists,
-    //         authUser: token.user,
-    //       };
-    //     } else {
-    //       session.user = { user: token.user };
-    //     }
-    //   }
-    //   return session;
-    // },
   },
 };
 
