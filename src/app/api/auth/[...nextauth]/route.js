@@ -46,7 +46,6 @@ export const authOptions = {
     // ...add more providers here
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  // page: { signIn: "/signIn" },
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "credentials") return true;
@@ -80,7 +79,7 @@ export const authOptions = {
             const newUser = new User({
               name: user.name,
               email: user.email,
-              signInWith: "github",
+              signInWith: "gitHub",
             });
             const savedUser = await newUser.save();
             return savedUser;
@@ -107,20 +106,34 @@ export const authOptions = {
           email: token?.user?.email,
         });
         if (userExists?.role === "professional") {
-          session.user = {
-            user: token.user,
-            prof: profExists,
-          };
+          if (
+            userExists.signInWith !== "google" ||
+            userExists.signInWith !== "gitHub"
+          ) {
+            session.user = {
+              authuser: token.user,
+              user: userExists,
+              prof: profExists,
+            };
+          } else {
+            session.user = {
+              user: token.user,
+              prof: profExists,
+            };
+          }
+          return session.user;
         } else if (
           userExists.signInWith !== "google" ||
           userExists.signInWith !== "gitHub"
         ) {
           session.user = {
-            user: userExists,
             authUser: token.user,
+            user: userExists,
           };
+          return session.user;
         } else {
           session.user = { user: token.user };
+          // return session.user;
         }
       }
       return session.user;

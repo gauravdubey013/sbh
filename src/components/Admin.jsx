@@ -9,13 +9,17 @@ import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
 import { LuShieldClose } from "react-icons/lu";
+import { FaRupeeSign } from "react-icons/fa";
+import { TbReportAnalytics } from "react-icons/tb";
 
 const Admin = () => {
-  const [isUserOpen, setIsUserOpen] = useState(true);
+  const [isReportOpen, setIsReportOpen] = useState(true);
+  const [isUserOpen, setIsUserOpen] = useState(false);
   const [isProfOpen, setIsProfOpen] = useState(false);
   const [isProfAcceptOpen, setIsProfAcceptOpen] = useState(false);
   const [isContactUsOpen, setIsContactUsOpen] = useState(false);
   const [isDelUserOpen, setIsDelUserOpen] = useState(false);
+  const [isSBHBalanceOpen, setIsSBHBalanceOpen] = useState(false);
   const activeCss = "bg-[#53c28b]";
 
   const [refDb, setRefDb] = useState(false);
@@ -59,6 +63,7 @@ const Admin = () => {
   const deletedUsersCollection = dBCollection?.deletedUsersCollection;
   const profsCollection = dBCollection?.profsCollection;
   const contactUsCollection = dBCollection?.contactUsCollection;
+  const sbhBalanceCollection = dBCollection?.sbhBalanceCollection;
 
   return (
     <>
@@ -72,11 +77,45 @@ const Admin = () => {
           </button>
           <div
             onClick={() => {
-              !isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              !isReportOpen ? setIsReportOpen(!isReportOpen) : "";
+              isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+            }}
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isReportOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+          >
+            <span className="md:hidden"><TbReportAnalytics size={30} /></span>
+            <span className="hidden md:flex">Dashboard</span>
+          </div>
+          <div
+            onClick={() => {
+              !isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
+              isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+            }}
+            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isSBHBalanceOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+          >
+            <span className="md:hidden"><FaRupeeSign size={30} /></span>
+            <span className="hidden md:flex">SBH Balance</span>
+          </div>
+          <div
+            onClick={() => {
+              !isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
+              isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
@@ -87,10 +126,12 @@ const Admin = () => {
           <div
             onClick={() => {
               !isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
@@ -101,10 +142,12 @@ const Admin = () => {
           <div
             onClick={() => {
               !isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
@@ -115,10 +158,12 @@ const Admin = () => {
           <div
             onClick={() => {
               !isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
@@ -129,10 +174,12 @@ const Admin = () => {
           <div
             onClick={() => {
               !isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
               isUserOpen ? setIsUserOpen(!isUserOpen) : "";
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
             className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
               } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
@@ -144,6 +191,11 @@ const Admin = () => {
 
         {!dBCollection ? <Loading /> :
           <div className="adminNav w-full h-[78vh] animate-fade-in-down overflow-hidden">
+            {isReportOpen && (
+              <div className="animate-fade-in-down">
+                <DashboardData usersCollection={usersCollection} profsCollection={profsCollection} />
+              </div>
+            )}
             {isUserOpen && (
               <div className="animate-fade-in-down">
                 <UserData usersCollection={usersCollection} setRefDb={setRefDb} />
@@ -152,6 +204,11 @@ const Admin = () => {
             {isProfOpen && (
               <div className="animate-fade-in-down">
                 <ProfData profsCollection={profsCollection} setRefDb={setRefDb} />
+              </div>
+            )}
+            {isProfAcceptOpen && (
+              <div className="animate-fade-in-down">
+                <AcceptProf profsCollection={profsCollection} setRefDb={setRefDb} />
               </div>
             )}
             {isContactUsOpen && (
@@ -166,9 +223,9 @@ const Admin = () => {
                 />
               </div>
             )}
-            {isProfAcceptOpen && (
+            {isSBHBalanceOpen && (
               <div className="animate-fade-in-down">
-                <AcceptProf profsCollection={profsCollection} setRefDb={setRefDb} />
+                <SBHBalanceData sbhBalanceCollection={sbhBalanceCollection} />
               </div>
             )}
           </div>
@@ -178,7 +235,266 @@ const Admin = () => {
   );
 };
 export default Admin;
+export const DashboardData = (props) => {
+  const { usersCollection, profsCollection } = props;
+  const [totalUsersCount, setTotalUsersCount] = useState([]);
+  const [totalProfsCount, setTotalProfsCount] = useState([]);
+  const [usersCount, setUsersCount] = useState(0);
+  const [profsCount, setProfsCount] = useState(0);
+  const [services, setServices] = useState({
+    writing: "",
+    plumber: "",
+    painters: "",
+    gardener: "",
+    electrician: "",
+    health_coach: "",
+    dj_musician: "",
+    house_helper: "",
+    nutritionist: "",
+    event_planner: "",
+    house_cleaner: "",
+    graphic_design: "",
+    yoga_instructor: "",
+    wedding_planner: "",
+    web_development: "",
+    personal_trainer: "",
+    party_entertainer: "",
+    interior_decorator: "",
+    mental_health_counselor: "",
+    photographer_videographer: ""
+  });
 
+  useEffect(() => {
+    if (usersCollection && profsCollection) {
+      setTotalUsersCount(usersCollection);
+      setTotalProfsCount(profsCollection);
+    }
+  }, [usersCollection]);
+
+  useEffect(() => {
+    if (totalUsersCount.length > 0) {
+      const userCount = totalUsersCount.filter((tc) => tc.role === "user").length;
+      const profCount = totalUsersCount.filter((tc) => tc.role === "professional").length;
+      setUsersCount(userCount);
+      setProfsCount(profCount);
+    }
+    if (totalProfsCount.length > 0) {
+      // console.log(totalProfsCount);
+      const writing = totalProfsCount.filter((tc) => tc.service === "writing").length;
+      const plumber = totalProfsCount.filter((tc) => tc.service === "plumber").length;
+      const painters = totalProfsCount.filter((tc) => tc.service === "painters").length;
+      const gardener = totalProfsCount.filter((tc) => tc.service === "gardener").length;
+      const electrician = totalProfsCount.filter((tc) => tc.service === "electrician").length;
+      const health_coach = totalProfsCount.filter((tc) => tc.service === "health_coach").length;
+      const dj_musician = totalProfsCount.filter((tc) => tc.service === "dj_musician").length;
+      const house_helper = totalProfsCount.filter((tc) => tc.service === "house_helper").length;
+      const nutritionist = totalProfsCount.filter((tc) => tc.service === "nutritionist").length;
+      const event_planner = totalProfsCount.filter((tc) => tc.service === "event_planner").length;
+      const house_cleaner = totalProfsCount.filter((tc) => tc.service === "house_cleaner").length;
+      const graphic_design = totalProfsCount.filter((tc) => tc.service === "graphic_design").length;
+      const yoga_instructor = totalProfsCount.filter((tc) => tc.service === "yoga_instructor").length;
+      const wedding_planner = totalProfsCount.filter((tc) => tc.service === "wedding_planner").length;
+      const web_development = totalProfsCount.filter((tc) => tc.service === "web_development").length;
+      const personal_trainer = totalProfsCount.filter((tc) => tc.service === "personal_trainer").length;
+      const party_entertainer = totalProfsCount.filter((tc) => tc.service === "party_entertainer").length;
+      const interior_decorator = totalProfsCount.filter((tc) => tc.service === "interior_decorator").length;
+      const mental_health_counselor = totalProfsCount.filter((tc) => tc.service === "mental_health_counselor").length;
+      const photographer_videographer = totalProfsCount.filter((tc) => tc.service === "photographer_videographer").length;
+      setServices({
+        // House & Home
+        gardener: gardener,
+        plumber: plumber,
+        interior_decorator: interior_decorator,
+        painters: painters,
+        electrician: electrician,
+        house_cleaner: house_cleaner,
+        house_helper: house_helper,
+        // Health & Wellness
+        health_coach: health_coach,
+        mental_health_counselor: mental_health_counselor,
+        personal_trainer: personal_trainer,
+        nutritionist: nutritionist,
+        yoga_instructor: yoga_instructor,
+        // Events & Entertainers
+        event_planner: event_planner,
+        dj_musician: dj_musician,
+        photographer_videographer: photographer_videographer,
+        party_entertainer: party_entertainer,
+        wedding_planner: wedding_planner,
+        // others
+        writing: writing,
+        graphic_design: graphic_design,
+        web_development: web_development,
+      })
+    }
+  }, [totalProfsCount]);
+
+  // ... rest of your component
+
+
+  if (!totalUsersCount) {
+    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
+  }
+  return (
+    <>
+      <section className="w-full h-[78vh] flex flex-col gap-2 p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <div className="w-full h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+          <span className="md:text-2xl">Total User's count : {totalUsersCount?.length ?? "NaN"}</span>
+        </div>
+        <div className="w-full h-full scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+          <div className="flex flex-col gap-2">
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">User's count : {usersCount ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Professional's count : {profsCount ?? "NaN"}</span>
+              </div>
+            </div>
+            <h3 className="text-[#53c28b] text-xl font-semibold">Professional's Services count</h3>
+            {/* House & Home */}
+            <h3 className="text-[#53c28b] text-xl font-semibold px-5">House & Home</h3>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Gardener : {services.gardener ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Plumber : {services.plumber ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Interior Decorator : {services.interior_decorator ?? "NaN"}</span>
+              </div>
+            </div>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Painters : {services.painters ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Electrician : {services.electrician ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">House Cleaner : {services.house_cleaner ?? "NaN"}</span>
+              </div>
+            </div>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">House Helper : {services.house_helper ?? "NaN"}</span>
+              </div>
+            </div>
+            {/* Health & Wellness */}
+            <h3 className="text-[#53c28b] text-xl font-semibold px-5">Health & Wellness</h3>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Health Coach : {services.health_coach ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Yoga Instructor : {services.yoga_instructor ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Personal Trainer : {services.personal_trainer ?? "NaN"}</span>
+              </div>
+            </div>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Nutritionist : {services.nutritionist ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Mental Health Counselor : {services.mental_health_counselor ?? "NaN"}</span>
+              </div>
+            </div>
+            {/* Events & Entertainers */}
+            <h3 className="text-[#53c28b] text-xl font-semibold px-5">Events & Entertainers</h3>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Event Planner : {services.event_planner ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">DJ / Musician : {services.dj_musician ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Party Entertainer : {services.party_entertainer ?? "NaN"}</span>
+              </div>
+            </div>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Wedding Planner : {services.wedding_planner ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Photographer Videographer : {services.photographer_videographer ?? "NaN"}</span>
+              </div>
+            </div>
+            {/* Others */}
+            <h3 className="text-[#53c28b] text-xl font-semibold px-5">Others</h3>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Web Development : {services.web_development ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Graphic Design : {services.graphic_design ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Writing : {services.writing ?? "NaN"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </>
+  )
+};
+export const SBHBalanceData = (props) => {
+  const { sbhBalanceCollection } = props;
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (sbhBalanceCollection) {
+      // console.log(data && data.transactions[0]);
+      setData(sbhBalanceCollection);
+    }
+  }, [sbhBalanceCollection]);
+
+  if (!data) {
+    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
+  }
+  return (
+    <>
+      <section className="w-full h-[78vh] flex flex-col gap-2 p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+          <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+            <span className="md:text-2xl">Balance Amount : ₹{data?.balanceAmount ?? "NaN"}</span>
+          </div>
+          <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+            <span className="md:text-2xl">Profit Margin : ₹{data?.sbhAmount ?? "NaN"}</span>
+          </div>
+        </div>
+        <div className="w-full h-[80%] p-2">
+          <h3 className="w-auto h-[10%] text-2xl text-[#53c28b] font-bold">Transactions : </h3>
+          <div className="w-full h-[90%] borde shadow-sm shadow-[#53c28b] rounded-2xl scrollDiv overflow-x-auto overflow-y-hidden">
+            <div className="w-[1000px] md:w-full h-10 flex items-center font-semibold justify-between gap-2 bg-[#53c28b] px-2 shadow-lg">
+              <span>Date & Time</span>
+              <span>PaymentId</span>
+              <span>From</span>
+              <span>To</span>
+              <span>Amount</span>
+            </div>
+            <div className="w-[1000px] md:w-full h-[90%] scrollDiv overflow-y-scroll overflow-hidden">
+              {data && data.transactions.map((i) => (
+                <div key={i?.paymentId} className="w-full h-10 flex items-center justify-between gap-2 px-2 text-slate-400">
+                  <span>{i?.dateTime ?? "NaN"}</span>
+                  <span>{i?.paymentId ?? "NaN"}</span>
+                  <span>{i?.fromUpiId ?? "NaN"}</span>
+                  <span>{i?.toUpiId ?? "NaN"}</span>
+                  <span>₹{i?.amount ?? "NaN"}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+};
 export const UserData = (props) => {
   const { usersCollection, setRefDb } = props;
   const [data, setData] = useState([]);
@@ -459,6 +775,7 @@ export const ProfData = (props) => {
 
 
   useEffect(() => {
+
     if (profsCollection) {
       let filteredData = profsCollection.filter(profService => profService.isVerified !== "no");
 
@@ -467,6 +784,7 @@ export const ProfData = (props) => {
       }
       if (hired === "notHired") {
         filteredData = filteredData.filter(profService => profService.hired !== "hired");
+        console.log(filteredData);
       } else if (hired === "hired") {
         filteredData = filteredData.filter(profService => profService.hired === "hired");
       }
@@ -509,14 +827,14 @@ export const ProfData = (props) => {
   return (
     <>
       <div className="w-full h-[78vh] relative">
-        <form className="w-full h-[10%] p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
+        <form className="w-full h-auto p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
           <select
             name="service"
             value={service}
             onChange={(e) => setService(e.target.value)}
             placeholder="Freelancer Category"
             required
-            className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+            className="w-full md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
           >
             <option className="ddl" value="all">All</option>
             <option className="ddl" value="writing">Writer</option>
@@ -546,14 +864,14 @@ export const ProfData = (props) => {
             onChange={(e) => setHired(e.target.value)}
             placeholder="Freelancer Category"
             required
-            className="w-[22rem] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+            className="w-full md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
           >
             <option className="ddl" value="all">All</option>
             <option className="ddl" value="hired">Hired</option>
             <option className="ddl" value="notHired">Not Hired</option>
           </select>
         </form>
-        <section className="w-full h-[90%] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
+        <section className="w-full h-[82%] md:h-[87%] scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
           <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
             {data.map((i) => {
               // 
@@ -604,6 +922,149 @@ export const ProfData = (props) => {
     </>
   );
 };
+export const AcceptProf = (props) => {
+  const { profsCollection, setRefDb } = props;
+  const [data, setData] = useState([]);
+  const [editData, setEditData] = useState();
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [sBtnD, setSBtnD] = useState(false);
+  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
+
+  useEffect(() => {
+    if (profsCollection) {
+      const filteredData = profsCollection.filter(profVerify => profVerify.isVerified === "no");
+      setData(filteredData);
+    }
+  }, [profsCollection]);
+
+  const acceptProf = async (profAction, selectedProfEmail) => {
+    try {
+      const res = await fetch("/api/admin-prof-accept", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          profAction,
+          selectedProfEmail,
+        })
+      })
+      // console.log(profAction + "");
+      if (res.status === 400) {
+        setError("Professional doesn't exists!");
+        setRefDb(true);
+      }
+      if (res.status === 200) {
+        if (profAction == "accept") {
+          setError("");
+          setSuccess("Accepted Professional successfully!");
+          setSBtnD(true);
+        }
+        if (profAction == "reject") {
+          setError("Rejected Professional successfully!");
+          setSBtnD(true);
+        }
+        setRefDb(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  }
+  // console.log(data[0]);
+  if (!data[0]) {
+    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
+      <span className='text-red-600'>No</span> Pending Professionals collection records found...
+    </section>
+  }
+  return (
+    <>
+      <section className="w-full h-[78vh] relative flex flex-col md:flex-row">
+        <div className={`w-full ${!isViewOpen ? "h-full" : "h-[50%]"} md:h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden ease-in-out duration-200`}>
+          <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
+            {data.map((i) => {
+              //   console.log(i?.email ?? "email");
+              return (
+                <div
+                  key={i._id}
+                  onClick={() => {
+                    if (i != editData) {
+                      // console.log(i);
+                      setSBtnD(false);
+                      setError("")
+                      setSuccess("")
+                    }
+                    setEditData(i);
+                    setIsViewOpen(true)
+                    if (i == editData) setIsViewOpen(!isViewOpen);
+                  }}
+                  className={` ${i == editData && isViewOpen ? activeCss : ""
+                    } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
+                >
+                  <div className="w-[30%] h-[5rem] borde rounded-full text-center overflow-hidden">
+                    {/* pfp */}
+                    <Image
+                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
+                      alt={"userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10 scale-75"
+                    />
+                  </div>
+                  <div className="w-full flex flex-col gap-[1px] text-base">
+                    <div className="font-bold">{i?.name ?? "name"}</div>
+                    <div className="text-sm">{i?.email ?? "email"}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div
+          className={`${!isViewOpen ? "h-0 md:-mr-[100%]" : "md:mr-0 h-[70%]"
+            } w-full md:w-[50%] md:h-[78vh] p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden flex flex-col gap-2 border rounded-xl bbg ease-in-out duration-200`}
+        >
+          <span className="font-extrabold text-xl text-[#53c28b] text-center">Details</span>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Name :</span>{editData?.name ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Email :</span>{editData?.email ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Verified :</span>{editData?.isVerified ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Service :</span>{editData?.service ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">DOB :</span>{editData?.dob ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Gender :</span>{editData?.gender ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Work History :</span> {editData?.workHistory ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Phone :</span>{editData?.phone ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Address :</span>{editData?.address ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Zip code :</span>{editData?.zipCode ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Yr. of Experience :</span>{editData?.skillLevel ?? "NaN"}</div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Resume :</span><Link href={editData?.resumePath ?? "NaN"} target="_blank" className="active:scale-110" >view</Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Bio :</span>{editData?.bio ?? "NaN"}</div>
+          <span className="text-[#53c28b]">Soical Links :</span>
+          <div className="text-sm flex gap-1 -mt-3"><span className=" text-[#53c28b]">1.</span><Link href={editData?.sLOne ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLOne ?? "NaN"}</u></Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">2.</span><Link href={editData?.sLTwo ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLTwo ?? "NaN"}</u></Link>
+          </div>
+          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Registration time :</span>{editData?.createdAt ?? "NaN"}</div>
+          {error &&
+            <span className="text-[red] animate-fade-in-down">{error}</span>}
+          {success &&
+            <span className="text-[#53c28b] animate-fade-in-down underline underline-offset-4">{success}</span>}
+          <div className="w-full h-[15vh] flex flex-col md:flex-row">
+            <button disabled={sBtnD} onClick={() => {
+              // setProfAction("accept")
+              acceptProf("accept", editData?.email);
+              // setIsViewOpen(!isViewOpen);
+            }} className={`${sBtnD ? "bg-[#218452] cursor-not-allowed scale-95" : "allBtn"} w-full h-[3rem] rounded-2xl`}>{!sBtnD ? "Accept" : "Accepted"}</button>
+            <button disabled={sBtnD} onClick={() => {
+              acceptProf("reject", editData?.email)
+            }} className={`${sBtnD ? "bg-[#842121] cursor-not-allowed" : "cursor-pointer bg-[red] hover:scale-100 active:text-lg active:scale-90"} w-full h-[3rem] rounded-2xl font-extrabold md:hover:bg-[red]/50 scale-95 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200`}>Reject</button>
+          </div>
+        </div >
+      </section >
+    </>
+  )
+}
 export const ContactUsData = (props) => {
   const { contactUsCollection } = props;
   const [data, setData] = useState([]);
@@ -794,146 +1255,4 @@ export const DeletedUserData = (props) => {
     </>
   )
 };
-export const AcceptProf = (props) => {
-  const { profsCollection, setRefDb } = props;
-  const [data, setData] = useState([]);
-  const [editData, setEditData] = useState();
-  const [isViewOpen, setIsViewOpen] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [sBtnD, setSBtnD] = useState(false);
-  const activeCss = "bg-[#48ffa363] scale-100 border-[#53c28b]";
 
-  useEffect(() => {
-    if (profsCollection) {
-      const filteredData = profsCollection.filter(profVerify => profVerify.isVerified === "no");
-      setData(filteredData);
-    }
-  }, [profsCollection]);
-
-  const acceptProf = async (profAction, selectedProfEmail) => {
-    try {
-      const res = await fetch("/api/admin-prof-accept", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          profAction,
-          selectedProfEmail,
-        })
-      })
-      // console.log(profAction + "");
-      if (res.status === 400) {
-        setError("Professional doesn't exists!");
-        setRefDb(true);
-      }
-      if (res.status === 200) {
-        if (profAction == "accept") {
-          setError("");
-          setSuccess("Accepted Professional successfully!");
-          setSBtnD(true);
-        }
-        if (profAction == "reject") {
-          setError("Rejected Professional successfully!");
-          setSBtnD(true);
-        }
-        setRefDb(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error);
-    }
-  }
-  // console.log(data[0]);
-  if (!data[0]) {
-    return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]">
-      <span className='text-red-600'>No</span> Pending Professionals collection records found...
-    </section>
-  }
-  return (
-    <>
-      <section className="w-full h-[78vh] relative flex flex-col md:flex-row">
-        <div className={`w-full ${!isViewOpen ? "h-full" : "h-[50%]"} md:h-auto scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden ease-in-out duration-200`}>
-          <div className="w-full h-auto p-2 grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-rows-2 md:grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 gap-2 overflow-hidden ease-in-out duration-300">
-            {data.map((i) => {
-              //   console.log(i?.email ?? "email");
-              return (
-                <div
-                  key={i._id}
-                  onClick={() => {
-                    if (i != editData) {
-                      // console.log(i);
-                      setSBtnD(false);
-                      setError("")
-                      setSuccess("")
-                    }
-                    setEditData(i);
-                    setIsViewOpen(true)
-                    if (i == editData) setIsViewOpen(!isViewOpen);
-                  }}
-                  className={` ${i == editData && isViewOpen ? activeCss : ""
-                    } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
-                >
-                  <div className="w-[30%] h-[5rem] borde rounded-full text-center overflow-hidden">
-                    {/* pfp */}
-                    <Image
-                      src={i?.profileImgPath ?? "/assets/loading3d360Rotate.gif"}
-                      alt={"userProfile"}
-                      priority={true}
-                      width={800}
-                      height={800}
-                      className="w-full h-full shadow-md z-10 scale-75"
-                    />
-                  </div>
-                  <div className="w-full flex flex-col gap-[1px] text-base">
-                    <div className="font-bold">{i?.name ?? "name"}</div>
-                    <div className="text-sm">{i?.email ?? "email"}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div
-          className={`${!isViewOpen ? "h-0 md:-mr-[100%]" : "md:mr-0 h-[70%]"
-            } w-full md:w-[50%] md:h-[78vh] p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden flex flex-col gap-2 border rounded-xl bbg ease-in-out duration-200`}
-        >
-          <span className="font-extrabold text-xl text-[#53c28b] text-center">Details</span>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Name :</span>{editData?.name ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Email :</span>{editData?.email ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Verified :</span>{editData?.isVerified ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Service :</span>{editData?.service ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">DOB :</span>{editData?.dob ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Gender :</span>{editData?.gender ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Work History :</span> {editData?.workHistory ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Phone :</span>{editData?.phone ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Address :</span>{editData?.address ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Zip code :</span>{editData?.zipCode ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Yr. of Experience :</span>{editData?.skillLevel ?? "NaN"}</div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Resume :</span><Link href={editData?.resumePath ?? "NaN"} target="_blank" className="active:scale-110" >view</Link>
-          </div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Bio :</span>{editData?.bio ?? "NaN"}</div>
-          <span className="text-[#53c28b]">Soical Links :</span>
-          <div className="text-sm flex gap-1 -mt-3"><span className=" text-[#53c28b]">1.</span><Link href={editData?.sLOne ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLOne ?? "NaN"}</u></Link>
-          </div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">2.</span><Link href={editData?.sLTwo ?? "NaN"} target="_blank" className="active:scale-110" >view - <u>{editData?.sLTwo ?? "NaN"}</u></Link>
-          </div>
-          <div className="text-sm flex gap-1"><span className="text-[#53c28b]">Registration time :</span>{editData?.createdAt ?? "NaN"}</div>
-          {error &&
-            <span className="text-[red] animate-fade-in-down">{error}</span>}
-          {success &&
-            <span className="text-[#53c28b] animate-fade-in-down underline underline-offset-4">{success}</span>}
-          <div className="w-full h-[15vh] flex flex-col md:flex-row">
-            <button disabled={sBtnD} onClick={() => {
-              // setProfAction("accept")
-              acceptProf("accept", editData?.email);
-              // setIsViewOpen(!isViewOpen);
-            }} className={`${sBtnD ? "bg-[#218452] cursor-not-allowed scale-95" : "allBtn"} w-full h-[3rem] rounded-2xl`}>{!sBtnD ? "Accept" : "Accepted"}</button>
-            <button disabled={sBtnD} onClick={() => {
-              acceptProf("reject", editData?.email)
-            }} className={`${sBtnD ? "bg-[#842121] cursor-not-allowed" : "cursor-pointer bg-[red] hover:scale-100 active:text-lg active:scale-90"} w-full h-[3rem] rounded-2xl font-extrabold md:hover:bg-[red]/50 scale-95 shadow-md flex justify-center items-center hover:shadow-lg focus:shadow-lg ease-in-out duration-200`}>Reject</button>
-          </div>
-        </div >
-      </section >
-    </>
-  )
-}

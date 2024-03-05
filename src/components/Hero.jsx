@@ -145,12 +145,13 @@ export const HeroContext = () => {
           <select
             name="service"
             value={service}
+            // defaultValue=""
             onChange={(e) => setService(e.target.value)}
             placeholder="Freelancer Category"
             // required
             className="w-full md:w-[18.8rem] lg:w-[22.75rem] h-[3.25rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md sm:rounded-r-none border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled hidden>
               What service are you looking for?
             </option>
             <option className="ddl" value="writing">Writer</option>

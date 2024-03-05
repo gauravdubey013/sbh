@@ -12,6 +12,7 @@ export const POST = async (request) => {
     const email = data.get("email");
     const profileImg = data.get("profileImg");
     const resume = data.get("resume");
+    const updUpiId = data.get("upiId");
     const updPhone = data.get("phone");
     const updSkillLevel = data.get("skillLevel");
     const updWorkHistory = data.get("workHistory");
@@ -29,6 +30,7 @@ export const POST = async (request) => {
       );
     }
 
+    if (updUpiId) existingProf.upiId = updUpiId;
     if (/^\d{10}$/.test(updPhone)) existingProf.phone = updPhone;
     if (updSkillLevel) existingProf.skillLevel = updSkillLevel;
     if (updWorkHistory) existingProf.workHistory = updWorkHistory;

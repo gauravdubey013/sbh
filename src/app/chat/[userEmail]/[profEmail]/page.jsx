@@ -11,7 +11,7 @@ const ChatMessagePanel = (props) => {
     const [message, setMessage] = useState('');
     const [chats, setChats] = useState(null);
     const [disableMessageBtn, setDisableMessageBtn] = useState(false);
-    // const [profName, setProfName] = useState(null);
+    const [userData, setUserData] = useState(null);
     const messagesContainerRef = useRef(null);
     // console.log(profName);
     const delay = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -83,6 +83,37 @@ const ChatMessagePanel = (props) => {
         fetchMessages();
     }, [chats]);
 
+    const userInfo = async () => {
+        try {
+            const res = await fetch("/api/user-data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: profEmail,
+                }),
+            });
+
+            if (res.status === 400) {
+                // setError("User data isn't in the database!");
+                console.log("Error: ", error);
+            }
+            if (res.status === 200) {
+                // setError("");
+                const data = await res.json();
+                setUserData(data);
+            }
+        } catch (error) {
+            // setError("Something went wrong!");
+            console.log("Error", error);
+        }
+    };
+
+    useEffect(() => {
+        if (!userData) {
+            userInfo();
+        }
+    }, [userData]);
+    // console.log(userData && userData?.prof?.upiId);
     return (
         <>
             <section className='w-full h-full flex flex-col gap-1 overflow-hidden'>
@@ -150,9 +181,10 @@ const ChatMessagePanel = (props) => {
                         >
                             {disableMessageBtn ? <span className="animate-pulse">Sending...</span> : "Send"}
                         </button>
-                        <Link href={`/payment/${userEmail}/${profEmail}`} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
-                            Pay
-                        </Link>
+                        {userData?.prof?.upiId &&
+                            <Link href={`/payment/${userEmail}/${profEmail}`} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
+                                Pay
+                            </Link>}
                     </form>
                 )}
             </section>

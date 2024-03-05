@@ -4,6 +4,7 @@ import Professional from "@/models/Professional";
 import ContactUsMessage from "@/models/ContactUsMessage";
 import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
+import SBHBalance from "@/models/SBHBalance";
 
 export const POST = async (request) => {
   try {
@@ -31,14 +32,21 @@ export const POST = async (request) => {
       const deletedUsersCollection = await DeletedUser.find({});
       const profsCollection = await Professional.find({});
       const contactUsCollection = await ContactUsMessage.find({});
-
-      if (!usersCollection && !profsCollection && !contactUsCollection) {
+      const sbhBalanceCollection = await SBHBalance.findOne({
+        sbh: "SkillBeHired",
+      });
+      // console.log(sbhBalanceCollection);
+      if (
+        (!usersCollection && !profsCollection && !contactUsCollection,
+        !sbhBalanceCollection)
+      ) {
         console.log("DB collection doesn't exists");
         return new NextResponse("DB collection doesn't exists", {
           status: 400,
         });
       }
       const dbCollections = {
+        sbhBalanceCollection,
         usersCollection,
         profsCollection,
         contactUsCollection,

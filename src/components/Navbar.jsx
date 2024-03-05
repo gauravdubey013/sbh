@@ -129,8 +129,9 @@ const Navbar = () => {
                       src="/assets/loadingThreeRotate.gif"
                       alt="authImg"
                       width={100}
-                      // fill={true}
                       height={100}
+                      priority={true}
+                      // fill={true}
                       className="h-8 w-8"
                     />
                   ) : !session ? (
@@ -143,7 +144,7 @@ const Navbar = () => {
                   ) : (
                     <>
                       <Dropdown
-                        authUser={session ?? ""}
+                        session={session ?? ""}
                         btnOnClick={async () => {
                           await signOut();
                           router.push("/signIn");
@@ -165,20 +166,20 @@ const Navbar = () => {
 export default Navbar;
 
 export const Dropdown = (props) => {
-  const { authUser, btnOnClick, btnName } = props;
+  const { session, btnOnClick, btnName } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-
-  // console.log("user: ", authUser?.user);
+  // console.log(session);
+  // console.log("user: ", session?.user);
   return (
     <div className="relative inline-block text-left">
       {/* Profile Image */}
       <Image
         src={
-          (authUser?.prof?.profileImgPath || authUser?.authUser?.image) ??
+          (session?.authUser?.image || session?.prof?.profileImgPath) ??
           "/assets/bg6.png"
         }
         alt="Profile"
@@ -204,15 +205,15 @@ export const Dropdown = (props) => {
         >
           {/* Dropdown Items */}
           <div className="block text-sm" role="menuitem">
-            {authUser?.user?.name ?? "name"}
+            {session?.user?.name ?? "name"}
           </div>
           <div className="block text-sm" role="menuitem">
-            {authUser?.user?.role ?? "role"}
+            {session?.user?.role ?? "role"}
           </div>
-          {(authUser?.user?.role === "admin" ||
-            authUser?.user?.role === "superAdmin") && (
+          {(session?.user?.role === "admin" ||
+            session?.user?.role === "superAdmin") && (
               <Link
-                href={`/admin/${authUser?.user?.email ?? ""}`}
+                href={`/admin/${session?.user?.email ?? ""}`}
                 onClick={() => setIsOpen(!isOpen)}
                 className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
               >
@@ -220,14 +221,14 @@ export const Dropdown = (props) => {
               </Link>
             )}
           <Link
-            href={`/profile/${authUser?.user?.email ?? ""}`}
+            href={`/profile/${session?.user?.email ?? ""}`}
             onClick={() => setIsOpen(!isOpen)}
             className="viewProfile allBtn w-[6rem] h-[2rem] text-md rounded-md"
           >
             View Profile
           </Link>
           <Link
-            href={authUser?.user?.role !== "professional" ? `/chat/${authUser?.user?.email}/none` : `/chat/none/${authUser?.user?.email}` || "/"}
+            href={session?.user?.role !== "professional" ? `/chat/${session?.user?.email}/none` : `/chat/none/${session?.user?.email}` || "/"}
             onClick={() => setIsOpen(!isOpen)}
             className="viewChats allBtn w-[6rem] h-[2rem] text-md rounded-md"
           >

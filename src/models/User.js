@@ -29,27 +29,6 @@ const userSchema = new Schema(
       default: "Email&Password",
     },
 
-    payment: [
-      {
-        paymentId: {
-          type: Number,
-          required: false,
-        },
-        to: {
-          type: String,
-          required: false,
-        },
-        amount: {
-          type: String,
-          required: false,
-        },
-        method: {
-          type: String,
-          required: false,
-        },
-      },
-    ],
-
     resetToken: {
       type: String,
       trim: true,

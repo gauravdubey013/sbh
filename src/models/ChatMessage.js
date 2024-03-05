@@ -2,36 +2,6 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-// const ChatMessageSchema = new Schema(
-//   {
-//     user: {
-//       type: String,
-//       required: true,
-//     },
-//     prof: {
-//       type: String,
-//       required: true,
-//     },
-//     chat: [
-//       {
-//         message: {
-//           type: String,
-//           required: true,
-//         },
-//         time: {
-//           type: String,
-//           required: true,
-//         },
-//         date: {
-//           type: String,
-//           required: true,
-//         },
-//       },
-//     ],
-//   },
-//   { timestamps: true }
-// );
-
 const ChatMessageSchema = new Schema(
   {
     user: {

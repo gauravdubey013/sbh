@@ -157,22 +157,24 @@ const Profile = (props) => {
                 } w-full md:w-[34.5%] h-[50vh] md:h-[60vh] bbg shadow-2xl border border-[#53c28b] rounded-b-3xl flex items-end justify-center absolute z-0`}
             >
               <div className="w-full flex flex-col gap-1 items-center justify-center p-2">
-                <Link
-                  href={prof?.sLOne ?? "https://sbh.vercel.app/"}
-                  target="_blank"
-                  className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
-                >
-                  Link One
-                  {/* {prof?.sLOne ?? "sbh"} */}
-                </Link>
-                <Link
-                  href={prof?.sLTwo ?? "https://sbh.vercel.app/"}
-                  target="_blank"
-                  className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
-                >
-                  Link Two
-                  {/* {prof?.sLTwo ?? "sbh"} */}
-                </Link>
+                {prof?.sLOne && (
+                  <Link
+                    href={prof?.sLOne ?? "https://sbh.vercel.app/"}
+                    target="_blank"
+                    className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
+                  >
+                    Link One
+                    {/* {prof?.sLOne ?? "sbh"} */}
+                  </Link>)}
+                {prof?.sLTwo && (
+                  <Link
+                    href={prof?.sLTwo ?? "https://sbh.vercel.app/"}
+                    target="_blank"
+                    className="allBtn w-[80%] h-[2.3rem] text-md rounded-3xl"
+                  >
+                    Link Two
+                    {/* {prof?.sLTwo ?? "sbh"} */}
+                  </Link>)}
               </div>
             </div>
             <div
@@ -229,7 +231,7 @@ const Profile = (props) => {
               <div className="flex flex-col items-center justify-center px-4">
                 <div className="flex flex-row gap-1">
                   <span className="text-[#53c28b]">Service :</span>
-                  <span> {prof?.service ?? "none"}</span>
+                  <span> {prof?.service.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) ?? "none"}</span>
                 </div>
                 <div className="flex gap-1">
                   <span className="text-[#53c28b]">Year of Experience :</span>
@@ -257,16 +259,17 @@ const Profile = (props) => {
             <div
               className={`grid px-7 py-2 -mb-3 text-[#000] items-center justify-around grid-cols-3 gap-4 divide-x divide-solid divide-zinc-950`}
             >
-              <div
-                className="col-span-1 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
-                onClick={() => {
-                  setSocialToggle(!socialToggle);
-                  contactToggle ? setContactToggle(!contactToggle) : "";
-                }}
-              >
-                <GiBackup size={25} />
-                <span>Social Links</span>
-              </div>
+              {(prof?.sLOne !== "NaN" || prof?.sLTwo !== "NaN") && (
+                <div
+                  className="col-span-1 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
+                  onClick={() => {
+                    setSocialToggle(!socialToggle);
+                    contactToggle ? setContactToggle(!contactToggle) : "";
+                  }}
+                >
+                  <GiBackup size={25} />
+                  <span>Social Links</span>
+                </div>)}
               <div
                 className="col-span-1 px-3 flex flex-col items-center text-md font-medium cursor-pointer active:translate-y-1 duration-200"
                 onClick={() => {
@@ -377,7 +380,6 @@ const Profile = (props) => {
     </>
   );
 };
-
 export default Profile;
 
 export const EditProfile = (props) => {
@@ -386,6 +388,7 @@ export const EditProfile = (props) => {
   const [showProfileImg, setShowProfileImg] = useState(null);
   const [resume, setResume] = useState(null);
   const [profEdit, setProfEdit] = useState({
+    upiId: "",
     phone: "",
     skillLevel: "",
     workHistory: "",
@@ -400,10 +403,27 @@ export const EditProfile = (props) => {
   });
   const [errors, setErrors] = useState({
     phoneE: "",
+    upiE: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
+
+  const upiPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/;
+  const handleUpi = (e) => {
+    const input = e.target.value;
+    setProfEdit((prev) => ({
+      ...prev,
+      upiId: input,
+    }));
+    if (input == "") {
+      setErrors({ upiE: "" });
+    } else if (!upiPattern.test(input)) {
+      setErrors({ upiE: "Invaild UPI id, refrence: sbh@icici" });
+    } else {
+      setErrors({ upiE: "" });
+    }
+  };
 
   const handlePhone = (e) => {
     let inputValue = e.target.value.replace(/[^\d]/g, "").slice(0, 10);
@@ -411,7 +431,7 @@ export const EditProfile = (props) => {
       ...prev,
       phone: inputValue,
     }));
-    if (inputValue.trim() === "") {
+    if (inputValue === "") {
       setCondition({ phoneC: true });
       setErrors({ phoneE: "" });
     } else {
@@ -450,6 +470,7 @@ export const EditProfile = (props) => {
     data.set("email", prof?.email);
     data.set("profileImg", profileImg);
     data.set("resume", resume);
+    data.set("upiId", profEdit.upiId);
     data.set("phone", profEdit.phone);
     data.set("skillLevel", profEdit.skillLevel);
     data.set("workHistory", profEdit.workHistory);
@@ -459,7 +480,7 @@ export const EditProfile = (props) => {
     data.set("sLOne", profEdit.sLOne);
     data.set("sLTwo", profEdit.sLTwo);
 
-    if (profEdit.phone.trim() !== "" && profEdit.phone.length !== 10) {
+    if (profEdit.phone !== "" && profEdit.phone.length !== 10) {
       setDisableBtn(false);
       setCondition({ phoneC: false });
       setErrors({ phoneE: "Number must be 10 digits and valid" });
@@ -485,6 +506,7 @@ export const EditProfile = (props) => {
           setSuccess(true);
           setRefDBState(true)
           setProfEdit({
+            upiId: "",
             phone: "",
             skillLevel: "",
             workHistory: "",
@@ -511,9 +533,9 @@ export const EditProfile = (props) => {
         className="w-full h-auto flex flex-col gap-2"
       >
         <div className="w-full h-auto overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
-          {/* </label> */}
+          {/* label */}
           Add Profile
-          <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10">
+          <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10 z-10">
             <input
               type="file"
               name="profileImg"
@@ -526,7 +548,7 @@ export const EditProfile = (props) => {
           </div>
           {(showProfileImg) && (
             <>
-              <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl" />
+              <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl animate-slideDown z-0" />
               <ImCancelCircle
                 size={30}
                 color="#fff"
@@ -560,6 +582,10 @@ export const EditProfile = (props) => {
             />
           )}
         </div>
+        <div className="">
+          <input type="text" value={profEdit.upiId} onChange={handleUpi} required placeholder={`UPI ID : ${prof.upiId ?? "Add Upi to receive payment"}`} className='allFormInput h-[52px]' />
+          {errors.upiE && <span className="text-red-500 animate-slideDown">{errors.upiE}</span>}
+        </div>
         <div className="flex flex-row gap-1">
           <input
             type="text"
@@ -590,7 +616,7 @@ export const EditProfile = (props) => {
                 number must be 10 digits
               </span>
               <span
-                className={`${errors.phoneE.trim() !== ""
+                className={`${errors.phoneE !== ""
                   ? "flex text-red-500 animate-slideDown"
                   : "hidden"
                   }`}

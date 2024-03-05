@@ -37,7 +37,7 @@ export const POST = async (request) => {
       await existingUser.save();
 
       body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${existingProf.name}!!</h1>
-        <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">We have <b style="color: #53c28b;"><u>Accepted</u></b> your Professional resitration : Start your professional life</span>
+        <span style="color: #ccc; font-size: 18px; font-family: 'Arial', sans-serif;">We have <b style="color: #53c28b;"><u>Accepted</u></b> your Professional registration : Start your professional life</span>
         <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
 
       await resend.emails.send({

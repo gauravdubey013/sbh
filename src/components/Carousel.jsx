@@ -57,11 +57,11 @@ const Carousel = (props) => {
         {!data[0] &&
           slides.map((slide) => (
             <div
-              className={`w-auto ${defH} ${mdH} ${lgH} ease-in-out duration-300 overflow-hidden rounded-lg`}
               key={slide._id}
+              className={`w-auto ${defH} ${mdH} ${lgH} ease-in-out duration-300 overflow-hidden rounded-lg`}
             >
               <div
-                className={`w-full h-full bbg animate-pulse scale-95 border border-[#53c28b] hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
+                className={`w-full h-full bbg animate-pulse scale-95 border border-[#53c28b] hover:scale-100 shadow-lg duration-200 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
               >Loading...</div>
             </div>
           ))}
@@ -69,11 +69,11 @@ const Carousel = (props) => {
         {data &&
           data.map((slide) => (
             <div
-              className={`w-auto ${defH} ${mdH} ${lgH} borde ease-in-out duration-300 overflow-hidden rounded-lg`}
               key={slide._id}
+              className={`w-auto ${defH} ${mdH} ${lgH} borde ease-in-out duration-300 overflow-hidden rounded-lg`}
             >
               <div
-                className={`w-full h-full relative bbg scale-95 borde border-[#53c28b] hover:scale-100 shadow-lg duration-300 rounded-lg flex flex-col items-center justify-end overflow-hidden`}
+                className={`w-full h-full relative bbg scale-95 borde border-[#53c28b] hover:scale-100 shadow-lg duration-200 rounded-lg flex flex-col items-center justify-end overflow-hidden`}
               >
                 <div className="absolute top-0 z-20 w-[5rem] h-[5rem] md:w-[8rem] md:h-[8rem] bbg rounded-full overflow-hidden">
                   <Image
@@ -90,7 +90,7 @@ const Carousel = (props) => {
                     <h2 className="text-sm md:text-lg font-semibold">
                       {slide?.name ?? "name"}
                     </h2>
-                    <div className="h-[2.3rem] md:h-[2rem] text-sm mb-[4px]"><span className="text-[#53c28b]">Service : </span>{slide?.service ?? "service"}</div>
+                    <div className="h-[2.3rem] md:h-[2rem] text-sm mb-[4px]"><span className="text-[#53c28b]">Service : </span>{slide?.service.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) ?? "service"}</div>
                     <span className="h-[4rem] text-[12px] md:text-sm line-clamp-1 md:line-clamp-3">
                       {slide?.bio !== "null" ? slide?.bio ?? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quisquam saepe quae dolorem distinctio optio perspiciatis consequuntur tempora labore eos." : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quisquam saepe quae dolorem distinctio optio perspiciatis consequuntur tempora labore eos."}
                     </span>

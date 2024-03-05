@@ -82,26 +82,6 @@ const professionalSchema = new Schema(
       type: String,
       required: false,
     },
-    receivedPayment: [
-      {
-        paymentId: {
-          type: Number,
-          required: false,
-        },
-        from: {
-          type: String,
-          required: false,
-        },
-        receivedAmount: {
-          type: Number,
-          required: false,
-        },
-        FullAmount: {
-          type: Number,
-          required: false,
-        },
-      },
-    ],
   },
   { timestamps: true }
 );

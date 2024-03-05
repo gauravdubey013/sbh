@@ -27,7 +27,7 @@ const ProfessionalSignUp = ({ params }) => {
   const [zipCode, setZipCode] = useState("");
   const [phone, setPhone] = useState("");
   const [bio, setBio] = useState("");
-  const [skillLevel, setSkillLevel] = useState("");
+  const [skillLevel, setSkillLevel] = useState("0");
   const [sLOne, setSLOne] = useState("");
   const [sLTwo, setSLTwo] = useState("");
   const [workHistory, setWorkHistory] = useState("");
@@ -189,7 +189,7 @@ const ProfessionalSignUp = ({ params }) => {
                     <div className="w-full h-auto overflow-hidden flex flex-col gap-3 items-center justify-between border-[1px] hover:border-[#53c28b] text-xl hover:text-[#53c28b] rounded-3xl p-6 ease-in-out duration-200">
                       {/* </label> */}
                       Add Profile
-                      <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10">
+                      <div className=" w-[80%] md:w-full h-auto flex items-center justify-center text-center py-3 md:py-0 md:px-10 z-10 bbg">
                         <input
                           type="file"
                           name="profileImg"
@@ -202,7 +202,7 @@ const ProfessionalSignUp = ({ params }) => {
                       </div>
                       {(showProfileImg) && (
                         <>
-                          <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl" />
+                          <Image src={showProfileImg} alt="Profile" width={1000} height={1000} className="w-28 h-28 rounded-full shadow-2xl animate-fade-in-down z-0" />
                           <ImCancelCircle
                             size={30}
                             color="#fff"
@@ -210,7 +210,7 @@ const ProfessionalSignUp = ({ params }) => {
                               setShowProfileImg(null);
                               document.getElementById('profileImgInput').value = null;
                             }}
-                            className="cancelIcon"
+                            className="cancelIcon animate-fade-in-down"
                           />
                         </>
                       )}
@@ -220,26 +220,18 @@ const ProfessionalSignUp = ({ params }) => {
                         }`}
                     >
                       <div className="flex gap-2">
-                        <select
+                        <select defaultValue="" onChange={(e) => setGender(e.target.value)}
                           name="gender"
-                          onChange={(e) => setGender(e.target.value)}
                           required
                           className="w-full h-[52px] ddl"
                         >
-                          <option
-                            value=""
-                            disabled
-                            selected
-                            hidden
-                            className=""
-                          >
+                          <option value="" disabled hidden>
                             Select Gender
                           </option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                           <option value="Other">other?</option>
                         </select>
-
                         <input
                           type="date"
                           name="dob"
@@ -262,12 +254,12 @@ const ProfessionalSignUp = ({ params }) => {
                     </div>
                     <select
                       name="service"
+                      defaultValue=""
                       onChange={(e) => setService(e.target.value)}
-                      placeholder="Freelancer Category"
                       required
                       className="w-full h-[52px] ddl"
                     >
-                      <option value="" disabled selected hidden>
+                      <option value="" disabled hidden>
                         Select Service
                       </option>
                       <option value="web_development">Web Development</option>
@@ -291,8 +283,10 @@ const ProfessionalSignUp = ({ params }) => {
                       <option value="plumber">Plumber</option>
                       <option value="house_helper">House Helper</option>
                     </select>
-                    <input type="text" value={upiId} onChange={handleUpi} required placeholder='Enter UPI id' className='allFormInput h-[52px]' />
-                    {errors.upiE && <span className="text-red-500 animate-slideDown">{errors.upiE}</span>}
+                    <div className="">
+                      <input type="text" value={upiId} onChange={handleUpi} required placeholder='Enter UPI id' className='allFormInput h-[52px]' />
+                      {errors.upiE && <span className="text-red-500 animate-slideDown">{errors.upiE}</span>}
+                    </div>
                     <div className="flex gap-2">
                       <input
                         type="text"
@@ -308,7 +302,7 @@ const ProfessionalSignUp = ({ params }) => {
                         <input
                           type="text"
                           name="phone"
-                          maxlength="10"
+                          maxLength="10"
                           value={phone}
                           onChange={handlePhone}
                           placeholder="Phone Number"
