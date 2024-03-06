@@ -235,6 +235,7 @@ const Admin = () => {
   );
 };
 export default Admin;
+
 export const DashboardData = (props) => {
   const { usersCollection, profsCollection } = props;
   const [totalUsersCount, setTotalUsersCount] = useState([]);
@@ -480,12 +481,16 @@ export const SBHBalanceData = (props) => {
             </div>
             <div className="w-[1000px] md:w-full h-[90%] scrollDiv overflow-y-scroll overflow-hidden">
               {data && data.transactions.map((i) => (
-                <div key={i?.paymentId} className="w-full h-10 flex items-center justify-between gap-2 px-2 text-slate-400">
-                  <span>{i?.dateTime ?? "NaN"}</span>
-                  <span>{i?.paymentId ?? "NaN"}</span>
-                  <span>{i?.fromUpiId ?? "NaN"}</span>
-                  <span>{i?.toUpiId ?? "NaN"}</span>
-                  <span>₹{i?.amount ?? "NaN"}</span>
+                <div key={i?.paymentId} className="w-full h-10 flex items-center justify-betwee gap-2 px-2 text-slate-400">
+                  <div className="w-[50%] flex justify-between">
+                    <span className="w-[13rem] scrollDiv overflow-y-scroll">{i?.dateTime ?? "NaN"}</span>
+                    <span className="w-[22rem] scrollDiv overflow-y-scroll">{i?.paymentId ?? "NaN"}</span>
+                  </div>
+                  <div className="w-[50%] flex justify-between">
+                    <span>{i?.fromUpiId ?? "NaN"}</span>
+                    <span>{i?.toUpiId ?? "NaN"}</span>
+                    <span>₹{i?.amount ?? "NaN"}</span>
+                  </div>
                 </div>
               ))}
             </div>

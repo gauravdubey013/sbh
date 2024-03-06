@@ -15,7 +15,7 @@ const AdminPage = ({ params }) => {
       session?.user?.email !== decodeURIComponent(params.email) &&
       (session?.user?.role !== "admin" || session?.user?.role !== "superAdmin")
     ) {
-      // router.replace("/");
+      router.replace("/");
     }
   }, [sessionStatus, router]);
 

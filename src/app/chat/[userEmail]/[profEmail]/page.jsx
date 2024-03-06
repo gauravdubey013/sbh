@@ -4,10 +4,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Loading from '@/app/loading';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 
 const ChatMessagePanel = (props) => {
     const { userEmail, profEmail, presonName, profPfp, fetchChatPersons, userRole } = props;
+    const { data: session, status: sessionStatus } = useSession();
+    // console.log(session?.user?.email);
     const [message, setMessage] = useState('');
     const [chats, setChats] = useState(null);
     const [disableMessageBtn, setDisableMessageBtn] = useState(false);
@@ -78,11 +81,6 @@ const ChatMessagePanel = (props) => {
         }
     };
 
-    useEffect(() => {
-        fetchChatPersons();
-        fetchMessages();
-    }, [chats]);
-
     const userInfo = async () => {
         try {
             const res = await fetch("/api/user-data", {
@@ -112,15 +110,49 @@ const ChatMessagePanel = (props) => {
         if (!userData) {
             userInfo();
         }
-    }, [userData]);
+        fetchChatPersons();
+        fetchMessages();
+    }, [userData, chats]);
     // console.log(userData && userData?.prof?.upiId);
     return (
         <>
             <section className='w-full h-full flex flex-col gap-1 overflow-hidden'>
                 <div className="w-full h-[87.8%] flex flex-col">
-                    <h2 className="w-full h-auto text-center border border-[#53c28b] p-2 text-xl md:text-lg font-semibold">
-                        {presonName}
-                    </h2>
+                    <div className="w-full flex border border-[#53c28b] p-2">
+
+                        <h2 className="w-full h-auto text-center text-xl md:text-lg font-semibold">
+                            {presonName}
+                        </h2>
+                        {session?.user?.email !== userEmail &&
+                            <button
+                                className={`allBtn w-auto h-auto px-2 py-1 rounded-lg ${false
+                                    ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                    : ""
+                                    }`}
+                            >
+                                Request
+                            </button>}
+                        {session?.user?.email !== profEmail &&
+                            <>
+                                <button
+                                    className={`allBtn w-auto h-auto px-2 py-1 rounded-lg ${false
+                                        ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                        : ""
+                                        }`}
+                                >
+                                    Yes
+                                </button>
+                                <button
+                                    className={`allBtn w-auto h-auto px-2 py-1 rounded-lg text-[red] ${false
+                                        ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                        : ""
+                                        }`}
+                                >
+                                    No
+                                </button>
+                            </>
+                        }
+                    </div>
                     <div ref={messagesContainerRef} className="scrollDiv overflow-y-scroll overflow-x-scroll scroll-snap-type-x-mandatory w-screen h-full flex flex-col gap-3 p-2">
                         {chats == null && (
                             <Loading />
