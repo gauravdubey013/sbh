@@ -49,9 +49,10 @@ const paymentSchema = new Schema(
         isRequestForPending: {
           type: Boolean,
           required: false,
+          default: false,
         },
         isAcceptance: {
-          type: Boolean,
+          type: String,
           required: false,
         },
         dateTime: {

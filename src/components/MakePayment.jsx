@@ -16,7 +16,7 @@ const MakePayment = (props) => {
     const [fullAmount, setFullAmount] = useState("");
     const [upiId, setUpiId] = useState("");
     const [pinCode, setPinCode] = useState("");
-    const [printReceiptVisible, setPrintReceiptVisible] = useState(true);
+    const [printReceiptVisible, setPrintReceiptVisible] = useState(false);
     const [upiError, setUpiError] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");

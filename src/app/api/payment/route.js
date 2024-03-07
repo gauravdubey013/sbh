@@ -42,7 +42,7 @@ export const POST = async (request) => {
     const advanceAmount = (15 / 100) * fullAmount;
     const sbhAmount = (5 / 100) * fullAmount;
     const pendingAmount = fullAmount - (advanceAmount + sbhAmount);
-    // const timestamp = new Date().getTime();
+
     const currentDate = new Date();
     const timeAsString = currentDate.toLocaleTimeString();
     const dateAsString = currentDate.toLocaleDateString();
@@ -145,15 +145,15 @@ export const POST = async (request) => {
       await sbhPay.save();
     }
 
-    const body1 = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${userExist?.name}!!</h1>
+    const bodyOne = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${userExist?.name}!!</h1>
     <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">We received your ₹${fullAmount} payment and paid the advance 15% (₹${advanceAmount}) to hired professional ${profExist?.name}.<br/>Save the receipt, please make sure to save the receipt</span>
-    <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
+    <br/><a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
 
     await resend.emails.send({
       from: process.env.EMAIL_FROM,
-      to: "gauravd8976@gmail.com",
+      to: "gauravd8976@gmail.com", //userEmail
       subject: "SkillBeHired - Professional Payment",
-      html: body1,
+      html: bodyOne,
       // attachments: [
       //   {
       //     filename: `${pdfContent}.pdf`,
@@ -162,15 +162,15 @@ export const POST = async (request) => {
       // ],
     });
 
-    const body2 = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${profExist?.name}!!</h1>
+    const bodyTwo = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${profExist?.name}!!</h1>
     <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">Received the payment of the first advance of 15% (₹${advanceAmount}) of ₹${fullAmount} by ${userExist?.name}.<br/>Request for the pending payment after completing the work or work done within the client chat.</span>
-    <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
+    <br/><a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
 
     await resend.emails.send({
       from: process.env.EMAIL_FROM,
-      to: "gauravd8976@gmail.com",
+      to: "gauravd8976@gmail.com", //profEmail
       subject: "SkillBeHired - Professional Advance Payment",
-      html: body2,
+      html: bodyTwo,
     });
 
     const receiptDetails = {

@@ -196,6 +196,11 @@ const Admin = () => {
                 <DashboardData usersCollection={usersCollection} profsCollection={profsCollection} />
               </div>
             )}
+            {isSBHBalanceOpen && (
+              <div className="animate-fade-in-down">
+                <SBHBalanceData sbhBalanceCollection={sbhBalanceCollection} setRefDb={setRefDb} />
+              </div>
+            )}
             {isUserOpen && (
               <div className="animate-fade-in-down">
                 <UserData usersCollection={usersCollection} setRefDb={setRefDb} />
@@ -221,11 +226,6 @@ const Admin = () => {
                 <DeletedUserData
                   deletedUsersCollection={deletedUsersCollection} setRefDb={setRefDb}
                 />
-              </div>
-            )}
-            {isSBHBalanceOpen && (
-              <div className="animate-fade-in-down">
-                <SBHBalanceData sbhBalanceCollection={sbhBalanceCollection} />
               </div>
             )}
           </div>
@@ -445,7 +445,7 @@ export const DashboardData = (props) => {
   )
 };
 export const SBHBalanceData = (props) => {
-  const { sbhBalanceCollection } = props;
+  const { sbhBalanceCollection, setRefDb } = props;
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -454,6 +454,10 @@ export const SBHBalanceData = (props) => {
       setData(sbhBalanceCollection);
     }
   }, [sbhBalanceCollection]);
+
+  useEffect(() => {
+    setRefDb();
+  }, []);
 
   if (!data) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
