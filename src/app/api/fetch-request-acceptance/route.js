@@ -23,7 +23,7 @@ const generatePaymentId = () => {
 
 export const POST = async (request) => {
   const { action, userEmail, profEmail, reason } = await request.json();
-  console.log(action, userEmail, profEmail);
+  // console.log(action, userEmail, profEmail);
   try {
     await connect();
 
@@ -47,7 +47,7 @@ export const POST = async (request) => {
 
     let acceptanceResponse;
     if (action == "fetchReceipt" && matchedReceipt) {
-      console.log(payment?.profUpiId);
+      // console.log(payment?.profUpiId);
       const receiptDetails = {
         paymentId: matchedReceipt?.paymentId,
         userUpiId: matchedReceipt?.userUpiId,
