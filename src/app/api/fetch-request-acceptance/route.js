@@ -232,10 +232,11 @@ export const POST = async (request) => {
       );
 
       if (!payment || payment.receipt.length === 0) {
-        await Professional.updateOne(
-          { email: profEmail },
-          { $set: { hired: "notHired" } }
-        );
+        const professionalExist = await Professional.findOne({
+          email: profEmail,
+        });
+        professionalExist.hired = "notHired";
+        professionalExist.save();
       }
     }
 
