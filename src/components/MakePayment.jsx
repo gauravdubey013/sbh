@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import ReactToPrint from 'react-to-print'
@@ -24,7 +24,6 @@ const MakePayment = (props) => {
     const [fetchedDetails, setFetchedDetails] = useState();
     // console.log(fullAmount);
 
-    // const upiPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const upiPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/;
     const handleUpi = (e) => {
         const input = e.target.value;
@@ -43,7 +42,35 @@ const MakePayment = (props) => {
     };
 
     if (session?.user?.role == "professional" && session?.user?.email == profEmail) return router.replace("/");
-
+    const fetchPaymentReceipt = async () => {
+        try {
+            const res = await fetch("/api/fetch-request-acceptance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    action: "fetchReceipt", userEmail, profEmail
+                })
+            });
+            if (res.status == 201) {
+                console.log("Haven't made any Payments");
+            }
+            if (res.status == 200) {
+                const data = await res.json();
+                console.log("Found", data);
+                setFetchedDetails(data);
+                setPrintReceiptVisible(true)
+            }
+        } catch (error) {
+            console.log(error);
+            setDisableSubmit(false)
+        }
+    }
+    useEffect(() => {
+        if (!fetchedDetails) {
+            fetchPaymentReceipt();
+        }
+    }, [fetchedDetails]);
+    // console.log(fetchedDetails);
 
     const makePayment = async (e) => {
         e.preventDefault();
@@ -89,7 +116,6 @@ const MakePayment = (props) => {
                         width: ${printRefDimensions.width};
                         height: ${printRefDimensions.height};
                     }`}
-                        // scale={scale}
                         // pageStyle={`@page { size: A4; margin: 0.5cm; } @media print { body { margin: 0; } }`}
                         trigger={() =>
                             <div ref={printRef}>
@@ -121,7 +147,11 @@ const MakePayment = (props) => {
                         </h2>
                         <div className="w-full flex flex-col gap-1">
                             <div className="flex items-center">
-                                <span className='text-[#4cffa5]'>₹</span><input type="text" value={fullAmount} onChange={(e) => setFullAmount(e.target.value.replace(/[^\d]/g, ""))} required placeholder='Enter amount' className='allFormInput h-[52px]' />
+                                <span className='text-[#4cffa5]'>₹</span>
+                                <input type="text" value={fullAmount} disabled={printReceiptVisible}
+                                    onChange={(e) => setFullAmount(e.target.value.replace(/[^\d]/g, ""))}
+                                    required placeholder='Enter amount'
+                                    className='allFormInput h-[52px]' />
                             </div>
                             {fullAmount !== "" &&
                                 <div className="w-full h-auto animate-fade-in-down">
@@ -132,7 +162,7 @@ const MakePayment = (props) => {
                             }
                             <button
                                 type="submit"
-                                disabled={disableSubmit}
+                                disabled={disableSubmit || printReceiptVisible}
                                 className={`allBtn w-full h-[3rem] text-2xl rounded-3xl ${disableSubmit
                                     ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                                     : ""
@@ -181,9 +211,7 @@ export default MakePayment;
 //         if (!response.ok) {
 //             throw new Error('Failed to fetch');
 //         }
-
 //         const data = await response.json();
-
 //         var options = {
 //             key: process.env.RAZORPAY_KEY,
 //             name: "SkillBeHired",

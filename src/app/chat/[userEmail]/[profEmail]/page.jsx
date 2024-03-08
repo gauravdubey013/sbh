@@ -46,14 +46,16 @@ const ChatMessagePanel = (props) => {
         }
     };
 
-    const sendMessage = async (message) => {
+    const sendMessage = async (e) => {
+        e.preventDefault();
+
         try {
             setDisableMessageBtn(true);
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    chatAction: "writeMsg", userRole, userEmail, profEmail, message,
+                    chatAction: "writeMsg", userRole, userEmail, profEmail, message: msg,
                 }),
             });
 
@@ -61,7 +63,7 @@ const ChatMessagePanel = (props) => {
                 setDisableMessageBtn(false);
                 fetchMessages();
                 fetchChatPersons();
-                setMessage('');
+                setMsg('');
                 await delay(1500);
                 scrollToBottom();
             }
@@ -88,7 +90,7 @@ const ChatMessagePanel = (props) => {
                 }),
             });
 
-            if (res.status === 400) {
+            if (res.status === 201) {
                 // setError("User data isn't in the database!");
                 console.log("User doesn't exists");
             }
@@ -112,7 +114,8 @@ const ChatMessagePanel = (props) => {
                     action: "fetch", userEmail, profEmail
                 })
             });
-            if (res.status == 400) {
+            if (res.status == 201) {
+                // setPaymentData("null");
                 console.log("Haven't made any Payments");
             }
             if (res.status == 200) {
@@ -149,8 +152,6 @@ const ChatMessagePanel = (props) => {
             console.log(error);
         }
     }
-
-
     useEffect(() => {
         if ((!userData && userEmail !== "none" && profEmail !== "none") && !paymentData) {
             userInfo();
@@ -159,15 +160,13 @@ const ChatMessagePanel = (props) => {
         fetchChatPersons();
         fetchMessages();
     }, [userData, chats]);
-    // console.log(userData && userData?.prof?.upiId);
+    // console.log(userData?.prof?.upiId);
     return (
         <>
             <section className='relative w-full h-full flex flex-col gap-1 overflow-hidden'>
                 <div className={`${(session?.user?.email !== profEmail && paymentData) && acceptanceNoReason ? "absolute" : "hidden"} z-10 w-full h-full flex items-center justify-center backdrop-blur-sm`}>
-                    {/* <div className=""> */}
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        sendMessage(`Reason of Regect - ${msg}`);
+                    <form onSubmit={() => {
+                        sendMessage();
                         paymentAction("acceptance-no");
                     }} className="w-1/2 h-auto p-2 shadow-lg shadow-[#53c28b] rounded-lg animate-slideDown">
                         <textarea
@@ -198,7 +197,6 @@ const ChatMessagePanel = (props) => {
                         <hr className='mt-2' />
                         <p>You won't receive the pending payment back until an less you provide us the reason.</p>
                     </form>
-                    {/* </div> */}
                 </div>
                 <div className="z-0 w-full h-[87.8%] flex flex-col">
                     <div className="w-full border border-[#53c28b]">
@@ -278,10 +276,7 @@ const ChatMessagePanel = (props) => {
                     </div>
                 </div>
                 {(userEmail !== "none" && profEmail !== "none") && (
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        sendMessage(msg);
-                    }} className="flex w-full h-auto p-2 border-t border-[#53c28b] rounded-lg">
+                    <form onSubmit={sendMessage} className="flex w-full h-auto p-2 border-t border-[#53c28b] rounded-lg">
                         <textarea
                             // type="text"
                             value={msg}

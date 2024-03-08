@@ -13,7 +13,7 @@ export const POST = async (request) => {
 
   if (!user) {
     return new NextResponse("Doesn't exists", {
-      status: 400,
+      status: 201,
     });
   }
 

@@ -57,7 +57,7 @@ const Profile = (props) => {
         }),
       });
 
-      if (res.status === 400) {
+      if (res.status === 201) {
         setError("User data isn't in the database!");
         console.log("Error: ", error);
       }

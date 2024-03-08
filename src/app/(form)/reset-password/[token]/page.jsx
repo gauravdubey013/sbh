@@ -51,7 +51,6 @@ const ResetPassword = ({ params }) => {
           />
         }
       />
-      {/* {error && <span className="text-red-500">{error}</span>} */}
     </div>
   );
 };

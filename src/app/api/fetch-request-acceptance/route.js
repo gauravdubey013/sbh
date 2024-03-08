@@ -22,6 +22,7 @@ const generatePaymentId = () => {
 
 export const POST = async (request) => {
   const { action, userEmail, profEmail, reason } = await request.json();
+  console.log(action, userEmail, profEmail);
   try {
     await connect();
 
@@ -29,9 +30,10 @@ export const POST = async (request) => {
       { profEmail },
       { receipt: { $elemMatch: { userEmail } } }
     );
+    console.log(payment);
     if (!payment) {
       return new NextResponse("Never made payment", {
-        status: 400,
+        status: 201,
       });
     }
     const userExist = await User.findOne({ email: userEmail });
@@ -42,6 +44,22 @@ export const POST = async (request) => {
       (rec) => rec.userEmail == userEmail
     )[0];
     let acceptanceResponse;
+    if (action == "fetchReceipt") {
+      // console.log(payment);
+      const receiptDetails = {
+        paymentId: matchedReceipt?.paymentId,
+        userUpiId: matchedReceipt?.userUpiId,
+        profUpiId: payment?.profUpiId ?? "sbh@sbh",
+        fullAmount: matchedReceipt?.fullAmount,
+        advanceAmount: matchedReceipt?.advanceAmount,
+        userName: matchedReceipt?.userName,
+        profName: payment?.profName,
+        dateTime: matchedReceipt?.dateTime,
+      };
+      return new NextResponse(JSON.stringify(receiptDetails), {
+        status: 200,
+      });
+    }
     if (action == "fetch") {
       // console.log(payment);
       return new NextResponse(JSON.stringify(matchedReceipt), {
