@@ -137,6 +137,7 @@ export const POST = async (request) => {
       };
       sbhBalExist.transactions.push(newTransactionsProfAmount);
       await sbhBalExist.save();
+
       profInfoExist.hired = "hired";
       await profInfoExist.save();
     } else {

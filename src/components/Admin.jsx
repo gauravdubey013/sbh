@@ -457,7 +457,7 @@ export const SBHBalanceData = (props) => {
 
   useEffect(() => {
     setRefDb();
-  }, []);
+  }, [data]);
 
   if (!data) {
     return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>

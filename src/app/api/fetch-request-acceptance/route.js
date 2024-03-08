@@ -45,7 +45,6 @@ export const POST = async (request) => {
       (rec) => rec.userEmail == userEmail
     )[0];
 
-    let acceptanceResponse;
     if (action == "fetchReceipt" && matchedReceipt) {
       // console.log(payment?.profUpiId);
       const receiptDetails = {
@@ -105,13 +104,14 @@ export const POST = async (request) => {
     const timeAsString = currentDate.toLocaleTimeString();
     const dateAsString = currentDate.toLocaleDateString();
     const dateTime = `${dateAsString} ${timeAsString}`;
+    let acceptanceResponse = "";
 
     if (action == "acceptance-yes") {
       await Payment.updateOne(
         { profEmail, "receipt.userEmail": userEmail },
         { $set: { "receipt.$.isAcceptance": "accepted" } }
       );
-      acceptanceResponse = "Accepted";
+      acceptanceResponse = "accepted";
       if (sbhBalExist) {
         // Adding transcations of...
         // Paying pending payment to professional by sbh after acceptance of client/user
@@ -136,7 +136,7 @@ export const POST = async (request) => {
         { profEmail, "receipt.userEmail": userEmail },
         { $set: { "receipt.$.isAcceptance": "rejected" } }
       );
-      acceptanceResponse = "Rejected";
+      acceptanceResponse = "rejected";
 
       if (sbhBalExist) {
         // Adding transcations of...
@@ -180,49 +180,39 @@ export const POST = async (request) => {
       });
     }
 
-    const bodyThree = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${
-      profExist?.name
-    }!!</h1>
-    <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">
-    ${
-      userExist?.name
-    } is responsed Work-Done Acceptance as <b>${acceptanceResponse}</b>.<br/>
-    ${
-      acceptanceResponse == "Accepted"
-        ? `Paid ${matchedReceipt?.pendingAmount} pending payment amount to you to UPI ${payment?.profUpiId}.`
-        : `Reason for rejecting pending payment : ${reason}`
-    }
-    </span><br/>
-    <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
+    if (
+      acceptanceResponse === "rejected" ||
+      acceptanceResponse === "accepted"
+    ) {
+      console.log(acceptanceResponse);
+      const paymentUpd = await Payment.findOne({
+        profEmail,
+        "receipt.userEmail": userEmail,
+      });
+      const matchedReceiptUpd = paymentUpd.receipt.filter(
+        (rec) => rec.userEmail == userEmail
+      )[0];
 
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM,
-      to: "gauravd8976@gmail.com", //profEmail
-      subject: "SkillBeHired - Client Acceptance & Pending Payment",
-      html: bodyThree,
-    });
-
-    if (acceptanceResponse == "Accepted" || acceptanceResponse == "Rejected") {
       const newPaymentReceiptHistory = PaymentReceiptHistory({
-        paymentId: matchedReceipt?.paymentId,
+        paymentId: matchedReceiptUpd?.paymentId,
         prof: {
-          profEmail: payment?.profEmail,
-          profUpiId: payment?.profUpiId,
-          profName: payment?.profName,
+          profEmail: paymentUpd?.profEmail,
+          profUpiId: paymentUpd?.profUpiId,
+          profName: paymentUpd?.profName,
         },
         user: {
-          userEmail: matchedReceipt?.userEmail,
-          userUpiId: matchedReceipt?.userUpiId,
-          userName: matchedReceipt?.userName,
+          userEmail: matchedReceiptUpd?.userEmail,
+          userUpiId: matchedReceiptUpd?.userUpiId,
+          userName: matchedReceiptUpd?.userName,
         },
         amount: {
-          fullAmount: matchedReceipt?.fullAmount,
-          advanceAmount: matchedReceipt?.advanceAmount,
-          pendingAmount: matchedReceipt?.pendingAmount,
+          fullAmount: matchedReceiptUpd?.fullAmount,
+          advanceAmount: matchedReceiptUpd?.advanceAmount,
+          pendingAmount: matchedReceiptUpd?.pendingAmount,
         },
-        isRequestForPending: matchedReceipt?.isRequestForPending,
-        isAcceptance: matchedReceipt?.isAcceptance,
-        dateTime: matchedReceipt?.dateTime,
+        isRequestForPending: matchedReceiptUpd?.isRequestForPending,
+        isAcceptance: matchedReceiptUpd?.isAcceptance,
+        dateTime: matchedReceiptUpd?.dateTime,
       });
       await newPaymentReceiptHistory.save();
 
@@ -239,6 +229,28 @@ export const POST = async (request) => {
         professionalExist.save();
       }
     }
+
+    const bodyThree = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${
+      profExist?.name
+    }!!</h1>
+    <span style="color: #ccc; font-size: 14px; font-family: 'Arial', sans-serif;">
+    ${
+      userExist?.name
+    } is responsed Work-Done Acceptance as <b>${acceptanceResponse}</b>.<br/>
+    ${
+      acceptanceResponse == "accepted"
+        ? `Paid ${matchedReceipt?.pendingAmount} pending payment amount to you to UPI ${payment?.profUpiId}.`
+        : `Reason for rejecting pending payment : ${reason}`
+    }
+    </span><br/>
+    <a href="https://sbh.vercel.app/" style="display: inline-block; padding: 10px 20px; background-color: #53c28b; color: #fff; text-decoration: none; border-radius: 5px; font-size: 18px;">Visit SkillBeHired</a>`;
+
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM,
+      to: "gauravd8976@gmail.com", //profEmail
+      subject: "SkillBeHired - Client Acceptance & Pending Payment",
+      html: bodyThree,
+    });
 
     return new NextResponse("Requested successfully to client", {
       status: 200,

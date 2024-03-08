@@ -42,6 +42,7 @@ const Profile = (props) => {
   const [refDBState, setRefDBState] = useState(false);
 
   const [userData, setUserData] = useState(null);
+  const [feedbackData, setFeedbackData] = useState(null);
   const [editToggle, setEditToggle] = useState(false);
   const [socialToggle, setSocialToggle] = useState(false);
   const [contactToggle, setContactToggle] = useState(false);
@@ -72,11 +73,35 @@ const Profile = (props) => {
     }
   };
 
+  const fetchFeedback = async () => {
+    try {
+      const res = await fetch("/api/fetch-send-feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "fetch", profEmail: email
+        })
+      });
+      if (res.status == 201) {
+        console.log("NO feedback");
+      }
+      if (res.status == 200) {
+        const data = await res.json();
+        // console.log(data);
+        setFeedbackData(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     if (!userData) {
       userInfo();
     }
-  }, [userData]);
+    fetchFeedback();
+  }, [userData, feedbackData]);
+  // console.log(feedbackData);
 
   if (refDBState == true) {
     userInfo();
@@ -301,6 +326,15 @@ const Profile = (props) => {
             <div className="w-full h-full rounded-3xl border border-[#53c28b] text-md flex flex-col gap-1 p-2 sm:p-4 md:px-6">
               <div className="w-full h-auto flex gap-1 items-start justify-start md:justify-between">
                 <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
+                  Joining Date
+                </span>
+                :
+                <span className="w-auto md:w-[80%] h-auto">
+                  {Date(prof?.createdAt) ?? "NaN"}
+                </span>
+              </div>
+              <div className="w-full h-auto flex gap-1 items-start justify-start md:justify-between">
+                <span className="text-[#53c28b] w-auto md:w-[12%] h-auto">
                   Work History
                 </span>
                 :
@@ -375,6 +409,30 @@ const Profile = (props) => {
               />
             </div>
           )}
+
+          {feedbackData &&
+            <>
+              {/* Feedback or review */}
+              <div className="w-full h-auto border rounded-3xl mt-3 border-[#53c28b] p-4 overflow-hidden">
+                <h2 className="text-xl text-[#53c28b]">Work Feedback</h2>
+                {feedbackData.map((i) => (
+                  <div key={i?._id} className="mt-5 flex gap-1 w-full h-auto">
+                    <Image
+                      src={i?.userPfp ?? "/assets/loading3d360Rotate.gif"}
+                      alt={i?.userName ?? "userProfile"}
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-10 h-10 shadow-md z-10 rounded-full"
+                    />
+                    <div className="w-full h-auto">
+                      <h3 className="text-lg">{i?.userName ?? "NaN"}</h3>
+                      <p className="text-justify text-md px-2">{i?.feedback ?? "NaN"}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>}
         </div>
       </div>
     </>

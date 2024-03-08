@@ -50,7 +50,7 @@ const ChatPage = ({ children, params }) => {
     return (
         <>
             <section className='w-full h-[92vh] md:h-[78vh] flex relative overflow-hidden'>
-                <div className={`w-[80%] md:w-[20%] absolute md:relative border border-[#53c28b] z-20 ${!toggle ? "-left-[72%] md:left-0 h-[3.133rem] md:h-full" : "left-0 h-full bbg"} ease-in-out duration-300`}>
+                <div className={`w-[80%] md:w-[20%] absolute md:relative border border-[#53c28b] z-20 ${!toggle ? "-left-[72%] md:left-0 h-[3.133rem] md:h-full" : "left-0 h-full bbg"} ease-in-out duration-300 overflow-hidden`}>
                     <div className="md:hidden w-full h-auto  flex items-center justify-between top-0 right-0 bbg">
                         <span className='w-full h-full px-2 text-xl'>Chats</span>
                         <Hamburger

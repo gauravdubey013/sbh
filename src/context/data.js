@@ -66,10 +66,15 @@ export const adBanner = [
   {
     id: 3,
     alt: "banner",
-    img: "/adBanner/banner3.jpeg",
+    img: "/adBanner/zombie.gif",
   },
   {
     id: 4,
+    alt: "banner",
+    img: "/adBanner/banner3.jpeg",
+  },
+  {
+    id: 5,
     alt: "banner",
     img: "/adBanner/banner4.jpg",
   },
