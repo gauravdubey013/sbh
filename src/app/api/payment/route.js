@@ -36,9 +36,6 @@ export const POST = async (request) => {
     const profExist = await User.findOne({ email: profEmail });
     const profInfoExist = await Professional.findOne({ email: profEmail });
 
-    profInfoExist.hired = "hired";
-    await profInfoExist.save();
-
     const advanceAmount = (15 / 100) * fullAmount;
     const sbhAmount = (5 / 100) * fullAmount;
     const pendingAmount = fullAmount - (advanceAmount + sbhAmount);
@@ -135,6 +132,8 @@ export const POST = async (request) => {
       };
       sbhBalExist.transactions.push(newTransactionsProfAmount);
       await sbhBalExist.save();
+      profInfoExist.hired = "hired";
+      await profInfoExist.save();
     } else {
       const sbhPay = SBHBalance({
         sbh: "SkillBeHired",
