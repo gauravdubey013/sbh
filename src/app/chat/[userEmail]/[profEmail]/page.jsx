@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Loading from '@/app/loading';
-import { useSession } from 'next-auth/react';
+import { ImCancelCircle } from "react-icons/im";
 
 const ChatMessagePanel = (props) => {
     const { userEmail, profEmail, presonName, profPfp, fetchChatPersons, userRole } = props;
@@ -16,7 +17,7 @@ const ChatMessagePanel = (props) => {
     const [disableMessageBtn, setDisableMessageBtn] = useState(false);
     const [disableFeedbackSubmit, setDisableFeedbackSubmit] = useState(false);
     const [acceptanceNoReason, setAcceptanceNoReason] = useState(false);
-    const [isSendFeedback, setIsSendFeedback] = useState(true);
+    const [isSendFeedback, setIsSendFeedback] = useState(false);
     const [userData, setUserData] = useState(null);
     const [paymentData, setPaymentData] = useState(null);
     const messagesContainerRef = useRef(null);
@@ -196,9 +197,9 @@ const ChatMessagePanel = (props) => {
             <section className='relative w-full h-full flex flex-col gap-1 overflow-hidden'>
                 <div className={`${isSendFeedback == true ? "absolute" : "hidden"} z-10 w-full h-full flex items-center justify-center backdrop-blur-sm`}>
                     <form onSubmit={sendFeedback} className="w-[90%] md:w-1/2 h-auto p-2 shadow-lg shadow-[#53c28b] rounded-lg animate-slideDown">
-                        <div className="flex justify-between">
+                        <div className="flex justify-between gap-1">
                             <h3 className='text-2xl text-[#53c28b] mb-2 underline'>Give Feedback of {presonName}'s work!</h3>
-                            <div onClick={() => setIsSendFeedback(false)} className="rounded-full text-3xl animate-pulse hover:animate-none hover:text-[#53c28b] active:text-xl cursor-pointer ease-in-out duration-300">X</div>
+                            <ImCancelCircle size={20} />
                         </div>
                         <textarea
                             // type="text"
