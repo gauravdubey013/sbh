@@ -35,10 +35,12 @@ export const POST = async (request) => {
     const userExist = await User.findOne({ email: userEmail });
     const profExist = await User.findOne({ email: profEmail });
     const profInfoExist = await Professional.findOne({ email: profEmail });
-
-    const advanceAmount = (15 / 100) * fullAmount;
-    const sbhAmount = (5 / 100) * fullAmount;
-    const pendingAmount = fullAmount - (advanceAmount + sbhAmount);
+    const adamt = (15 / 100) * fullAmount;
+    const sbhamt = (5 / 100) * fullAmount;
+    const pendamt = fullAmount - (advanceAmount + sbhAmount);
+    const advanceAmount = parseFloat(adamt.toFixed(2));
+    const sbhAmount = parseFloat(sbhamt.toFixed(2));
+    const pendingAmount = parseFloat(pendamt.toFixed(2));
 
     const currentDate = new Date();
     const timeAsString = currentDate.toLocaleTimeString();
