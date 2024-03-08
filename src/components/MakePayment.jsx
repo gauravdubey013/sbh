@@ -56,18 +56,18 @@ const MakePayment = (props) => {
             }
             if (res.status == 200) {
                 const data = await res.json();
-                console.log("Found", data);
+                // console.log("Found", data);
                 setFetchedDetails(data);
-                setPrintReceiptVisible(true)
+                setPrintReceiptVisible(true);
             }
         } catch (error) {
             console.log(error);
-            setDisableSubmit(false)
+            setDisableSubmit(false);
         }
     }
     useEffect(() => {
         if (!fetchedDetails) {
-            // fetchPaymentReceipt();
+            fetchPaymentReceipt();
         }
     }, [fetchedDetails]);
     // console.log(fetchedDetails);
@@ -127,8 +127,8 @@ const MakePayment = (props) => {
                                 <div className="w-full h-[63.5%] borde mt-[10.5vh] text-start flex flex-col text-[16px]">
                                     <span className='text-2xl'>Your Name : {fetchedDetails?.userName ?? "NaN"}</span>
                                     <span className=''>Payment ID : {fetchedDetails?.paymentId ?? "NaN"}</span>
-                                    <span className=''>UPI ID : {upiId}</span>
-                                    <span className=''>Received Amount : ₹{fullAmount}</span>
+                                    <span className=''>UPI ID : {fetchedDetails?.userUpiId}</span>
+                                    <span className=''>Received Amount : ₹{fetchedDetails?.fullAmount}</span>
                                     <span className=''>Received to : SkillBeHired</span>
                                     <span className=''>Advance 15% amount  : ₹{fetchedDetails?.advanceAmount ?? "NaN"}</span>
                                     <span className=''>Advance 15% paid to  : {fetchedDetails?.profName ?? "NaN"} ({fetchedDetails?.profUpiId ?? "NaN"})</span>

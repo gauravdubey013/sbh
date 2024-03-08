@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import Loading from '@/app/loading';
-import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-
 
 const ChatMessagePanel = (props) => {
     const { userEmail, profEmail, presonName, profPfp, fetchChatPersons, userRole } = props;
@@ -47,7 +46,9 @@ const ChatMessagePanel = (props) => {
     };
 
     const sendMessage = async (e) => {
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
 
         try {
             setDisableMessageBtn(true);
@@ -153,19 +154,22 @@ const ChatMessagePanel = (props) => {
         }
     }
     useEffect(() => {
-        if ((!userData && userEmail !== "none" && profEmail !== "none") && !paymentData) {
-            userInfo();
+        if (userEmail !== "none" && profEmail !== "none") {
+            if (!userData) {
+                userInfo();
+            }
             fetchPayment();
         }
-        fetchChatPersons();
         fetchMessages();
+        fetchChatPersons();
     }, [userData, chats]);
     // console.log(userData?.prof?.upiId);
     return (
         <>
             <section className='relative w-full h-full flex flex-col gap-1 overflow-hidden'>
                 <div className={`${(session?.user?.email !== profEmail && paymentData) && acceptanceNoReason ? "absolute" : "hidden"} z-10 w-full h-full flex items-center justify-center backdrop-blur-sm`}>
-                    <form onSubmit={() => {
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
                         sendMessage();
                         paymentAction("acceptance-no");
                     }} className="w-1/2 h-auto p-2 shadow-lg shadow-[#53c28b] rounded-lg animate-slideDown">
@@ -302,7 +306,7 @@ const ChatMessagePanel = (props) => {
                         >
                             {disableMessageBtn ? <span className="animate-pulse">Sending...</span> : "Send"}
                         </button>
-                        {userData?.prof?.upiId &&
+                        {userData?.prof?.upiId && session?.user?.email !== profEmail &&
                             <Link href={`/payment/${userEmail}/${profEmail}`} className="allBtn w-[4rem] h-[2.5rem] p-2 rounded-lg" >
                                 Pay
                             </Link>}

@@ -5,6 +5,7 @@ import User from "@/models/User";
 import SBHBalance from "@/models/SBHBalance";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import PaymentReceiptHistory from "@/models/PaymentReceiptHistory";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const generatePaymentId = () => {
@@ -26,11 +27,11 @@ export const POST = async (request) => {
   try {
     await connect();
 
-    const payment = await Payment.findOne(
-      { profEmail },
-      { receipt: { $elemMatch: { userEmail } } }
-    );
-    console.log(payment);
+    const payment = await Payment.findOne({
+      profEmail,
+      "receipt.userEmail": userEmail,
+    });
+    // console.log(payment);
     if (!payment) {
       return new NextResponse("Never made payment", {
         status: 201,
@@ -43,13 +44,14 @@ export const POST = async (request) => {
     const matchedReceipt = payment.receipt.filter(
       (rec) => rec.userEmail == userEmail
     )[0];
+
     let acceptanceResponse;
-    if (action == "fetchReceipt") {
-      // console.log(payment);
+    if (action == "fetchReceipt" && matchedReceipt) {
+      console.log(payment?.profUpiId);
       const receiptDetails = {
         paymentId: matchedReceipt?.paymentId,
         userUpiId: matchedReceipt?.userUpiId,
-        profUpiId: payment?.profUpiId ?? "sbh@sbh",
+        profUpiId: payment?.profUpiId,
         fullAmount: matchedReceipt?.fullAmount,
         advanceAmount: matchedReceipt?.advanceAmount,
         userName: matchedReceipt?.userName,
@@ -107,7 +109,7 @@ export const POST = async (request) => {
     if (action == "acceptance-yes") {
       await Payment.updateOne(
         { profEmail, "receipt.userEmail": userEmail },
-        { $set: { "receipt.$.isAcceptance": "yes" } }
+        { $set: { "receipt.$.isAcceptance": "accepted" } }
       );
       acceptanceResponse = "Accepted";
       if (sbhBalExist) {
@@ -132,7 +134,7 @@ export const POST = async (request) => {
     if (action == "acceptance-no") {
       await Payment.updateOne(
         { profEmail, "receipt.userEmail": userEmail },
-        { $set: { "receipt.$.isAcceptance": "no" } }
+        { $set: { "receipt.$.isAcceptance": "rejected" } }
       );
       acceptanceResponse = "Rejected";
 
@@ -147,7 +149,7 @@ export const POST = async (request) => {
             "paid pending payment to client/user after rejecting acceptance.",
           paymentId: generatePaymentId(),
           fromUpiId: "sbh@sbh",
-          toUpiId: payment?.profUpiId,
+          toUpiId: matchedReceipt?.userUpiId,
           amount: matchedReceipt?.pendingAmount,
           dateTime,
         };
@@ -199,6 +201,44 @@ export const POST = async (request) => {
       subject: "SkillBeHired - Client Acceptance & Pending Payment",
       html: bodyThree,
     });
+
+    if (acceptanceResponse == "Accepted" || acceptanceResponse == "Rejected") {
+      const newPaymentReceiptHistory = PaymentReceiptHistory({
+        paymentId: matchedReceipt?.paymentId,
+        prof: {
+          profEmail: payment?.profEmail,
+          profUpiId: payment?.profUpiId,
+          profName: payment?.profName,
+        },
+        user: {
+          userEmail: matchedReceipt?.userEmail,
+          userUpiId: matchedReceipt?.userUpiId,
+          userName: matchedReceipt?.userName,
+        },
+        amount: {
+          fullAmount: matchedReceipt?.fullAmount,
+          advanceAmount: matchedReceipt?.advanceAmount,
+          pendingAmount: matchedReceipt?.pendingAmount,
+        },
+        isRequestForPending: matchedReceipt?.isRequestForPending,
+        isAcceptance: matchedReceipt?.isAcceptance,
+        dateTime: matchedReceipt?.dateTime,
+      });
+      await newPaymentReceiptHistory.save();
+
+      await Payment.updateOne(
+        { profEmail },
+        { $pull: { receipt: { userEmail } } }
+      );
+
+      if (!payment || payment.receipt.length === 0) {
+        await Professional.updateOne(
+          { email: profEmail },
+          { $set: { hired: "notHired" } }
+        );
+      }
+    }
+
     return new NextResponse("Requested successfully to client", {
       status: 200,
     });
