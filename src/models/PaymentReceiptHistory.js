@@ -6,7 +6,7 @@ const paymentReceiptHistorySchema = new Schema(
   {
     paymentId: {
       type: String,
-      required: ture,
+      required: true,
     },
     prof: {
       profEmail: {
@@ -25,43 +25,43 @@ const paymentReceiptHistorySchema = new Schema(
     user: {
       userEmail: {
         type: String,
-        required: ture,
+        required: true,
       },
       userUpiId: {
         type: String,
-        required: ture,
+        required: true,
       },
       userName: {
         type: String,
-        required: ture,
+        required: true,
       },
     },
     amount: {
       fullAmount: {
         type: Number,
-        required: ture,
+        required: true,
       },
       advanceAmount: {
         type: Number,
-        required: ture,
+        required: true,
       },
       pendingAmount: {
         type: Number,
-        required: ture,
+        required: true,
       },
     },
     isRequestForPending: {
       type: Boolean,
-      required: ture,
+      required: true,
       default: false,
     },
     isAcceptance: {
       type: String,
-      required: ture,
+      required: true,
     },
     dateTime: {
       type: String,
-      required: ture,
+      required: true,
     },
   },
   { timestamps: true }
