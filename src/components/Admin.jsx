@@ -836,6 +836,9 @@ export const ProfData = (props) => {
   return (
     <>
       <div className="w-full h-[78vh] relative">
+        <div className="absolute w-10 h-10 flex items-center justify-center borde rounded-full shadow-md shadow-[#53c28b] top-2 right-5">
+          {data.length}
+        </div>
         <form className="w-full h-auto p-2 animate-fade-in-down flex flex-col sm:flex-row gap-3 md:items-center md:justify-center ease-in-out duration-300">
           <select
             name="service"
@@ -843,7 +846,7 @@ export const ProfData = (props) => {
             onChange={(e) => setService(e.target.value)}
             placeholder="Freelancer Category"
             required
-            className="w-full md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
+            className="w-[80%] md:w-[18rem] lg:w-[22rem] h-[3rem] p-2 placeholder:text-[#fff]/[0.9] text-[#fff]/[0.9] outline-none bg-transparent rounded-md border-[2px] border-solid border-[#e6e7ec]/50 shadow-sm hover:border-[#53c28b] focus:border-b-[#53c28b] hover:placeholder:text-[#53c28b] ease-in-out duration-500"
           >
             <option className="ddl" value="all">All</option>
             <option className="ddl" value="writing">Writer</option>
