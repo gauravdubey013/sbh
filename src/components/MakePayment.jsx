@@ -67,7 +67,7 @@ const MakePayment = (props) => {
     }
     useEffect(() => {
         if (!fetchedDetails) {
-            fetchPaymentReceipt();
+            // fetchPaymentReceipt();
         }
     }, [fetchedDetails]);
     // console.log(fetchedDetails);
