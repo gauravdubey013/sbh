@@ -221,7 +221,9 @@ export const POST = async (request) => {
         { $pull: { receipt: { userEmail } } }
       );
 
-      if (!payment || payment.receipt.length === 0) {
+      const paymentUpdTwo = await Payment.findOne({ profEmail });
+
+      if (!paymentUpdTwo || paymentUpdTwo.receipt.length === 0) {
         const professionalExist = await Professional.findOne({
           email: profEmail,
         });

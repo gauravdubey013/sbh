@@ -410,7 +410,7 @@ const Profile = (props) => {
             </div>
           )}
 
-          {feedbackData &&
+          {feedbackData.length > 0 &&
             <>
               {/* Feedback or review */}
               <div className="w-full h-auto border rounded-3xl mt-3 border-[#53c28b] p-4 overflow-hidden">
