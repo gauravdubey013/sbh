@@ -121,7 +121,7 @@ const ChatMessagePanel = (props) => {
             });
             if (res.status == 201) {
                 // setPaymentData("null");
-                console.log("Haven't made any Payments");
+                // console.log("Haven't made any Payments");
             }
             if (res.status == 200) {
                 const data = await res.json();
@@ -191,7 +191,7 @@ const ChatMessagePanel = (props) => {
         fetchMessages();
         fetchChatPersons();
     }, [userData, chats]);
-    // console.log(userData?.prof?.upiId);
+    // console.log(chats);
     return (
         <>
             <section className='relative w-full h-full flex flex-col gap-1 overflow-hidden'>

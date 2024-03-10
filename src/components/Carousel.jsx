@@ -57,7 +57,7 @@ const Carousel = (props) => {
         {!data[0] &&
           slides.map((slide) => (
             <div
-              key={slide._id}
+              key={slide.id}
               className={`w-auto ${defH} ${mdH} ${lgH} ease-in-out duration-300 overflow-hidden rounded-lg`}
             >
               <div

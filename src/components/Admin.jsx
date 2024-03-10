@@ -85,8 +85,8 @@ const Admin = () => {
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isReportOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isReportOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden"><TbReportAnalytics size={30} /></span>
             <span className="hidden md:flex">Dashboard</span>
@@ -101,8 +101,8 @@ const Admin = () => {
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isSBHBalanceOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isSBHBalanceOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaRupeeSign size={30} /></span>
             <span className="hidden md:flex">SBH Balance</span>
@@ -117,8 +117,8 @@ const Admin = () => {
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsers size={30} /></span>
             <span className="hidden md:flex">Users</span>
@@ -133,8 +133,8 @@ const Admin = () => {
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />&#10003;</span>
             <span className="hidden md:flex gap-1">Verified Professionals</span>
@@ -149,8 +149,8 @@ const Admin = () => {
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />X</span>
             <span className="hidden md:flex gap-1">Pending Professionals</span>
@@ -165,8 +165,8 @@ const Admin = () => {
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden"><PiUserListFill size={30} /></span>
             <span className="hidden md:flex">Contact Us</span>
@@ -181,8 +181,8 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer md:hover:bg-[#48ffa363] active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
+              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsersSlash size={30} /></span>
             <span className="hidden md:flex">Deleted Users</span>
@@ -467,10 +467,10 @@ export const SBHBalanceData = (props) => {
       <section className="w-full h-[78vh] flex flex-col gap-2 p-2 scrollDiv overflow-y-scroll scroll-snap-type-x-mandatory overflow-hidden">
         <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
           <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
-            <span className="md:text-2xl">Balance Amount : ₹{data?.balanceAmount ?? "NaN"}</span>
+            <span className="md:text-2xl">Balance Amount : ₹{data?.balanceAmount.toFixed(2) ?? "NaN"}</span>
           </div>
           <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
-            <span className="md:text-2xl">Profit Margin : ₹{data?.sbhAmount ?? "NaN"}</span>
+            <span className="md:text-2xl">Profit Margin : ₹{data?.sbhAmount.toFixed(2) ?? "NaN"}</span>
           </div>
         </div>
         <div className="w-full h-[80%] p-2">
@@ -483,7 +483,7 @@ export const SBHBalanceData = (props) => {
               <span>To</span>
               <span>Amount</span>
             </div>
-            <div className="w-[1000px] md:w-full h-[90%] scrollDiv overflow-y-scroll overflow-hidden">
+            <div className="w-[1000px] md:w-full h-[90%] flex flex-col-reverse justify-end text-md scrollDiv overflow-y-scroll overflow-hidden">
               {data && data.transactions.map((i) => (
                 <div key={i?.paymentId} className="w-full h-10 flex items-center justify-betwee gap-2 px-2 text-slate-400">
                   <div className="w-[50%] flex justify-between">
@@ -493,7 +493,7 @@ export const SBHBalanceData = (props) => {
                   <div className="w-[50%] flex justify-between">
                     <span>{i?.fromUpiId ?? "NaN"}</span>
                     <span>{i?.toUpiId ?? "NaN"}</span>
-                    <span>₹{i?.amount ?? "NaN"}</span>
+                    <span>₹{i?.amount.toFixed(2) ?? "NaN"}</span>
                   </div>
                 </div>
               ))}

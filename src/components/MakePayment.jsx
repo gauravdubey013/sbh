@@ -24,6 +24,12 @@ const MakePayment = (props) => {
     const [fetchedDetails, setFetchedDetails] = useState();
     // console.log(fullAmount);
 
+    const handleFullAmt = (e) => {
+        setFullAmount(e.target.value.replace(/[^\d]/g, ""));
+    }
+    const handlePincode = (e) => {
+        setPinCode(e.target.value.replace(/[^\d]/g, "").slice(0, 6));
+    }
     const upiPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/;
     const handleUpi = (e) => {
         const input = e.target.value;
@@ -87,7 +93,7 @@ const MakePayment = (props) => {
                     // setDisableSubmit(false);
                     const data = await res.json();
                     setFetchedDetails(data);
-                    console.log(data);
+                    // console.log(data);
 
                     setSuccess("Payment Successful!")
                     setPrintReceiptVisible(true)
@@ -149,7 +155,7 @@ const MakePayment = (props) => {
                             <div className="flex items-center">
                                 <span className='text-[#4cffa5]'>₹</span>
                                 <input type="text" value={fullAmount} disabled={printReceiptVisible}
-                                    onChange={(e) => setFullAmount(e.target.value.replace(/[^\d]/g, ""))}
+                                    onChange={handleFullAmt}
                                     required placeholder='Enter amount'
                                     className='allFormInput h-[52px]' />
                             </div>
@@ -157,23 +163,34 @@ const MakePayment = (props) => {
                                 <div className="w-full h-auto animate-fade-in-down">
                                     <input type="text" value={upiId} onChange={handleUpi} required placeholder='Enter UPI id' className='allFormInput h-[52px]' />
                                     {upiError && <span className="w-full h-auto text-red-500 animate-fade-in-down text-lg ease-in-out duration-300">{upiError}</span>}
-                                    <input type="text" value={pinCode} onChange={(e) => setPinCode(e.target.value.replace(/[^\d]/g, "").slice(0, 6))} required placeholder='Enter Pin code' className='allFormInput h-[52px]' />
+                                    <input type="text" value={pinCode} onChange={handlePincode} required placeholder='Enter Pin code' className='allFormInput h-[52px]' />
                                 </div>
                             }
-                            <button
-                                type="submit"
-                                disabled={disableSubmit || printReceiptVisible}
-                                className={`allBtn w-full h-[3rem] text-2xl rounded-3xl ${disableSubmit
-                                    ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
-                                    : ""
-                                    }`}
-                            >
-                                {disableSubmit ? (
-                                    disableSubmit && upiError !== "" ? "UPI Invalid" : (success !== "" ? "Paid" : <span className='animate-pulse'>Paying</span>)
-                                ) : (
-                                    `Pay ${fullAmount !== "" ? `₹${fullAmount}` : ""} now`
-                                )}
-                            </button>
+                            <div className="flex gap-">
+                                <button
+                                    type="submit"
+                                    disabled={disableSubmit || printReceiptVisible}
+                                    className={`allBtn w-full h-[3rem] text-2xl rounded-3xl ${disableSubmit
+                                        ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                        : ""
+                                        }`}
+                                >
+                                    {disableSubmit ? (
+                                        disableSubmit && upiError !== "" ? "UPI Invalid" : (success !== "" ? "Paid" : <span className='animate-pulse'>Paying</span>)
+                                    ) : (
+                                        `Pay ${fullAmount !== "" ? `₹${fullAmount}` : ""} now`
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => router.back()}
+                                    disabled={printReceiptVisible}
+                                    className={`allBtn w-full h-[3rem] text-2xl rounded-3xl ${printReceiptVisible
+                                        ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                                        : ""
+                                        }`}
+                                >Cancel
+                                </button>
+                            </div>
                         </div>
                         {error && <span className="text-red-500 animate-fade-in-up text-lg ease-in-out duration-300">{error}</span>}
                         {success && <span className="text-[#53c28b] animate-fade-in-up text-lg ease-in-out duration-300">{success}</span>}
