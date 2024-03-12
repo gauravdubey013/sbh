@@ -42,7 +42,6 @@ const ProfessionalSignUp = ({ params }) => {
     sLOneE: "",
     sLTwoE: "",
   });
-  const [upiError, setUpiError] = useState("");
 
   const [condition, setCondition] = useState({
     phoneC: true,
@@ -72,7 +71,7 @@ const ProfessionalSignUp = ({ params }) => {
     if (input == "") {
       setErrors({ upiE: "" });
     } else if (!upiPattern.test(input)) {
-      setErrors({ upiE: "Invaild UPI id, refrence: sbh@icici" });
+      setErrors({ upiE: "Invaild UPI id, reference: sbh@icici" });
     } else {
       setErrors({ upiE: "" });
     }

@@ -147,7 +147,7 @@ const ChatMessagePanel = (props) => {
             }
             if (res.status == 200) {
                 fetchPayment();
-                if (action == "request") alert("Requested to clinet for work done acceptance.");
+                if (action == "request") alert("Requested to client for work done acceptance.");
                 if (action == "acceptance-yes")
                     alert(`You accepted the Work-Done, so now pending payment will be paid to ${presonName}.\n SkillBeHired - Thanks for using our payment service.`);
                 if (action == "acceptance-no") (setAcceptanceNoReason(false));
@@ -161,6 +161,7 @@ const ChatMessagePanel = (props) => {
     }
     const sendFeedback = async (e) => {
         e.preventDefault();
+        setDisableFeedbackSubmit(true);
 
         try {
             const res = await fetch("/api/fetch-send-feedback", {
@@ -171,7 +172,8 @@ const ChatMessagePanel = (props) => {
                 })
             });
             if (res.status == 201) {
-                console.log("");
+                // console.log("user doesn't exist");
+                setDisableFeedbackSubmit(false);
             }
             if (res.status == 200) {
                 alert("Thank you for expressing your gratitude through the feedback!");
@@ -195,7 +197,7 @@ const ChatMessagePanel = (props) => {
     return (
         <>
             <section className='relative w-full h-full flex flex-col gap-1 overflow-hidden'>
-                <div className={`${isSendFeedback == true ? "absolute" : "hidden"} z-10 w-full h-full flex items-center justify-center backdrop-blur-sm`}>
+                <div className={`${session?.user?.email !== profEmail && isSendFeedback == true ? "absolute" : "hidden"} z-10 w-full h-full flex items-center justify-center backdrop-blur-sm`}>
                     <form onSubmit={sendFeedback} className="w-[90%] md:w-1/2 h-auto p-2 shadow-lg shadow-[#53c28b] rounded-lg animate-slideDown">
                         <div className="flex justify-between gap-1">
                             <h3 className='text-2xl text-[#53c28b] mb-2 underline'>Give Feedback of {presonName}'s work!</h3>

@@ -47,9 +47,34 @@ export const ContactForm = () => {
   });
 
   const [error, setError] = useState("");
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   const router = useRouter();
 
+  const handleFirstname = (e) => {
+    let inputValue = e.target.value.replace(/[^a-z]/gi, "");
+    setContactUserMessage({ ...contactUserMessage, firstname: inputValue });
+  };
+  const handleLastname = (e) => {
+    let inputValue = e.target.value.replace(/[^a-z]/gi, "");
+    setContactUserMessage({ ...contactUserMessage, lastname: inputValue });
+  };
+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const handleEmail = (e) => {
+    const inputValue = e.target.value;
+    setContactUserMessage({ ...contactUserMessage, email: inputValue });
+
+    if (inputValue.trim() === "") {
+      setError("");
+    } else {
+      if (!emailPattern.test(inputValue)) {
+        setError("Invalid email");
+      } else {
+        setError("");
+      }
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactUserMessage({
@@ -60,18 +85,10 @@ export const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(
-      "firstname: ",
-      contactUserMessage.firstname,
-      "\nlastname: ",
-      contactUserMessage.lastname,
-      "\nemail: ",
-      contactUserMessage.email,
-      "\nmessage: ",
-      contactUserMessage.message
-    );
-
+    if (!emailPattern.test(contactUserMessage.email)) {
+      return setError("Invalid Email")
+    }
+    setDisableSubmit(true);
     try {
       const res = await fetch("/api/contact-us-message", {
         method: "POST",
@@ -86,14 +103,23 @@ export const ContactForm = () => {
 
       if (res.status === 400) {
         setError("We already have received message from this email!");
+        setDisableSubmit(false);
       }
       if (res.status === 200) {
         setError("");
-        router.push("/");
+        setContactUserMessage({
+          firstname: "",
+          lastname: "",
+          email: "",
+          message: "",
+        })
+        setDisableSubmit(false);
+        // router.push("/");
       }
     } catch (error) {
       setError("Error: Something went wrong!");
       console.log("Error", error);
+      setDisableSubmit(false);
     }
   };
 
@@ -109,7 +135,7 @@ export const ContactForm = () => {
             type="text"
             placeholder="First Name"
             required
-            onChange={handleChange}
+            onChange={handleFirstname}
             name="firstname"
             value={contactUserMessage.firstname}
             className="allFormInput h-[52px]"
@@ -118,7 +144,7 @@ export const ContactForm = () => {
             type="text"
             placeholder="Last Name"
             required
-            onChange={handleChange}
+            onChange={handleLastname}
             name="lastname"
             value={contactUserMessage.lastname}
             className="allFormInput h-[52px]"
@@ -128,7 +154,7 @@ export const ContactForm = () => {
           type="email"
           placeholder="Email*"
           required
-          onChange={handleChange}
+          onChange={handleEmail}
           name="email"
           value={contactUserMessage.email}
           className="allFormInput h-[52px]"
@@ -145,9 +171,12 @@ export const ContactForm = () => {
         />
         <button
           type="submit"
-          className="allBtn w-[7.75rem] h-[3.25rem] text-xl rounded-3xl"
-        >
-          Send
+          disabled={disableSubmit}
+          className={`allBtn w-full h-[3rem] text-xl rounded-3xl ${disableSubmit
+            ? " opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+            : ""
+            }`}>
+          {disableSubmit ? <span className="animate-pulse">Sending...</span> : "Send"}
         </button>
         {error && <span className="text-red-500">{error}</span>}
       </form>

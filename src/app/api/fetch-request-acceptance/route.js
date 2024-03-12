@@ -83,7 +83,7 @@ export const POST = async (request) => {
 
       await resend.emails.send({
         from: process.env.EMAIL_FROM,
-        to: "gauravd8976@gmail.com", //userEmail
+        to: userEmail,
         subject:
           "SkillBeHired - Work-Done Acceptance or pending payment request",
         html: bodyOne,
@@ -168,7 +168,7 @@ export const POST = async (request) => {
 
       await resend.emails.send({
         from: process.env.EMAIL_FROM,
-        to: "gauravd8976@gmail.com", //userEmail
+        to: userEmail,
         subject: "SkillBeHired - Pending Payment Receive",
         html: bodyTwo,
         // attachments: [
@@ -249,7 +249,7 @@ export const POST = async (request) => {
 
     await resend.emails.send({
       from: process.env.EMAIL_FROM,
-      to: "gauravd8976@gmail.com", //profEmail
+      to: profEmail,
       subject: "SkillBeHired - Client Acceptance & Pending Payment",
       html: bodyThree,
     });

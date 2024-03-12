@@ -125,7 +125,7 @@ export const HeroContext = () => {
     e.preventDefault();
 
     if ((service && zipCode) == "") {
-      return setError("Please provide the search both input!");
+      return setError("Please provide the both search input!");
     }
     setError("");
     return router.push(`/search-professional/${service}/${zipCode}`);

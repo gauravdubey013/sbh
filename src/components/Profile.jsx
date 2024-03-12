@@ -477,7 +477,7 @@ export const EditProfile = (props) => {
     if (input == "") {
       setErrors({ upiE: "" });
     } else if (!upiPattern.test(input)) {
-      setErrors({ upiE: "Invaild UPI id, refrence: sbh@icici" });
+      setErrors({ upiE: "Invaild UPI id, reference: sbh@icici" });
     } else {
       setErrors({ upiE: "" });
     }
