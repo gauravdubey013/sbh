@@ -155,7 +155,7 @@ const ProfessionalSignUp = ({ params }) => {
           setDisableBtn(false);
         } else if (res.status === 200) {
           setDisableBtn(false);
-          alert("Your Professional profile will be shown after being reviewed by an admin.");
+          alert("Your Professional profile will be shown after being reviewed by an Admin.");
           setSuccess(true);
           setError("");
           router.push("/signIn");

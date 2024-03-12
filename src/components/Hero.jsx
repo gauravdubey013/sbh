@@ -182,7 +182,7 @@ export const HeroContext = () => {
               <input
                 type="text"
                 value={zipCode}
-                onChange={(e) => setZipCode(e.target.value.replace(/[^\d]/g, ""))}
+                onChange={(e) => setZipCode(e.target.value.replace(/[^\d]/g, "")).slice(0, 6)}
                 // required
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {

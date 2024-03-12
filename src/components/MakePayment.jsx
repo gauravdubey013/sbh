@@ -25,7 +25,7 @@ const MakePayment = (props) => {
     // console.log(fullAmount);
 
     const handleFullAmt = (e) => {
-        setFullAmount(e.target.value.replace(/[^\d]/g, ""));
+        setFullAmount(e.target.value.replace(/[^\d]/g, "").slice(0, 6));
     }
     const handlePincode = (e) => {
         setPinCode(e.target.value.replace(/[^\d]/g, "").slice(0, 6));
