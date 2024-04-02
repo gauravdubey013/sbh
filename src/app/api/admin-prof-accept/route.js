@@ -8,7 +8,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (request) => {
   try {
-    let body;
     await connect();
 
     const { profAction, selectedProfEmail } = await request.json();
@@ -23,6 +22,8 @@ export const POST = async (request) => {
         status: 400,
       });
     }
+
+    let body;
     const existingUser = await User.findOne({ email: selectedProfEmail });
     if (!existingUser) {
       return new NextResponse("User doesn't exists!", {

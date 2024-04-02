@@ -85,7 +85,7 @@ function LoginForm() {
     console.log("email: ", email, "\npassword: ", password);
     if (!email && !password) {
       setError("Please provide credentials!");
-      setDisableBtn(false);
+      return setDisableBtn(false);
       // alert("Please provide credentials!");
     } else {
       try {
@@ -182,7 +182,7 @@ function LoginForm() {
               <input
                 type={showPass}
                 placeholder="Enter Password"
-                className={`allFormInput h-[52px] `}
+                className={`allFormInput h-[52px]`}
                 value={password}
                 onChange={handelPassword}
                 onKeyDown={(e) => {

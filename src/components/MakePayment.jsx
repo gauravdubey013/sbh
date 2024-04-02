@@ -163,10 +163,10 @@ const MakePayment = (props) => {
                                 <div className="w-full h-auto animate-fade-in-down">
                                     <input type="text" value={upiId} onChange={handleUpi} required placeholder='Enter UPI id' className='allFormInput h-[52px]' />
                                     {upiError && <span className="w-full h-auto text-red-500 animate-fade-in-down text-lg ease-in-out duration-300">{upiError}</span>}
-                                    <input type="text" value={pinCode} onChange={handlePincode} required placeholder='Enter Pin code' className='allFormInput h-[52px]' />
+                                    <input type="password" value={pinCode} onChange={handlePincode} required placeholder='Enter Pin code' className='allFormInput h-[52px]' />
                                 </div>
                             }
-                            <div className="flex gap-">
+                            <div className="flex flex-col md:flex-row gap-2">
                                 <button
                                     type="submit"
                                     disabled={disableSubmit || printReceiptVisible}

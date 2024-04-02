@@ -5,12 +5,15 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "@/app/loading";
+import AdBannerCarousel from "./AdBannerCarousel";
 import { WiCloudRefresh } from "react-icons/wi";
 import { FaUserTie, FaUsers, FaUsersSlash } from "react-icons/fa6";
 import { PiUserListFill } from "react-icons/pi";
 import { LuShieldClose } from "react-icons/lu";
 import { FaRupeeSign } from "react-icons/fa";
 import { TbReportAnalytics } from "react-icons/tb";
+import { PiSlideshowDuotone } from "react-icons/pi";
+import { FcRemoveImage } from "react-icons/fc";
 
 const Admin = () => {
   const [isReportOpen, setIsReportOpen] = useState(true);
@@ -20,7 +23,8 @@ const Admin = () => {
   const [isContactUsOpen, setIsContactUsOpen] = useState(false);
   const [isDelUserOpen, setIsDelUserOpen] = useState(false);
   const [isSBHBalanceOpen, setIsSBHBalanceOpen] = useState(false);
-  const activeCss = "bg-[#53c28b]";
+  const [isAdsOpen, setIsAdsOpen] = useState(false);
+  const activeCss = "bg-[#53c28b] text-[#000] font-bold";
 
   const [refDb, setRefDb] = useState(false);
   const [dBCollection, setDBCollection] = useState(null);
@@ -64,6 +68,7 @@ const Admin = () => {
   const profsCollection = dBCollection?.profsCollection;
   const contactUsCollection = dBCollection?.contactUsCollection;
   const sbhBalanceCollection = dBCollection?.sbhBalanceCollection;
+  const adBannerCollection = dBCollection?.adBannerCollection;
 
   return (
     <>
@@ -84,9 +89,10 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isReportOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isReportOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><TbReportAnalytics size={30} /></span>
             <span className="hidden md:flex">Dashboard</span>
@@ -100,9 +106,10 @@ const Admin = () => {
               isProfOpen ? setIsProfOpen(!isProfOpen) : "";
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isSBHBalanceOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isSBHBalanceOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaRupeeSign size={30} /></span>
             <span className="hidden md:flex">SBH Balance</span>
@@ -116,9 +123,10 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isUserOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsers size={30} /></span>
             <span className="hidden md:flex">Users</span>
@@ -132,9 +140,10 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />&#10003;</span>
             <span className="hidden md:flex gap-1">Verified Professionals</span>
@@ -148,9 +157,10 @@ const Admin = () => {
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isProfAcceptOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden flex items-center justify-center font-extrabold"><FaUserTie size={30} />X</span>
             <span className="hidden md:flex gap-1">Pending Professionals</span>
@@ -164,9 +174,10 @@ const Admin = () => {
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isContactUsOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><PiUserListFill size={30} /></span>
             <span className="hidden md:flex">Contact Us</span>
@@ -180,12 +191,30 @@ const Admin = () => {
               isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
               isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
               isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+              isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
             }}
-            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : ""
-              } shadow-sm hover:shadow-xl shadow-[#53c28b] md:hover:bg-[#48ffa363] ease-in-out duration-300`}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isDelUserOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
           >
             <span className="md:hidden"><FaUsersSlash size={30} /></span>
             <span className="hidden md:flex">Deleted Users</span>
+          </div>
+          <div
+            onClick={() => {
+              !isAdsOpen ? setIsAdsOpen(!isAdsOpen) : "";
+              isDelUserOpen ? setIsDelUserOpen(!isDelUserOpen) : "";
+              isReportOpen ? setIsReportOpen(!isReportOpen) : "";
+              isUserOpen ? setIsUserOpen(!isUserOpen) : "";
+              isProfOpen ? setIsProfOpen(!isProfOpen) : "";
+              isProfAcceptOpen ? setIsProfAcceptOpen(!isProfAcceptOpen) : "";
+              isContactUsOpen ? setIsContactUsOpen(!isContactUsOpen) : "";
+              isSBHBalanceOpen ? setIsSBHBalanceOpen(!isSBHBalanceOpen) : "";
+            }}
+            className={`w-full h-[6vh] rounded-md cursor-pointer active:scale-90 flex items-center justify-center ${isAdsOpen == true ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
+              } shadow-sm shadow-[#53c28b] ease-in-out duration-300`}
+          >
+            <span className="md:hidden"><PiSlideshowDuotone size={30} /></span>
+            <span className="hidden md:flex">Ads</span>
           </div>
         </div>
 
@@ -228,6 +257,13 @@ const Admin = () => {
                 />
               </div>
             )}
+            {isAdsOpen && (
+              <div className="animate-fade-in-down">
+                <AddRemoveAds
+                  adBannerCollection={adBannerCollection} setRefDb={setRefDb}
+                />
+              </div>
+            )}
           </div>
         }
       </section>
@@ -241,6 +277,8 @@ export const DashboardData = (props) => {
   const [totalUsersCount, setTotalUsersCount] = useState([]);
   const [totalProfsCount, setTotalProfsCount] = useState([]);
   const [usersCount, setUsersCount] = useState(0);
+  const [superAdminCount, setSuperAdminCount] = useState(0);
+  const [adminCount, setAdminCount] = useState(0);
   const [profsCount, setProfsCount] = useState(0);
   const [services, setServices] = useState({
     writing: "",
@@ -274,10 +312,14 @@ export const DashboardData = (props) => {
 
   useEffect(() => {
     if (totalUsersCount.length > 0) {
-      const userCount = totalUsersCount.filter((tc) => tc.role === "user").length;
-      const profCount = totalUsersCount.filter((tc) => tc.role === "professional").length;
-      setUsersCount(userCount);
-      setProfsCount(profCount);
+      const superAdmins = totalUsersCount.filter((tc) => tc.role === "superAdmin").length;
+      const admins = totalUsersCount.filter((tc) => tc.role === "admin").length;
+      const users = totalUsersCount.filter((tc) => tc.role === "user").length;
+      const profs = totalUsersCount.filter((tc) => tc.role === "professional").length;
+      setSuperAdminCount(superAdmins);
+      setAdminCount(admins);
+      setUsersCount(users);
+      setProfsCount(profs);
     }
     if (totalProfsCount.length > 0) {
       // console.log(totalProfsCount);
@@ -346,10 +388,18 @@ export const DashboardData = (props) => {
           <div className="flex flex-col gap-2">
             <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
               <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
-                <span className="md:text-2xl">User's count : {usersCount ?? "NaN"}</span>
+                <span className="md:text-2xl">Super Admin's : {superAdminCount ?? "NaN"}</span>
               </div>
               <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
-                <span className="md:text-2xl">Professional's count : {profsCount ?? "NaN"}</span>
+                <span className="md:text-2xl">Admin's : {adminCount ?? "NaN"}</span>
+              </div>
+            </div>
+            <div className="w-full md:h-[20%] flex flex-col md:flex-row gap-2 rounded-3xl overflow-hidden p-1">
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">User's : {usersCount ?? "NaN"}</span>
+              </div>
+              <div className="w-full md:w-1/2 h-[4rem] rounded-3xl flex items-center justify-center gap-2 scale-95 hover:scale-100 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] hover:bg-[#53c28b] ease-in-out duration-300">
+                <span className="md:text-2xl">Professional's : {profsCount ?? "NaN"}</span>
               </div>
             </div>
             <h3 className="text-[#53c28b] text-xl font-semibold">Professional's Services count</h3>
@@ -446,7 +496,7 @@ export const DashboardData = (props) => {
 };
 export const SBHBalanceData = (props) => {
   const { sbhBalanceCollection, setRefDb } = props;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     if (sbhBalanceCollection) {
@@ -456,6 +506,7 @@ export const SBHBalanceData = (props) => {
   }, [sbhBalanceCollection]);
 
   useEffect(() => {
+    // if (data == null)
     setRefDb();
   }, [data]);
 
@@ -475,7 +526,7 @@ export const SBHBalanceData = (props) => {
         </div>
         <div className="w-full h-[80%] p-2">
           <h3 className="w-auto h-[10%] text-2xl text-[#53c28b] font-bold">Transactions : </h3>
-          <div className="w-full h-[90%] borde shadow-sm shadow-[#53c28b] rounded-2xl scrollDiv overflow-x-auto overflow-y-hidden">
+          <div className="w-full h-[90%] borde shadow-sm shadow-[#53c28b] rounded-2xl scrollDiv overflow-x-auto overflow-y-hidde">
             <div className="w-[1000px] md:w-full h-10 flex items-center font-semibold justify-between gap-2 bg-[#53c28b] px-2 shadow-lg">
               <span>Date & Time</span>
               <span>PaymentId</span>
@@ -660,7 +711,7 @@ export const UserData = (props) => {
                     setIsEditOpen(true)
                     if (i == editData) setIsEditOpen(!isEditOpen);
                   }}
-                  className={` ${i == editData && isEditOpen ? activeCss : ""
+                  className={` ${i == editData && isEditOpen ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
                     } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
                 >
                   <div className="w-[20%] borde rounded-full text-center overflow-hidden">
@@ -714,7 +765,7 @@ export const UserData = (props) => {
               <input
                 type="text"
                 name="role"
-                disabled
+                // disabled
                 value={userEdit.role}
                 onChange={handleChange}
                 placeholder={`Role - ${editData?.role ?? "NaN"}`}
@@ -1010,7 +1061,7 @@ export const AcceptProf = (props) => {
                     setIsViewOpen(true)
                     if (i == editData) setIsViewOpen(!isViewOpen);
                   }}
-                  className={` ${i == editData && isViewOpen ? activeCss : ""
+                  className={` ${i == editData && isViewOpen ? activeCss : "md:hover:bg-[#48ffa363] hover:shadow-xl"
                     } w-auto h-auto border rounded-lg flex flex-row items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 hover:border-[#53c28b] active:scale-95 overflow-hidden ease-in-out duration-300`}
                 >
                   <div className="w-[30%] h-[5rem] borde rounded-full text-center overflow-hidden">
@@ -1140,33 +1191,41 @@ export const DeletedUserData = (props) => {
   }, [deletedUsersCollection]);
 
   const [editData, setEditData] = useState();
+  const [dataAction, setDataAction] = useState("");
   const [error, setError] = useState("");
   const [restoreDisableBtn, setRestoreDisableBtn] = useState(false);
+  const [delePernDisableBtn, setDelePernDisableBtn] = useState(false);
   const [restoreSuccess, setRestoreSuccess] = useState(false);
 
-  const handleRestoreUser = async (e) => {
-    const email = editData?.email ?? "email99";
+  const handleRestoreORDeletePermanentlyUser = async (e) => {
+    const email = editData?.email ?? "email";
     // console.log(email);
-    e.preventDefault()
-
-    setRestoreDisableBtn(true);
+    e.preventDefault();
+    if (dataAction == "restore") {
+      setRestoreDisableBtn(true);
+    }
+    if (dataAction == "deletePermanently") {
+      setDelePernDisableBtn(true);
+    }
     try {
-      const res = await fetch("/api/admin-user-restore", {
+      const res = await fetch("/api/admin-user-restore-deletePermanently", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
+          email, dataAction
         }),
       });
 
       if (res.status === 400) {
         setError("User doesn't exists!");
         setRestoreDisableBtn(false);
+        setDelePernDisableBtn(false);
         setRefDb(true);
       }
       if (res.status === 200) {
         setError("");
         setRestoreSuccess(true);
+        setDelePernDisableBtn(false);
         setRestoreDisableBtn(false);
         setRefDb(true);
       }
@@ -1188,7 +1247,7 @@ export const DeletedUserData = (props) => {
             return (
               <div
                 key={i._id}
-                className="w-auto h-auto border rounded-lg flex flex-col items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 ease-in-out duration-300"
+                className="w-auto h-auto borde rounded-lg flex flex-col items-center justify-center gap-1 p-1 cursor-pointer shadow-md hover:shadow-xl shadow-[#53c28b] scale-95 hover:scale-100 ease-in-out duration-300"
               >
                 <div className="w-auto h-auto flex flex-row items-center justify-center">
                   <div className="w-[30%] borde rounded-full text-center overflow-hidden">
@@ -1227,12 +1286,15 @@ export const DeletedUserData = (props) => {
                 </div>
 
                 <form className="w-full h-auto"
-                  onSubmit={handleRestoreUser}
+                  onSubmit={handleRestoreORDeletePermanentlyUser}
                 >
                   <button
                     type="submit"
                     disabled={restoreDisableBtn}
-                    onClick={() => setEditData(i)}
+                    onClick={() => {
+                      setDataAction("restore");
+                      setEditData(i);
+                    }}
                     className={`allBtn w-full h-[2rem] text-xl rounded-3xl mb-1 overflow-hidden ${restoreDisableBtn
                       ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
                       : ""
@@ -1246,7 +1308,7 @@ export const DeletedUserData = (props) => {
                         : (
                           restoreSuccess && i == editData ?
                             <span className="text-gre">
-                              Use Restored Successfully
+                              User Restored Successfully
                             </span>
                             : (
                               restoreDisableBtn && i == editData ?
@@ -1258,6 +1320,38 @@ export const DeletedUserData = (props) => {
                         )
                     ) : "Restore"}
                   </button>
+                  <button
+                    type="submit"
+                    disabled={delePernDisableBtn}
+                    onClick={() => {
+                      setDataAction("deletePermanently");
+                      setEditData(i);
+                    }}
+                    className={`allBtn w-full h-[2rem] text-xl rounded-3xl mb-1 overflow-hidden ${delePernDisableBtn
+                      ? "opacity-70 active:scale-95 hover:scale-95 active:text-xl"
+                      : ""
+                      }`}
+                  >
+                    {i == editData ? (
+                      error && i == editData ?
+                        <span className="flex text-red-500 animate-slideDown">
+                          {error}
+                        </span>
+                        : (
+                          restoreSuccess && i == editData ?
+                            <span className="text-gre">
+                              User Deleted Successfully
+                            </span>
+                            : (
+                              delePernDisableBtn && i == editData ?
+                                <span className="flex animate-pulse">
+                                  Deleting...
+                                </span>
+                                : "Delete Permanently"
+                            )
+                        )
+                    ) : "Delete Permanently"}
+                  </button>
                 </form>
               </div>
             );
@@ -1267,4 +1361,242 @@ export const DeletedUserData = (props) => {
     </>
   )
 };
+export const AddRemoveAds = (props) => {
+  const { adBannerCollection, setRefDb } = props;
+  const [adBanners, setAdBanners] = useState([]);
 
+  useEffect(() => {
+    if (adBannerCollection) {
+      setAdBanners(adBannerCollection);
+    }
+  }, [adBannerCollection]);
+  // console.log(adBanners);
+
+  const [actionPanel, setActionPanel] = useState({
+    add: true,
+    remove: false
+  });
+  const activeCss = "bg-[#53c28b] text-[#000] font-bold";
+  const [redirectUrl, setRedirectUrl] = useState("");
+  const [bannerUrl, setBannerUrl] = useState("");
+  const [submitDisableBtn, setSubmitDisableBtn] = useState(false);
+  const [error, setError] = useState("");
+  const [rError, setRError] = useState("");
+  const [success, setSuccess] = useState("");
+  const urlPattern = /^https:\/\//i;
+
+  const handleAdRedirectUrl = (e) => {
+    const inputUrl = e.target.value;
+    if (inputUrl.trim() !== "") {
+      if (urlPattern.test(inputUrl)) {
+        setError("");
+        return setRedirectUrl(inputUrl);
+      }
+      setError("Url must start with 'https://'");
+    } else {
+      setError("");
+    }
+  }
+  const handleAdBannerUrl = (e) => {
+    const inputUrl = e.target.value;
+    if (inputUrl.trim() !== "") {
+      if (urlPattern.test(inputUrl)) {
+        setError("");
+        return setBannerUrl(inputUrl);
+      }
+      setError("Url must start with 'https://'");
+    } else {
+      setBannerUrl("/assets/profilebanner2.gif");
+      setError("");
+    }
+  }
+
+  const adBannerSample = [
+    {
+      _id: 1,
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+    {
+      _id: 2,
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+    {
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+    {
+      _id: 4,
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+    {
+      _id: 5,
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+    {
+      id: 6,
+      redirectTo: redirectUrl,
+      bannerUrl: bannerUrl || "/assets/profilebanner2.gif",
+      bannerAlt: "banner",
+    },
+  ];
+
+  const handelBannerAdd = async (e) => {
+    e.preventDefault();
+
+    if (!bannerUrl && !redirectUrl) {
+      return setError("Please provide url's");
+    }
+    try {
+      const res = await fetch("/api/adBanner-fetch-add-remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          redirectTo: redirectUrl, bannerUrl, fnAction: "add"
+        }),
+      });
+      if (res.status === 200) {
+        setError("");
+        setSuccess("Added Ad Successfully!");
+        setRedirectUrl("");
+        setBannerUrl("/assets/profilebanner2.gif");
+        setSubmitDisableBtn(false);
+        setRefDb(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  }
+  const handelBannerRemove = async (bannerId) => {
+    try {
+      const res = await fetch("/api/adBanner-fetch-add-remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fnAction: "remove", bannerId
+        }),
+      });
+      if (res.status === 201) {
+        setRError("Banner ID not provided");
+        // setRefDb(true);
+      }
+      if (res.status === 200) {
+        setRError("");
+        setRefDb(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  }
+  return (
+    <>
+      <section className="w-full h-[78vh] px-5 animate-fade-in-down scrollDiv overflow-y-scroll overflow-hidden">
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-4 z-10 bbg">
+            <div onClick={() => setActionPanel({ add: true, remove: false })} className={`w-1/2 h-[40px] borde rounded-3xl cursor-pointer md:text-xl font-semibold flex items-center justify-center shadow-md shadow-[#53c28b] scale-95 ${actionPanel.add == true ? activeCss : "hover:shadow-xl md:hover:bg-[#48ffa363] hover:scale-100 active:translate-y-1"} ease-in-out duration-300`}>Add</div>
+            <div onClick={() => setActionPanel({ add: false, remove: true })} className={`w-1/2 h-[40px] borde rounded-3xl cursor-pointer md:text-xl font-semibold flex items-center justify-center shadow-md shadow-[#53c28b] scale-95 ${actionPanel.remove == true ? activeCss : "hover:shadow-xl md:hover:bg-[#48ffa363] hover:scale-100 active:translate-y-1"} ease-in-out duration-300`}>Remove</div>
+          </div>
+          {actionPanel.add == true &&
+            <div className="w-full h-auto animate-slideDown z-0 overflow-hidden">
+              <form onSubmit={handelBannerAdd} className="w-full h-auto flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
+                  <input type="url" placeholder="Enter Ad Redirect link" value={redirectUrl} onChange={handleAdRedirectUrl} className={`allFormInput h-[52px]`} />
+                  <input type="url" placeholder="Enter Ad Image link" value={bannerUrl} onChange={handleAdBannerUrl} className={`allFormInput h-[52px]`} />
+                </div>
+                <div className="flex flex-col md:flex-row gap-2 justify-between">
+                  <button type="submit" className="allBtn w-[10vh] h-[30px] rounded-2xl z-20">
+                    {submitDisableBtn ? <span className='animate-pulse'>Adding...</span> : "Add"}
+                  </button>
+                  {error && <span className="text-[red] animate-slideDown z-0">{error}</span>}
+                  {success && <span className="text-[#53c28b] animate-slideDown z-0">{success}</span>}
+                </div>
+              </form>
+              <div className="flex flex-col gap-2 text-xl text-[#53c28b]">
+                Preview
+                <div className="flex items-center justify-center">
+                  <div className="w-[90%] scale-105 overflow-hidden">
+                    <AdBannerCarousel
+                      // bg="bg-[#53c28b]"
+                      abdData={adBannerSample}
+                      defH="h-[12rem]"
+                      mdH="md:h-[14rem]"
+                      lgH="lg:h-[15rem]"
+                      slidesToScroll={1}
+                      speed={2500}
+                      autoplay={"true"}
+                      autoplaySpeed={0.01}
+                      slidesToShowDefault={3}
+                      slidesToShow768={3}
+                      slidesToShow1024={3}
+                      slidesToShow640={1}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>}
+          {actionPanel.remove == true && <div className="w-full h-auto animate-slideDown z-0 overflow-hidden">
+            <div className="grid grid-flow-row grid-cols-3 gap-2">
+              {adBanners.map((i) => (
+                <div className="relative">
+                  <div className="w-full h-full z-0 rounded-lg scale-95 hover:scale-100 ease-in-out duration-300 overflow-hidden">
+                    <div className="absolute right-0 top-0 w-10 h-8 flex items-center justify-center rounded-xl z-10">
+                      <FcRemoveImage size={30} onClick={() => {
+                        handelBannerRemove(i?._id ?? "");
+                      }} className="cursor-pointer shadow-md hover:scale-105 active:translate-y-1 ease-in-out duration-300" />
+                    </div>
+                    {/* <span className="absolute w-full bottom-0 text-center bg-[#00000045] text-[red] font-bold animate-slideDown z-20">REm</span> */}
+                    {error && <span className="absolute w-full bottom-0 text-center bg-[#00000045] text-[red] font-bold animate-slideDown z-20">{error}</span>}
+                    <Image
+                      src={i?.bannerUrl ?? "/assets/profilebanner2.gif"}
+                      alt={i?.bannerAlt ?? "bannner"}
+                      // fill="true"
+                      priority={true}
+                      width={800}
+                      height={800}
+                      className="w-full h-full shadow-md z-10 hover:scale-110 ease-in-out duration-300"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>}
+          <div className="w-full h-auto flex flex-col gap-2 text-xl text-[#53c28b] overflow-hidden">
+            Live
+            <div className="scale-105">
+              <AdBannerCarousel
+                bg="bg-[#53c28b]"
+                abdData={adBanners}
+                defH="h-[12rem]"
+                mdH="md:h-[14rem]"
+                lgH="lg:h-[16rem]"
+                slidesToScroll={1}
+                speed={2500}
+                autoplay={"true"}
+                autoplaySpeed={0.01}
+                slidesToShowDefault={3}
+                slidesToShow768={3}
+                slidesToShow1024={3}
+                slidesToShow640={1}
+              />
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </>
+  )
+};
+
+// if (!deletedUsersCollection[0]) {
+//   return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
+// }

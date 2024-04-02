@@ -1,10 +1,11 @@
 "use client";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+
 import Link from "next/link";
 import Image from "next/image";
-// import Link from "next/link";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { slides } from "@/context/data";
 
 const AdBannerCarousel = (props) => {
   let {
@@ -57,10 +58,21 @@ const AdBannerCarousel = (props) => {
   };
   return (
     <div>
-      <Slider {...settings} className="rounded-lg bg-whi">
-        {abdData.map((adb) => (
-          <Link href={"https://github.com/gauravdubey013"} target="_blank"
-            key={adb.id}
+      <Slider {...settings} className="rounded-lg">
+        {!abdData[0] &&
+          slides.map((slide) => (
+            <div
+              key={slide.id}
+              className={`w-auto ${defH} ${mdH} ${lgH} ease-in-out duration-300 overflow-hidden rounded-lg`}
+            >
+              <div
+                className={`w-full h-full bbg animate-pulse scale-95 border border-[#53c28b] hover:scale-100 shadow-lg duration-200 rounded-lg flex flex-col items-center justify-center overflow-hidden`}
+              >Loading...</div>
+            </div>
+          ))}
+        {abdData && abdData.map((adb) => (
+          <Link key={adb._id}
+            href={adb.redirectTo} target="_blank"
             className={`w-auto ${defH} ${mdH} ${lgH} relative ease-in-out duration-300 overflow-hidden rounded-lg`}
           >
             <div
@@ -72,8 +84,8 @@ const AdBannerCarousel = (props) => {
                 </span>
               </div>
               <Image
-                src={adb.img}
-                alt={adb.alt}
+                src={adb.bannerUrl ?? ""}
+                alt={adb.bannerAlt}
                 // fill="true"
                 priority={true}
                 width={800}
@@ -90,6 +102,8 @@ const AdBannerCarousel = (props) => {
 export default AdBannerCarousel;
 
 AdBannerCarousel.defaultProps = {
+  abdData: [],
+  refDB: false,
   slidesToScroll: 3,
   autoplay: false,
   autoplaySpeed: 1000,

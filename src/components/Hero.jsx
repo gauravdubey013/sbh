@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CiSearch } from "react-icons/ci";
@@ -11,6 +11,32 @@ import Contact from "./Contact";
 import { useRouter } from "next/navigation";
 
 export default function HeroTest() {
+  const [adBannerData, setAdBannerData] = useState([]);
+  const fetchAdBanners = async () => {
+    try {
+      const res = await fetch("/api/adBanner-fetch-add-remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fnAction: "fetch"
+        }),
+      });
+      if (res.status === 200) {
+        const adBData = await res.json();
+        setAdBannerData(adBData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (adBannerData.length == 0) {
+      fetchAdBanners();
+    }
+  }, [adBannerData])
+  // console.log(adBannerData);
+
   let ref = useRef(null);
   let { scrollYProgress } = useScroll({
     target: ref,
@@ -65,8 +91,8 @@ export default function HeroTest() {
         >
           <div className="bg-transparent -translate-y-16">
             <AdBannerCarousel
-              bg="bg-[#53c28b]"
-              abdData={adBanner}
+              // bg="bg-[#53c28b]"
+              abdData={adBannerData}
               defH="h-[14rem]"
               mdH="md:h-[16rem]"
               lgH="lg:h-[20rem]"

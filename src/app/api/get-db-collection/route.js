@@ -5,6 +5,7 @@ import ContactUsMessage from "@/models/ContactUsMessage";
 import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
 import SBHBalance from "@/models/SBHBalance";
+import AdBanners from "@/models/AdBanners";
 
 export const POST = async (request) => {
   try {
@@ -32,6 +33,7 @@ export const POST = async (request) => {
       const deletedUsersCollection = await DeletedUser.find({});
       const profsCollection = await Professional.find({});
       const contactUsCollection = await ContactUsMessage.find({});
+      const adBannerCollection = await AdBanners.find({});
       const sbhBalanceCollection = await SBHBalance.findOne({
         sbh: "SkillBeHired",
       });
@@ -46,6 +48,7 @@ export const POST = async (request) => {
         });
       }
       const dbCollections = {
+        adBannerCollection,
         sbhBalanceCollection,
         usersCollection,
         profsCollection,
