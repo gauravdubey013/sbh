@@ -1,5 +1,6 @@
 import connect from "@/utils/db";
 import User from "@/models/User";
+import Professional from "@/models/Professional";
 import DeletedUser from "@/models/DeletedUser";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
@@ -28,8 +29,13 @@ export const POST = async (request) => {
       password: existingUser?.password ?? "pswd",
       role: existingUser?.role ?? "user",
     });
-    await newDeletedUser.save();
 
+    if (existingUser?.role == "professional") {
+      const prof = await Professional.findOne({ email });
+      prof.isVerified = "no";
+      await prof.save();
+    }
+    await newDeletedUser.save();
     await User.deleteOne({ email });
 
     const body = `<h1 style="color: #333; font-family: 'Arial', sans-serif;">Heya ${existingUser?.name}!!</h1>

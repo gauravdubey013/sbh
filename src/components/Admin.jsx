@@ -1013,6 +1013,10 @@ export const AcceptProf = (props) => {
         })
       })
       // console.log(profAction + "");
+      if (res.status === 401) {
+        setError("User doesn't exists!");
+        setRefDb(true);
+      }
       if (res.status === 400) {
         setError("Professional doesn't exists!");
         setRefDb(true);
@@ -1196,6 +1200,7 @@ export const DeletedUserData = (props) => {
   const [restoreDisableBtn, setRestoreDisableBtn] = useState(false);
   const [delePernDisableBtn, setDelePernDisableBtn] = useState(false);
   const [restoreSuccess, setRestoreSuccess] = useState(false);
+  const [delPernSuccess, setDelPernSuccess] = useState(false);
 
   const handleRestoreORDeletePermanentlyUser = async (e) => {
     const email = editData?.email ?? "email";
@@ -1224,7 +1229,12 @@ export const DeletedUserData = (props) => {
       }
       if (res.status === 200) {
         setError("");
-        setRestoreSuccess(true);
+        if (dataAction == "restore") {
+          setRestoreSuccess(true);
+        }
+        if (dataAction == "deletePermanently") {
+          setDelPernSuccess(true);
+        }
         setDelePernDisableBtn(false);
         setRestoreDisableBtn(false);
         setRefDb(true);
@@ -1338,7 +1348,7 @@ export const DeletedUserData = (props) => {
                           {error}
                         </span>
                         : (
-                          restoreSuccess && i == editData ?
+                          delPernSuccess && i == editData ?
                             <span className="text-gre">
                               User Deleted Successfully
                             </span>
@@ -1370,7 +1380,7 @@ export const AddRemoveAds = (props) => {
       setAdBanners(adBannerCollection);
     }
   }, [adBannerCollection]);
-  // console.log(adBanners);
+  // console.log(adBanners.length);
 
   const [actionPanel, setActionPanel] = useState({
     add: true,
@@ -1406,7 +1416,7 @@ export const AddRemoveAds = (props) => {
       }
       setError("Url must start with 'https://'");
     } else {
-      setBannerUrl("/assets/profilebanner2.gif");
+      setBannerUrl("");
       setError("");
     }
   }
@@ -1467,7 +1477,7 @@ export const AddRemoveAds = (props) => {
         setError("");
         setSuccess("Added Ad Successfully!");
         setRedirectUrl("");
-        setBannerUrl("/assets/profilebanner2.gif");
+        setBannerUrl("");
         setSubmitDisableBtn(false);
         setRefDb(true);
       }
@@ -1526,7 +1536,6 @@ export const AddRemoveAds = (props) => {
                 <div className="flex items-center justify-center">
                   <div className="w-[90%] scale-105 overflow-hidden">
                     <AdBannerCarousel
-                      // bg="bg-[#53c28b]"
                       abdData={adBannerSample}
                       defH="h-[12rem]"
                       mdH="md:h-[14rem]"
@@ -1571,7 +1580,10 @@ export const AddRemoveAds = (props) => {
             </div>
           </div>}
           <div className="w-full h-auto flex flex-col gap-2 text-xl text-[#53c28b] overflow-hidden">
-            Live
+            <div className="flex justify-between">
+              Live
+              <span>Total banners : {adBanners.length}</span>
+            </div>
             <div className="scale-105">
               <AdBannerCarousel
                 bg="bg-[#53c28b]"
@@ -1590,13 +1602,9 @@ export const AddRemoveAds = (props) => {
               />
             </div>
           </div>
-
         </div>
       </section>
     </>
   )
 };
 
-// if (!deletedUsersCollection[0]) {
-//   return <section className="w-full h-full animate-fade-in-down text-center font-extrabold text-2xl text-[#53c28b]"><span className='text-red-600'>No</span> Deleted Users records found</section>
-// }

@@ -201,7 +201,7 @@ const ChatMessagePanel = (props) => {
                     <form onSubmit={sendFeedback} className="w-[90%] md:w-1/2 h-auto p-2 shadow-lg shadow-[#53c28b] rounded-lg animate-slideDown">
                         <div className="flex justify-between gap-1">
                             <h3 className='text-2xl text-[#53c28b] mb-2 underline'>Give Feedback of {presonName}'s work!</h3>
-                            <ImCancelCircle size={20} className='cancelIcon' />
+                            <ImCancelCircle size={20} className='cancelIcon' onClick={() => setIsSendFeedback(false)} />
                         </div>
                         <textarea
                             // type="text"

@@ -12,6 +12,13 @@ export const POST = async (request) => {
 
     const { profAction, selectedProfEmail } = await request.json();
 
+    const existingUser = await User.findOne({ email: selectedProfEmail });
+    if (!existingUser) {
+      return new NextResponse("User doesn't exists!", {
+        message: "User doesn't exists!",
+        status: 401,
+      });
+    }
     const existingProf = await Professional.findOne({
       email: selectedProfEmail,
     });
@@ -24,13 +31,7 @@ export const POST = async (request) => {
     }
 
     let body;
-    const existingUser = await User.findOne({ email: selectedProfEmail });
-    if (!existingUser) {
-      return new NextResponse("User doesn't exists!", {
-        message: "User doesn't exists!",
-        status: 400,
-      });
-    }
+
     if (profAction == "accept") {
       existingProf.isVerified = "yes";
       await existingProf.save();
@@ -52,6 +53,7 @@ export const POST = async (request) => {
         status: 200,
       });
     }
+
     if (profAction == "reject") {
       existingUser.role = "user";
       await existingUser.save();
