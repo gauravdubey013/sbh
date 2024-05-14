@@ -53,7 +53,7 @@ const footer = [
     id: 1,
     className:
       "fa fa-github text-blue-500 opacity-[0.6] hover:opacity-[1] hover:text-[gray] hover:scale-110",
-    url: "https://github.com/gauravdubey013",
+    url: "https://github.com/gauravdubey19",
   },
   {
     id: 2,

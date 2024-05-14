@@ -3,9 +3,9 @@ import User from "@/models/User";
 import Professional from "@/models/Professional";
 import ContactUsMessage from "@/models/ContactUsMessage";
 import DeletedUser from "@/models/DeletedUser";
-import { NextResponse } from "next/server";
 import SBHBalance from "@/models/SBHBalance";
 import AdBanners from "@/models/AdBanners";
+import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   try {
